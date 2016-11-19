@@ -1,0 +1,30 @@
+<project default = "compile">
+	<property name="mainClass" value="buzmo/BuzmoLogin"/>
+	<path id="project.class.path">
+		<pathelement location="build"/>
+	</path>
+
+	<!-- compile -->
+	<target name="compile" description="Compiles Buzmo">
+		<mkdir dir="build"/>
+		<javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source">
+			<classpath>
+				<pathelement location="build"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- run -->
+	<target name="run" description="Runs Buzmo" depends="compile">
+		<java classname="${mainClass}" fork="true">
+			<classpath refid="project.class.path"/>
+		</java>
+	</target>
+
+	<!-- clean -->
+	<target name="clean" description="Deletes unncessary files and dir">
+		<delete failonerror="false" verbose="true">
+			<fileset dir="build" includes="**/*.class"/>
+		</delete>
+	</target>
+</project>
