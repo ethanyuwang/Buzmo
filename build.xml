@@ -1,5 +1,5 @@
 <project default = "compile">
-	<property name="mainClass" value="buzmo/BuzmoLogin"/>
+	<property name="mainClass" value="buzmo/BuzmoJFrame"/>
 	<path id="project.class.path">
 		<pathelement location="build"/>
 	</path>

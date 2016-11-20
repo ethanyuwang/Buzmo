@@ -1,10 +1,11 @@
 package buzmo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class BuzmoLoginScreen extends JPanel
+public class LoginJPanel extends JPanel
 {
     //Java GUI Components
     JButton loginButton;
@@ -15,7 +16,7 @@ public class BuzmoLoginScreen extends JPanel
     JPanel topPanel;
     JPanel botPanel;
 
-    public BuzmoLoginScreen()
+    public LoginJPanel()
     {
 	this.repaint();
 	loginButton = new JButton("Login");
@@ -54,6 +55,11 @@ public class BuzmoLoginScreen extends JPanel
 	add(botPanel);
 
 	//event managers
-	
+	signUpButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new SignUpJPanel());
+		}
+	});
     }
 }

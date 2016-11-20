@@ -1,20 +1,21 @@
 package buzmo;
+
 import javax.swing.*;
 
-public class BuzmoLogin
+public class BuzmoJFrame
 {
 	//GUI Constants
 	public static JFrame mainWindow;
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 400;
 
-	BuzmoLoginScreen cp;
+	LoginJPanel cp;
 
 	//Constructor
-	public BuzmoLogin()
+	public BuzmoJFrame()
 	{
 		mainWindow = new JFrame();
-		cp = new BuzmoLoginScreen();
+		cp = new LoginJPanel();
 		
 		mainWindow.setSize(WIDTH, HEIGHT);
 		mainWindow.setResizable(false);
@@ -25,16 +26,16 @@ public class BuzmoLogin
 		mainWindow.setVisible(true);
 	}
 
-	public static void main(String [] args)
-	{
-		new BuzmoLogin();
-	}
-
 	public static void setCurrentPanelTo(JPanel panel)
 	{
 		mainWindow.setContentPane(panel);
 		mainWindow.revalidate();
 		mainWindow.repaint();
 		panel.requestFocusInWindow();
+	}
+
+	public static void main(String [] args)
+	{
+		new BuzmoJFrame();
 	}
 }
