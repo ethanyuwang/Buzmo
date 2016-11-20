@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class SetUp {
+public class DBManager {
 
         public static void main(String[] args){
 
@@ -12,31 +12,12 @@ public class SetUp {
 			String password = "304";
                         Connection con = DriverManager.getConnection(url,username, password);
 
-			/*//Print Table Names
-			DatabaseMetaData md = con.getMetaData();
-			ResultSet rs = md.getTables(null, null, "%", null);
-			while (rs.next()) {
-  				System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3));
-			}*/
-
-			DatabaseMetaData dm = con.getMetaData();
-			ResultSet rs = dm.getImportedKeys(null, null, "Users");
-			int i = 1;
-			while (rs.next()) {
-        			System.out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(4));
-    			}
-			
-/*
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM USERS");
-			ResultSetMetaData rsmd = rs.getMetaData();
-			String name = rsmd.getColumnName(8);
-			System.out.println(name);
-*/
-
 			//Create Tables
 			//createTables(con);
 			//addForeignKeys(con);
+
+			//Print Table
+			//printTable(con, "MESSAGES");
 
 			// 4. Process the result set
                         //while(rs.next())
@@ -48,6 +29,46 @@ public class SetUp {
                 }
                 catch(Exception e){System.out.println(e);}
         }
+
+	public static void printTable(Connection con, String TBName){
+		try{
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM "+TBName);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int colNum = rsmd.getColumnCount();
+
+			// print table data
+			System.out.println("<Table: "+TBName+" with "+colNum+" columns>");
+			for(int i=1; i<=colNum; i++){
+				if (i==colNum){
+					System.out.println(rsmd.getColumnName(i));
+				}
+				else{
+					System.out.print(rsmd.getColumnName(i)+", ");
+				}
+			}
+			while(rs.next()){
+				for(int i=1; i<=colNum; i++){
+					if (i==colNum){
+						System.out.println(rs.getString(i));
+					}
+					else{
+						System.out.print(rs.getString(i)+", ");
+					}
+				}
+			}	
+			System.out.println();	
+			// print foreign keys
+			DatabaseMetaData dm = con.getMetaData();
+			rs = dm.getImportedKeys(null, null, TBName);
+			while (rs.next()){
+				System.out.println("foreign_key ("+rs.getString(3)+
+				") references "+rs.getString(8)+"("+rs.getString(4)+")");
+			}	
+                }
+                catch(Exception e){System.out.println(e);}
+	}
+
 
 	public static void createTables(Connection con){
 		try{
