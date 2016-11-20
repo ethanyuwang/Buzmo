@@ -11,6 +11,8 @@ public class LoginJPanel extends JPanel
     JButton loginButton;
     JButton signUpButton;
     JLabel titleLabel;
+    JTextField emailField;
+    JTextField passField;
 
     GridBagConstraints gbc;
     JPanel topPanel;
@@ -22,6 +24,9 @@ public class LoginJPanel extends JPanel
 	loginButton = new JButton("Login");
 	signUpButton = new JButton("Sign up");
 	titleLabel = new JLabel("Buzmo");
+	emailField = new JTextField();
+	passField = new JTextField();
+
 	gbc = new GridBagConstraints();
 	topPanel = new JPanel(new BorderLayout());
 	botPanel = new JPanel(new GridBagLayout());
@@ -42,9 +47,15 @@ public class LoginJPanel extends JPanel
 	gbc.gridy = 1;
 	gbc.gridwidth = 1;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(loginButton, gbc);
+	botPanel.add(emailField, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 2;
+	botPanel.add(passField, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 3;
+	botPanel.add(loginButton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 4;
 	botPanel.add(signUpButton, gbc);
 
 	topPanel.setOpaque(false);
