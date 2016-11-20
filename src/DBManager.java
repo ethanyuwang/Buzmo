@@ -17,7 +17,7 @@ public class DBManager {
 			//addForeignKeys(con);
 
 			//Print Table
-			//printTable(con, "MESSAGES");
+			printTable(con, "USERS");
 
 			// 4. Process the result set
                         //while(rs.next())
@@ -57,11 +57,16 @@ public class DBManager {
 					}
 				}
 			}	
-			System.out.println();	
-			// print foreign keys
+			System.out.println();
+			// print primary keys
 			DatabaseMetaData dm = con.getMetaData();
+			rs = dm.getPrimaryKeys(null, null, TBName);
+			while(rs.next()){
+				System.out.println("primary key ("+rs.getString("COLUMN_NAME")+")");
+			} 
+			// print foreign keys
 			rs = dm.getImportedKeys(null, null, TBName);
-			while (rs.next()){
+			while(rs.next()){
 				System.out.println("foreign_key ("+rs.getString(3)+
 				") references "+rs.getString(8)+"("+rs.getString(4)+")");
 			}	
@@ -85,8 +90,7 @@ public class DBManager {
 	  		" Contact_pending_list INT NOT NULL, " +
 			" Contact_list INT NOT NULL, " +
 	  		" PRIMARY KEY (email_address))";
-			st.executeQuery(sql);
-	
+			st.executeQuery(sql);	
 		
 			sql = "CREATE TABLE Managers " +
 	  		"(email_address VARCHAR(20) NOT NULL, " +
@@ -146,7 +150,6 @@ public class DBManager {
 	  		" pending_people VARCHAR(20) NOT NULL, " +
 	  		" PRIMARY KEY (gp_id))";
 			st.executeQuery(sql);
-
 			
 			sql = "CREATE TABLE Topic_words " +
 	  		"(Topic_word VARCHAR(30) NOT NULL, " +
