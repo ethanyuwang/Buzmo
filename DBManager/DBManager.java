@@ -21,8 +21,11 @@ public class DBManager {
 			//createTables(con);
 			//addForeignKeys(con);
 
+			//Delete Tables
+			deleteTables(con);
+
 			//Print Table
-			printTable(con, "USERS");
+			//printTable(con, "USERS");
 
 			// 4. Process the result set
                         //while(rs.next())
@@ -79,6 +82,32 @@ public class DBManager {
                 catch(Exception e){System.out.println(e);}
 	}
 
+	public static void deleteTables(Connection con){
+		try{
+			Statement st = con.createStatement();
+			String sql = "DROP TABLE USERS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE MANAGERS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE CIRCLE_FEEDS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE GROUP_CHATS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE PRIVATE_CHATS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE MESSAGES CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE CONTACT_PENDING_LISTS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE CONTACT_LISTS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE GROUP_PENDING_LISTS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+			sql = "DROP TABLE TOPIC_WORDS CASCADE CONSTRAINTS";
+			st.executeUpdate(sql);
+		}
+		catch(Exception e){System.out.println(e);}
+	}
 
 	public static void createTables(Connection con){
 		try{
