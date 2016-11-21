@@ -22,10 +22,10 @@ public class DBManager {
 			//addForeignKeys(con);
 
 			//Delete Tables
-			deleteTables(con);
+			//deleteTables(con);
 
 			//Print Table
-			//printTable(con, "USERS");
+			printTable(con, "USERS");
 
 			// 4. Process the result set
                         //while(rs.next())
@@ -116,13 +116,13 @@ public class DBManager {
 			
 			String sql = "CREATE TABLE Users " +
 	  		"(email_address VARCHAR(20) NOT NULL, " +
+	  		" password VARCHAR(10) NOT NULL, " +
 	  		" name VARCHAR(20) NOT NULL, " +
 	  		" phone_number NUMERIC(10) NOT NULL, " +
-	  		" password VARCHAR(10) NOT NULL, " +
-	  		" screenname VARCHAR(20) NOT NULL, " +
-			" Topic_words VARCHAR(30) NOT NULL, " +
-	  		" Contact_pending_list INT NOT NULL, " +
-			" Contact_list INT NOT NULL, " +
+	  		" screenname VARCHAR(20), " +
+			" Topic_words VARCHAR(30), " +
+	  		" Contact_pending_list INT, " +
+			" Contact_list INT, " +
 	  		" PRIMARY KEY (email_address))";
 			st.executeQuery(sql);	
 		

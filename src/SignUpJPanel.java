@@ -81,8 +81,11 @@ public class SignUpJPanel extends JPanel
 	signUpButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			DBInteractor.addUser(BuzmoJFrame.con, emailField.getText(), passField.getText(),
+			Boolean complete = DBInteractor.addUser(BuzmoJFrame.con, emailField.getText(), passField.getText(),
 				nameField.getText(), phoneField.getText(), screennameField.getText());
+			if(complete){
+				BuzmoJFrame.setCurrentPanelTo(new LoginJPanel());
+			}
 		}
 	});
     }
