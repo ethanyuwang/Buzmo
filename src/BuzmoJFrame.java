@@ -1,6 +1,7 @@
 package buzmo;
 
 import javax.swing.*;
+import java.sql.*;
 
 public class BuzmoJFrame
 {
@@ -8,6 +9,8 @@ public class BuzmoJFrame
 	public static JFrame mainWindow;
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 400;
+	// Database
+	public static Connection con;
 
 	LoginJPanel cp;
 
@@ -36,6 +39,7 @@ public class BuzmoJFrame
 
 	public static void main(String [] args)
 	{
+		con = DBInteractor.connectToDB();
 		new BuzmoJFrame();
 	}
 }

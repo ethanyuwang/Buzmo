@@ -1,5 +1,10 @@
 import java.sql.*;
 
+/* To-do:
+ * too many "NOT NULL"
+ * e.g. Users topic word, screenname can be NULL?
+ */
+
 public class DBManager {
 
         public static void main(String[] args){

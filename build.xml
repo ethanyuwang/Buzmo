@@ -2,14 +2,16 @@
 	<property name="mainClass" value="buzmo/BuzmoJFrame"/>
 	<path id="project.class.path">
 		<pathelement location="build"/>
+		<pathelement location="DBManager/ojdbc6.jar"/>
 	</path>
 
 	<!-- compile -->
 	<target name="compile" description="Compiles Buzmo">
 		<mkdir dir="build"/>
-		<javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source">
+		<javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source" includeantruntime="false">
 			<classpath>
 				<pathelement location="build"/>
+				<pathelement location="DBManager/ojdbc6.jar"/>
 			</classpath>
 		</javac>
 	</target>

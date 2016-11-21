@@ -24,8 +24,8 @@ public class LoginJPanel extends JPanel
 	loginButton = new JButton("Login");
 	signUpButton = new JButton("Sign up");
 	titleLabel = new JLabel("Buzmo");
-	emailField = new JTextField();
-	passField = new JTextField();
+	emailField = new JTextField("email");
+	passField = new JTextField("password");
 
 	gbc = new GridBagConstraints();
 	topPanel = new JPanel(new BorderLayout());
