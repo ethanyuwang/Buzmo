@@ -72,5 +72,18 @@ public class LoginJPanel extends JPanel
 			BuzmoJFrame.setCurrentPanelTo(new SignUpJPanel());
 		}
 	});
+	loginButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Boolean complete = DBInteractor.loginUser(BuzmoJFrame.con, emailField.getText(), passField.getText());
+			if(complete){
+				System.out.println("Login SUCCESS");
+				BuzmoJFrame.setCurrentPanelTo(new CircleJPanel());
+			}
+			else{
+				System.out.println("Login FAIL");
+			}
+		}
+	});
     }
 }

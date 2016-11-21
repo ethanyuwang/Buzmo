@@ -33,4 +33,21 @@ public class DBInteractor {
 		}
 		catch(Exception e){System.out.println(e); return false;}
 	}
+
+	public static Boolean loginUser(Connection con, String email, String pass){
+		try {
+			Statement st = con.createStatement();
+			String sql = "SELECT U.PASSWORD FROM USERS U WHERE U.EMAIL_ADDRESS='" + email + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				System.out.println(rs.getString(1));
+				System.out.println(pass);
+				if (pass.equals(rs.getString(1))){
+					return true;
+				}
+			}
+			return false;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+	}
 }
