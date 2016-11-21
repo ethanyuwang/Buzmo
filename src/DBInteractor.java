@@ -21,17 +21,13 @@ public class DBInteractor {
 		try {
 			Statement st = con.createStatement();
 			// Note: insert order needs to match table column order
-			/*
 			String sql = "INSERT INTO USERS " +
-			"VALUES (\'" + email + "\', \'" + 
-			pass + "\', \'" +
-			name + "\', \'" +
-			phone + "\', \'" +
-			screenname  + "\', \'" +
+			"VALUES ('" + email + "', " +
+			"'" + pass + "', " +
+			"'" + name + "', " +
+			phone + ", " +
+			"'" + screenname + "', " +
 			"null, null, null)";
-			*/
-			String sql = "INSERT INTO USERS " +
-			"VALUES ('1', '2', 3, '4', '5', '6', 7, 8)";
 			st.executeUpdate(sql);
 			return true;
 		}
