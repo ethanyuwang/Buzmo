@@ -26,8 +26,7 @@ public class DBInteractor {
 			"'" + pass + "', " +
 			"'" + name + "', " +
 			phone + ", " +
-			"'" + screenname + "', " +
-			"null, null, null)";
+			"'" + screenname + "')";
 			st.executeUpdate(sql);
 			return true;
 		}
