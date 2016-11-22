@@ -42,6 +42,7 @@ public class DBInteractor {
 				System.out.println(rs.getString(1));
 				System.out.println(pass);
 				if (pass.equals(rs.getString(1))){
+					BuzmoJFrame.userEmail = email;
 					return true;
 				}
 			}

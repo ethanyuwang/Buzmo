@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class LoginJPanel extends JPanel
+public class CircleFeedJPanel extends JPanel
 {
     //Java GUI Components
     JButton loginButton;
@@ -18,12 +18,12 @@ public class LoginJPanel extends JPanel
     JPanel topPanel;
     JPanel botPanel;
 
-    public LoginJPanel()
+    public CircleFeedJPanel()
     {
 	this.repaint();
 	loginButton = new JButton("Login");
 	signUpButton = new JButton("Sign up");
-	titleLabel = new JLabel("Buzmo");
+	titleLabel = new JLabel("CIRCLE");
 	emailField = new JTextField("email");
 	passField = new JTextField("password");
 

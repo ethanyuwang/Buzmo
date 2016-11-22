@@ -11,6 +11,7 @@ public class BuzmoJFrame
 	public static final int HEIGHT = 400;
 	// Database
 	public static Connection con;
+	public static String userEmail;
 
 	LoginJPanel cp;
 
