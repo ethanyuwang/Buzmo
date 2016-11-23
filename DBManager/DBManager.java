@@ -26,7 +26,7 @@ public class DBManager {
 			//printGLEETables(con);
 
 			//Print all tables
-			//printAllTables(con);
+			printAllTables(con);
 
 			// Close conenction
                         con.close();
