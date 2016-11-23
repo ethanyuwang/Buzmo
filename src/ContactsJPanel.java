@@ -27,11 +27,11 @@ public class ContactsJPanel extends JPanel
     {
 	this.repaint();
 	titleLabel = new JLabel("CONTACTS");
-	contactTextArea = new JTextArea("JFSDJFSDFSJDKFJSD\nFSDFSJDJFSJDFSJklF\nDSKLJFSKLDJFSK\nLDFJSKLDJFSK\nLDJFSKLDFJSKLDJ\nFKLSDJFKLSJKLF");
+	contactTextArea = new JTextArea(DBInteractor.getContactLists(BuzmoJFrame.con));
 	contactTextArea.setEditable(false);
 	contactTextArea.setLineWrap(true);
 	contactTextArea.setWrapStyleWord(false);
-	pendingTextArea = new JTextArea("djklsfjkljfsd PENDING CONTACTS ARE HERE");
+	pendingTextArea = new JTextArea(DBInteractor.getContactPendingLists(BuzmoJFrame.con));
 	pendingTextArea.setEditable(false);
 	pendingTextArea.setLineWrap(true);
 	pendingTextArea.setWrapStyleWord(false);
@@ -77,5 +77,37 @@ public class ContactsJPanel extends JPanel
 	add(botPanel);
 
 	//event managers
+	requestButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Boolean complete = DBInteractor.requestContact(BuzmoJFrame.con, requestField.getText());
+			if(complete){
+				System.out.println("Request Contact SUCCESS");
+				BuzmoJFrame.setCurrentPanelTo(new ContactsJPanel());
+			}
+			else{
+				System.out.println("Request Contact FAIL");
+			}
+		}
+	});
+	acceptButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Boolean complete = DBInteractor.acceptContact(BuzmoJFrame.con, acceptField.getText());
+			if(complete){
+				System.out.println("Accept Contact SUCCESS");
+				BuzmoJFrame.setCurrentPanelTo(new ContactsJPanel());
+			}
+			else{
+				System.out.println("Accept Contact FAIL");
+			}
+		}
+	});
+	backButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
+		}
+	});
     }
 }
