@@ -51,7 +51,7 @@ public class PrivateChatJPanel extends JPanel
 	//Naviagtion Components
 	backButton = new JButton("Back");
 
-	//Chat dispaly and control Components
+	//contacts dispaly and select Components
 	contactsTextArea = new JTextArea(DBInteractor.getContactLists(BuzmoJFrame.con));
 	contactsTextArea.setEditable(false);
 	contactsTextArea.setLineWrap(true);

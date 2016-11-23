@@ -1,14 +1,14 @@
-/*package buzmo;
+package buzmo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PrivateChatJPanel extends JPanel
+public class GroupChatJPanel extends JPanel
 {
     //Variables
-    String recipientEmail = "";
+    String currentGroupName = "";
 
     GridBagConstraints gbc;
     JPanel topPanel;
@@ -24,6 +24,15 @@ public class PrivateChatJPanel extends JPanel
     JScrollPane draftScroll;
     JButton sendButton;
 
+    //Create new group Components
+    JTextField createField;
+    JScrollPane createScroll;
+    JButton createButton;
+
+    //List of GroupMembers Components
+    JTextArea groupMembersTextArea;
+    JScrollPane groupMembersScroll;
+
     //List of GroupChats and select Components
     JTextArea groupChatsListTextArea;
     JTextField groupChatSelectTextField;
@@ -31,18 +40,28 @@ public class PrivateChatJPanel extends JPanel
     JScrollPane groupChatSelectScroll;
     JButton selectButton;
 
-    //List of GroupMembers Components
-    JTextArea groupMembersTextArea;
-    JScrollPane groupMembersScroll;
-    JScrollPane groupChatSelectScroll;
-    JButton selectButton;
+    //List of pending request and add Components
+    JTextArea pendingRequestsTextArea;
+    JTextField addTextField;
+    JScrollPane pendingRequestsScroll;
+    JScrollPane addScroll;
+    JButton addButton;
 
-    public PrivateChatJPanel()
+    //List of contacts and invite Components
+    JTextArea contactsTextArea;
+    JTextField inviteTextField;
+    JScrollPane contactsScroll;
+    JScrollPane inviteScroll;
+    JButton inviteButton;
+
+
+
+    public GroupChatJPanel()
     {
 	this.repaint();
 
 	//Chat dispaly and control Components
-	historyTextArea = new JTextArea("Select a friend\n");
+	historyTextArea = new JTextArea("Select a chat group to start\n");
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
@@ -53,22 +72,56 @@ public class PrivateChatJPanel extends JPanel
 	draftScroll = new JScrollPane(draftTextField);
 
 	sendButton = new JButton("Send");
+	
+	//Create new group Components
+    	createField = new JTextField("New chat group");
+    	createScroll = new JScrollPane(createField);
+    	createButton = new JButton("Create");
 
-	//Naviagtion Components
-	backButton = new JButton("Back");
+    	//List of GroupMembers Components
+    	groupMembersTextArea = new JTextArea("Members:\n"+DBInteractor.getGroupMembers(BuzmoJFrame.con, currentGroupName));
+    	groupMembersScroll = new JScrollPane(groupMembersTextArea);
 
-	//Chat dispaly and control Components
-	contactsTextArea = new JTextArea(DBInteractor.getContactLists(BuzmoJFrame.con));
+   	//List of GroupChats and select Components
+    	groupChatsListTextArea = new JTextArea("Groups:\n"+DBInteractor.getGroupMembers(BuzmoJFrame.con));
+	historyTextArea.setEditable(false);
+	historyTextArea.setLineWrap(true);
+	historyTextArea.setWrapStyleWord(false);
+ 
+   	groupChatSelectTextField = new JTextField("Select group to chat with");
+ 
+   	groupChatsListScroll = new JScrollPane(groupChatsListTextArea);
+    	groupChatSelectScroll = new JScrollPane(groupChatSelectTextField);
+    	selectButton = new JButton("Select");
+
+	//contacts dispaly and invite Components
+	contactsTextArea = new JTextArea("Contacts:\n"+DBInteractor.getContactLists(BuzmoJFrame.con));
 	contactsTextArea.setEditable(false);
 	contactsTextArea.setLineWrap(true);
 	contactsTextArea.setWrapStyleWord(false);
 
-	recipientTextField = new JTextField("Enter friend's email");
+	inviteTextField = new JTextField("Enter friend's email");
 
 	contactsScroll = new JScrollPane(contactsTextArea);
-	recipientScroll = new JScrollPane(recipientTextField);
+	inviteScroll = new JScrollPane(inviteTextField);
 
-	selectButton = new JButton("Select");
+	inviteButton = new JButton("Invite");
+
+    	//List of request and add Components
+   	pendingRequestsTextArea = new JTextArea("You're invited to the following groups:\n"+DBInteractor.getPendingGroupChatInvites(BuzmoJFrame.con));
+	pendingRequestsTextArea.setEditable(false);
+	pendingRequestsTextArea.setLineWrap(true);
+	pendingRequestsTextArea.setWrapStyleWord(false);
+
+    	addTextField = new JTextField("Select a group to add");
+    	
+	pendingRequestsScroll= new JScrollPane(pendingRequestsTextArea);
+    	addScroll= new JScrollPane(addTextField);
+
+    	addButton = new JButton("add");
+
+	//Naviagtion Components
+	backButton = new JButton("Back");
 
 	//Pannels
 	gbc = new GridBagConstraints();
@@ -79,10 +132,26 @@ public class PrivateChatJPanel extends JPanel
 	setLayout(new GridLayout());
 
 	//add components to top panel
-	//topPanel.add(titleLabel, BorderLayout.PAGE_START);
 	topPanel.add(historyScroll, BorderLayout.CENTER);
+	topPanel.add(groupChatsListScroll, BorderLayout.WEST);
+	topPanel.add(groupMembersScroll, BorderLayout.EAST);
 
 	//add components to bot panel
+	//Select chat group components
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = 50;
+	gbc.ipadx = 70;
+	gbc.gridwidth = 3;
+	gbc.gridheight = 3;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	botPanel.add(groupChatSelectScroll, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 3;
+	gbc.ipady = 0;
+	gbc.gridheight = 3;
+	botPanel.add(selectButton, gbc);
+
 	//edit message components
 	gbc.gridx = 0;
 	gbc.gridy = 0;
@@ -97,27 +166,62 @@ public class PrivateChatJPanel extends JPanel
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
 	botPanel.add(sendButton, gbc);
+
+	//Create new group Components
 	gbc.gridx = 0;
 	gbc.gridy = 6;
+	gbc.ipady = 50;
+	gbc.ipadx = 70;
+	gbc.gridwidth = 3;
+	gbc.gridheight = 3;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	botPanel.add(createScroll, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 9;
+	gbc.ipady = 0;
+	gbc.gridheight = 3;
+	botPanel.add(createButton, gbc);
+
+	//Navigation Components
+	gbc.gridx = 0;
+	gbc.gridy = 12;
 	botPanel.add(backButton, gbc);
 
-	//edit contact list components
+	//answer pending request components
 	gbc.gridx = 3;
 	gbc.gridy = 0;
 	gbc.ipady = 50;
 	gbc.gridwidth = 1;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(contactsScroll, gbc);
+	botPanel.add(pendingRequestsScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 3;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
-	botPanel.add(recipientScroll, gbc);
+	botPanel.add(addScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 6;
 	gbc.ipady = 0;
-	botPanel.add(selectButton, gbc);
+	botPanel.add(addButton, gbc);
+
+	//edit contact list components
+	gbc.gridx = 3;
+	gbc.gridy = 10;
+	gbc.ipady = 50;
+	gbc.gridwidth = 1;
+	gbc.gridheight = 3;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	botPanel.add(contactsScroll, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 13;
+	gbc.gridheight = 3;
+	gbc.ipady = 20;
+	botPanel.add(inviteScroll, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 16;
+	gbc.ipady = 0;
+	botPanel.add(inviteButton, gbc);
 
 	topPanel.setOpaque(false);
 	botPanel.setOpaque(false);
@@ -127,24 +231,24 @@ public class PrivateChatJPanel extends JPanel
 	add(botPanel);
 
 	//event managers
-	selectButton.addMouseListener(new MouseAdapter() {
+	createButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			String temp = recipientTextField.getText();
-			Boolean complete = DBInteractor.isContact(BuzmoJFrame.con, temp);
+			String temp = createField.getText();
+			Boolean complete = DBInteractor.createGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				recipientEmail = temp;
-				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
+				historyTextArea.setText("You created chat group: "+temp+"\n");
 			}
 			else{
-				historyTextArea.append("Can not find "+temp+" in your contact list\n");
+				historyTextArea.append("Can not create chat group: "+temp+"\n");
 			}
 		}
 	});
 	sendButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if(recipientEmail.equals("")){
+			if(currentGroupName.equals("")){
 				historyTextArea.append("Please select a friend\n");
 				return;
 			}
@@ -164,4 +268,4 @@ public class PrivateChatJPanel extends JPanel
 		}
 	});
     }
-}*/
+}

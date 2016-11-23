@@ -126,6 +126,7 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return false;}
 	}
 
+	//Used for ContactsJPannel, PrivateChatJPanel, GroupChatJPanel
 	public static String getContactLists(Connection con){
 		try {
 			String ret = "";
@@ -248,6 +249,86 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return "Failed to load messages\n";}
 	}
 	
+
+
+	//Used for GroupChatJPanel 
+	public static String getGroupMembers(Connection con, String currentGroupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return "empty";
+}
+
+	//Used for GroupChatJPanel 
+	public static String getGroups(Connection con){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return "empty";
+}
+
+	//Used for GroupChatJPanel 
+	public static String getPendingGroupChatInvites(Connection con){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return "empty";
+}
+
+	//Used for GroupChatJPanel 
+	public static Boolean createGroup(Connection con, String groupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
+
+
+	//Helper functions 
 	private static Timestamp getCurrentTimeStamp() {
 		java.util.Date today = new java.util.Date();
 		return new Timestamp(today.getTime());
