@@ -160,18 +160,76 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return "";}
 	}
 	//Used for PrivateChatJPanel 
-	public static Boolean isContact(Connection con, String name){
-	    return true;
+	public static Boolean isContact(Connection con, String recipientEmail){
+		try {
+			String myEmail = BuzmoJFrame.userEmail;	
+			Statement st = con.createStatement();
+			String sql = "SELECT count(*) FROM CONTACT_LISTS C WHERE " +
+			"(C.owner='" + myEmail + "' AND " +
+			" C.friend='" + recipientEmail + "')"; 
+			ResultSet rs = st.executeQuery(sql);			
+			if(rs.next()){
+				int count = rs.getInt(1);
+				if(count != 1){
+					return false;
+				}
+			}
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
 	}
 
 	//Used for PrivateChatJPanel 
-	public static Boolean addMessageToPrivateChat(Connection con, String message, String recipientName){
-	    return true;
+	public static Boolean addMessageToPrivateChat(Connection con, String message, String recipientEmail){
+		try {
+			String myEmail = BuzmoJFrame.userEmail;
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?)";	
+			PreparedStatement ps = con.prepareStatement(sql);
+			con.setAutoCommit(false);
+		
+			ps.setInt(1, 1234);
+			ps.setString(2, message);
+			ps.setTimestamp(3, getCurrentTimeStamp());
+			ps.setString(4, "private");
+			ps.setString(5, "N/A");
+			ps.setString(6, myEmail);
+			ps.setString(7, recipientEmail);
+
+			ps.addBatch();
+			ps.executeBatch();
+			con.commit();
+			con.setAutoCommit(true);
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
 	}
 
 	//Used for PrivateChatJPanel 
-	public static String loadChatHistory(Connection con){
-	String ret = "";
-	    return ret;
+	public static String loadChatHistory(Connection con, String recipientEmail){
+		try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;	
+			Statement st = con.createStatement();
+			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
+			"M.type='private' AND " + 
+			"((M.sender='" + myEmail + "' AND " + 
+			" M.receiver='" + recipientEmail + "') " +
+			"OR " +
+			"(M.sender='" + recipientEmail + "' AND " + 
+			" M.receiver='" + myEmail + "')) ORDER BY M.timestamp";
+			ResultSet rs = st.executeQuery(sql);			
+			while(rs.next()){
+				ret += rs.getString(2) + " (";
+				ret += rs.getString(3) + "): ";
+				ret += rs.getString(1) + "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "Failed to load messages\n";}
+	}
+	
+	private static Timestamp getCurrentTimeStamp() {
+		java.util.Date today = new java.util.Date();
+		return new Timestamp(today.getTime());
 	}
 }

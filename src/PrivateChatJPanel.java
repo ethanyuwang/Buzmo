@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 public class PrivateChatJPanel extends JPanel
 {
     //Variables
-    String recipientName;
+    String recipientEmail = "";
 
     GridBagConstraints gbc;
     JPanel topPanel;
@@ -22,7 +22,7 @@ public class PrivateChatJPanel extends JPanel
     JTextField draftTextField;
     JScrollPane historyScroll;
     JScrollPane draftScroll;
-    JButton sentButton;
+    JButton sendButton;
 
     //List of freinds and select Components
     JTextArea contactsTextArea;
@@ -36,7 +36,7 @@ public class PrivateChatJPanel extends JPanel
 	this.repaint();
 
 	//Chat dispaly and control Components
-	historyTextArea = new JTextArea(DBInteractor.loadChatHistory(BuzmoJFrame.con));
+	historyTextArea = new JTextArea("Select a friend\n");
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
@@ -46,7 +46,7 @@ public class PrivateChatJPanel extends JPanel
 	historyScroll = new JScrollPane(historyTextArea);
 	draftScroll = new JScrollPane(draftTextField);
 
-	sentButton = new JButton("Sent");
+	sendButton = new JButton("Send");
 
 	//Naviagtion Components
 	backButton = new JButton("Back");
@@ -57,7 +57,7 @@ public class PrivateChatJPanel extends JPanel
 	contactsTextArea.setLineWrap(true);
 	contactsTextArea.setWrapStyleWord(false);
 
-	recipientTextField = new JTextField("Enter friend's name");
+	recipientTextField = new JTextField("Enter friend's email");
 
 	contactsScroll = new JScrollPane(contactsTextArea);
 	recipientScroll = new JScrollPane(recipientTextField);
@@ -90,7 +90,7 @@ public class PrivateChatJPanel extends JPanel
 	gbc.gridy = 3;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	botPanel.add(sentButton, gbc);
+	botPanel.add(sendButton, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 6;
 	botPanel.add(backButton, gbc);
@@ -127,20 +127,24 @@ public class PrivateChatJPanel extends JPanel
 			String temp = recipientTextField.getText();
 			Boolean complete = DBInteractor.isContact(BuzmoJFrame.con, temp);
 			if(complete){
-				recipientName = temp;
-				historyTextArea.append("Your chat started with "+recipientName+"\n");
+				recipientEmail = temp;
+				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
 			}
 			else{
-				historyTextArea.append("Can not find "+temp+" in your contact list");
+				historyTextArea.append("Can not find "+temp+" in your contact list\n");
 			}
 		}
 	});
-	sentButton.addMouseListener(new MouseAdapter() {
+	sendButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			Boolean complete = DBInteractor.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientName);
+			if(recipientEmail.equals("")){
+				historyTextArea.append("Please select a friend\n");
+				return;
+			}
+			Boolean complete = DBInteractor.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientEmail);
 			if(complete){
-				historyTextArea.append(draftTextField.getText()+"\n");
+				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
 			}
 			else{
 				historyTextArea.append("Sending message failed\n");

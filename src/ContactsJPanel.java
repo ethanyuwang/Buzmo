@@ -80,7 +80,12 @@ public class ContactsJPanel extends JPanel
 	requestButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			Boolean complete = DBInteractor.requestContact(BuzmoJFrame.con, requestField.getText());
+			String receiverEmail = requestField.getText();
+			if(receiverEmail.equals(BuzmoJFrame.userEmail)){
+				System.out.println("Can't add yourself");
+				return;
+			}
+			Boolean complete = DBInteractor.requestContact(BuzmoJFrame.con, receiverEmail);
 			if(complete){
 				System.out.println("Request Contact SUCCESS");
 				BuzmoJFrame.setCurrentPanelTo(new ContactsJPanel());
