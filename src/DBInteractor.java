@@ -159,4 +159,19 @@ public class DBInteractor {
 		}
 		catch(Exception e){System.out.println(e); return "";}
 	}
+	//Used for PrivateChatJPanel 
+	public static Boolean isContact(Connection con, String name){
+	    return true;
+	}
+
+	//Used for PrivateChatJPanel 
+	public static Boolean addMessageToPrivateChat(Connection con, String message, String recipientName){
+	    return true;
+	}
+
+	//Used for PrivateChatJPanel 
+	public static String loadChatHistory(Connection con){
+	String ret = "";
+	    return ret;
+	}
 }

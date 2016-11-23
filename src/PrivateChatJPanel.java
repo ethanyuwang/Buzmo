@@ -10,13 +10,6 @@ public class PrivateChatJPanel extends JPanel
     //Variables
     String recipientName;
 
-    //Java GUI Components
-    JButton loginButton;
-    JButton signUpButton;
-    JLabel titleLabel;
-    JTextField emailField;
-    JTextField passField;
-
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
@@ -43,7 +36,7 @@ public class PrivateChatJPanel extends JPanel
 	this.repaint();
 
 	//Chat dispaly and control Components
-	historyTextArea = new JTextArea("Hello\nHello\nHello\n...\n");
+	historyTextArea = new JTextArea(DBInteractor.loadChatHistory(BuzmoJFrame.con));
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
@@ -132,7 +125,7 @@ public class PrivateChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = recipientTextField.getText();
-			Boolean complete = false; //DBInteractor.selectContact(BuzmoJFrame.con, temp);
+			Boolean complete = DBInteractor.isContact(BuzmoJFrame.con, temp);
 			if(complete){
 				recipientName = temp;
 				historyTextArea.append("Your chat started with "+recipientName+"\n");
@@ -145,14 +138,13 @@ public class PrivateChatJPanel extends JPanel
 	sentButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			/*Boolean complete = DBInteractor.acceptContact(BuzmoJFrame.con, acceptField.getText());
+			Boolean complete = DBInteractor.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientName);
 			if(complete){
-				System.out.println("Accept Contact SUCCESS");
-				BuzmoJFrame.setCurrentPanelTo(new ContactsJPanel());
+				historyTextArea.append(draftTextField.getText()+"\n");
 			}
 			else{
-				System.out.println("Accept Contact FAIL");
-			}*/
+				historyTextArea.append("Sending message failed\n");
+			}
 		}
 	});
 	backButton.addMouseListener(new MouseAdapter() {
