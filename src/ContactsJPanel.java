@@ -51,7 +51,7 @@ public class ContactsJPanel extends JPanel
 	setLayout(new GridLayout(2,1));
 
 	//add components to top panel
-	topPanel.setDividerLocation(300);
+	topPanel.setDividerLocation(450);
 
 	//add components to bot panel
 	gbc.gridx = 3;

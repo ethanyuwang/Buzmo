@@ -13,7 +13,7 @@ public class NavigationJPanel extends JPanel
     JButton privateChatButton;
     JButton groupChatButton;
     JButton contactsButton;
-
+    JButton backButton;
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
@@ -26,6 +26,7 @@ public class NavigationJPanel extends JPanel
 	privateChatButton = new JButton("Private Chat");
 	groupChatButton = new JButton("Group Chat");
 	contactsButton = new JButton("Contacts");
+	backButton = new JButton("Back");
 
 	gbc = new GridBagConstraints();
 	topPanel = new JPanel(new BorderLayout());
@@ -57,6 +58,9 @@ public class NavigationJPanel extends JPanel
 	gbc.gridx = 3;
 	gbc.gridy = 4;
 	botPanel.add(contactsButton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 5;
+	botPanel.add(backButton, gbc);
 
 	topPanel.setOpaque(false);
 	botPanel.setOpaque(false);
@@ -90,5 +94,11 @@ public class NavigationJPanel extends JPanel
                         BuzmoJFrame.setCurrentPanelTo(new ContactsJPanel());
                 }
         });
+	backButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new LoginJPanel());
+		}
+	});
     }
 }

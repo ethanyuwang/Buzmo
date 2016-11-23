@@ -183,18 +183,38 @@ public class DBInteractor {
 	public static Boolean addMessageToPrivateChat(Connection con, String message, String recipientEmail){
 		try {
 			String myEmail = BuzmoJFrame.userEmail;
-			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?)";	
+			Timestamp ts = getCurrentTimeStamp();
+			String messageWithTime = message+ts.toString();
+
+			//Add a copy to sender
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
-		
-			ps.setInt(1, 1234);
+			String messageWithTimeAndOwner = messageWithTime + myEmail;
+			ps.setInt(1, messageWithTimeAndOwner.hashCode());
 			ps.setString(2, message);
-			ps.setTimestamp(3, getCurrentTimeStamp());
+			ps.setTimestamp(3, ts);
 			ps.setString(4, "private");
 			ps.setString(5, "N/A");
 			ps.setString(6, myEmail);
-			ps.setString(7, recipientEmail);
+			ps.setString(7, myEmail);
+			ps.setString(8, recipientEmail);
+			ps.addBatch();
+			ps.executeBatch();
+			con.commit();
 
+			//Add a copy to recipient
+			ps = con.prepareStatement(sql);
+			messageWithTimeAndOwner = messageWithTime + recipientEmail;
+			ps.setInt(1, messageWithTimeAndOwner.hashCode());
+			ps.setInt(1, messageWithTime.hashCode());
+			ps.setString(2, message);
+			ps.setTimestamp(3, ts);
+			ps.setString(4, "private");
+			ps.setString(5, "N/A");
+			ps.setString(6, recipientEmail);
+			ps.setString(7, myEmail);
+			ps.setString(8, recipientEmail);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -211,7 +231,7 @@ public class DBInteractor {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
-			"M.type='private' AND " + 
+			"M.type='private' AND M.owner='" + myEmail + "' AND " + 
 			"((M.sender='" + myEmail + "' AND " + 
 			" M.receiver='" + recipientEmail + "') " +
 			"OR " +

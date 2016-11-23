@@ -13,8 +13,8 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
 			//Create Tables
-			//createTables(con);
-			//addForeignKeys(con);
+			createTables(con);
+			addForeignKeys(con);
 
 			//Delete Tables
 			//deleteTables(con);
@@ -79,6 +79,7 @@ public class DBManager {
 	  		" timestamp DATE NOT NULL, " +
 	  		" type VARCHAR(15) NOT NULL, " +
 	  		" is_public VARCHAR(15) NOT NULL, " +
+	  		" owner VARCHAR(20) NOT NULL, " +
 	  		" sender VARCHAR(20) NOT NULL, " +
 	  		" receiver VARCHAR(20) NOT NULL, " +
 	  		" PRIMARY KEY (message_id))";
@@ -156,6 +157,7 @@ public class DBManager {
 			st.executeQuery(sql);
 
 			sql = "ALTER TABLE Messages " + 
+	  		"ADD FOREIGN KEY (owner) REFERENCES Users(email_address) " +
 	  		"ADD FOREIGN KEY (sender) REFERENCES Users(email_address) " +
 	  		"ADD FOREIGN KEY (receiver) REFERENCES Users(email_address)";
 			st.executeQuery(sql);

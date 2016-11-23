@@ -1,62 +1,123 @@
-package buzmo;
+/*package buzmo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class GroupChatJPanel extends JPanel
+public class PrivateChatJPanel extends JPanel
 {
-    //Java GUI Components
-    JButton loginButton;
-    JButton signUpButton;
-    JLabel titleLabel;
-    JTextField emailField;
-    JTextField passField;
+    //Variables
+    String recipientEmail = "";
 
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
 
-    public GroupChatJPanel()
+    //Naviagtion Components
+    JButton backButton;
+
+    //Chat dispaly and control Components
+    JTextArea historyTextArea;
+    JTextField draftTextField;
+    JScrollPane historyScroll;
+    JScrollPane draftScroll;
+    JButton sendButton;
+
+    //List of GroupChats and select Components
+    JTextArea groupChatsListTextArea;
+    JTextField groupChatSelectTextField;
+    JScrollPane groupChatsListScroll;
+    JScrollPane groupChatSelectScroll;
+    JButton selectButton;
+
+    //List of GroupMembers Components
+    JTextArea groupMembersTextArea;
+    JScrollPane groupMembersScroll;
+    JScrollPane groupChatSelectScroll;
+    JButton selectButton;
+
+    public PrivateChatJPanel()
     {
 	this.repaint();
-	loginButton = new JButton("Login");
-	signUpButton = new JButton("Sign up");
-	titleLabel = new JLabel("GROUP");
-	emailField = new JTextField("email");
-	passField = new JTextField("password");
 
+	//Chat dispaly and control Components
+	historyTextArea = new JTextArea("Select a friend\n");
+	historyTextArea.setEditable(false);
+	historyTextArea.setLineWrap(true);
+	historyTextArea.setWrapStyleWord(false);
+
+	draftTextField= new JTextField("Enter message");
+
+	historyScroll = new JScrollPane(historyTextArea);
+	draftScroll = new JScrollPane(draftTextField);
+
+	sendButton = new JButton("Send");
+
+	//Naviagtion Components
+	backButton = new JButton("Back");
+
+	//Chat dispaly and control Components
+	contactsTextArea = new JTextArea(DBInteractor.getContactLists(BuzmoJFrame.con));
+	contactsTextArea.setEditable(false);
+	contactsTextArea.setLineWrap(true);
+	contactsTextArea.setWrapStyleWord(false);
+
+	recipientTextField = new JTextField("Enter friend's email");
+
+	contactsScroll = new JScrollPane(contactsTextArea);
+	recipientScroll = new JScrollPane(recipientTextField);
+
+	selectButton = new JButton("Select");
+
+	//Pannels
 	gbc = new GridBagConstraints();
 	topPanel = new JPanel(new BorderLayout());
 	botPanel = new JPanel(new GridBagLayout());
 
 	//set layout manager for this panel
-	setLayout(new GridLayout(2,1));
-
-	//set title font and size
-	titleLabel.setFont(new Font("Serif", Font.BOLD, 38));
-	titleLabel.setVerticalAlignment(SwingConstants.CENTER);
-	titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	setLayout(new GridLayout());
 
 	//add components to top panel
-	topPanel.add(titleLabel, BorderLayout.CENTER);
+	//topPanel.add(titleLabel, BorderLayout.PAGE_START);
+	topPanel.add(historyScroll, BorderLayout.CENTER);
 
 	//add components to bot panel
-	gbc.gridx = 3;
-	gbc.gridy = 1;
-	gbc.gridwidth = 1;
+	//edit message components
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = 50;
+	gbc.ipadx = 70;
+	gbc.gridwidth = 3;
+	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(emailField, gbc);
+	botPanel.add(draftScroll, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 3;
+	gbc.ipady = 0;
+	gbc.gridheight = 3;
+	botPanel.add(sendButton, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 6;
+	botPanel.add(backButton, gbc);
+
+	//edit contact list components
 	gbc.gridx = 3;
-	gbc.gridy = 2;
-	botPanel.add(passField, gbc);
+	gbc.gridy = 0;
+	gbc.ipady = 50;
+	gbc.gridwidth = 1;
+	gbc.gridheight = 3;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	botPanel.add(contactsScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 3;
-	botPanel.add(loginButton, gbc);
+	gbc.gridheight = 3;
+	gbc.ipady = 20;
+	botPanel.add(recipientScroll, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 4;
-	botPanel.add(signUpButton, gbc);
+	gbc.gridy = 6;
+	gbc.ipady = 0;
+	botPanel.add(selectButton, gbc);
 
 	topPanel.setOpaque(false);
 	botPanel.setOpaque(false);
@@ -66,24 +127,41 @@ public class GroupChatJPanel extends JPanel
 	add(botPanel);
 
 	//event managers
-	signUpButton.addMouseListener(new MouseAdapter() {
+	selectButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			BuzmoJFrame.setCurrentPanelTo(new SignUpJPanel());
-		}
-	});
-	loginButton.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			Boolean complete = DBInteractor.loginUser(BuzmoJFrame.con, emailField.getText(), passField.getText());
+			String temp = recipientTextField.getText();
+			Boolean complete = DBInteractor.isContact(BuzmoJFrame.con, temp);
 			if(complete){
-				System.out.println("Login SUCCESS");
-				BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
+				recipientEmail = temp;
+				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
 			}
 			else{
-				System.out.println("Login FAIL");
+				historyTextArea.append("Can not find "+temp+" in your contact list\n");
 			}
+		}
+	});
+	sendButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if(recipientEmail.equals("")){
+				historyTextArea.append("Please select a friend\n");
+				return;
+			}
+			Boolean complete = DBInteractor.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientEmail);
+			if(complete){
+				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
+			}
+			else{
+				historyTextArea.append("Sending message failed\n");
+			}
+		}
+	});
+	backButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
 		}
 	});
     }
-}
+}*/
