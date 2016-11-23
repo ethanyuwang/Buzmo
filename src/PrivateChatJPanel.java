@@ -18,45 +18,70 @@ public class PrivateChatJPanel extends JPanel
     JPanel topPanel;
     JPanel botPanel;
 
+    //Naviagtion Components
+    JButton backButton;
+
+    //Chat dispaly and control Components
+    JTextField draftTextArea;
+    JTextArea historyTextArea;
+    JScrollPane draftScroll;
+    JScrollPane historyScroll;
+    JButton sentButton;
+
+    //List of freinds and select Components
+    JTextField draftTextArea;
+    JTextArea historyTextArea;
+
     public PrivateChatJPanel()
     {
 	this.repaint();
-	loginButton = new JButton("Login");
-	signUpButton = new JButton("Sign up");
-	titleLabel = new JLabel("PRIVATE");
-	emailField = new JTextField("email");
-	passField = new JTextField("password");
+
+	//Chat dispaly and control Components
+	draftTextArea = new JTextField("Enter message");
+
+	historyTextArea = new JTextArea("Hello\nHello\nHello\n...\n");
+	historyTextArea.setEditable(false);
+	historyTextArea.setLineWrap(true);
+	historyTextArea.setWrapStyleWord(false);
+
+	draftScroll = new JScrollPane(draftTextArea);
+	historyScroll = new JScrollPane(historyTextArea);
+
+	sentButton = new JButton("Sent");
+
+	//Naviagtion Components
+	backButton = new JButton("Back");
 
 	gbc = new GridBagConstraints();
 	topPanel = new JPanel(new BorderLayout());
 	botPanel = new JPanel(new GridBagLayout());
 
 	//set layout manager for this panel
-	setLayout(new GridLayout(2,1));
+	setLayout(new GridLayout());
 
-	//set title font and size
+	/*//set title font and size
 	titleLabel.setFont(new Font("Serif", Font.BOLD, 38));
 	titleLabel.setVerticalAlignment(SwingConstants.CENTER);
-	titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	titleLabel.setHorizontalAlignment(SwingConstants.CENTER);*/
 
 	//add components to top panel
-	topPanel.add(titleLabel, BorderLayout.CENTER);
+	//topPanel.add(titleLabel, BorderLayout.PAGE_START);
+	topPanel.add(historyScroll, BorderLayout.CENTER);
 
 	//add components to bot panel
+
+
 	gbc.gridx = 3;
 	gbc.gridy = 1;
 	gbc.gridwidth = 1;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(emailField, gbc);
+	botPanel.add(draftScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 2;
-	botPanel.add(passField, gbc);
+	botPanel.add(sentButton, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 3;
-	botPanel.add(loginButton, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 4;
-	botPanel.add(signUpButton, gbc);
+	botPanel.add(backButton, gbc);
 
 	topPanel.setOpaque(false);
 	botPanel.setOpaque(false);
@@ -66,23 +91,23 @@ public class PrivateChatJPanel extends JPanel
 	add(botPanel);
 
 	//event managers
-	signUpButton.addMouseListener(new MouseAdapter() {
+	backButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			BuzmoJFrame.setCurrentPanelTo(new SignUpJPanel());
+			BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
 		}
 	});
-	loginButton.addMouseListener(new MouseAdapter() {
+	sentButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			Boolean complete = DBInteractor.loginUser(BuzmoJFrame.con, emailField.getText(), passField.getText());
+			/*Boolean complete = DBInteractor.loginUser(BuzmoJFrame.con, emailField.getText(), passField.getText());
 			if(complete){
 				System.out.println("Login SUCCESS");
 				BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
 			}
 			else{
 				System.out.println("Login FAIL");
-			}
+			}*/
 		}
 	});
     }
