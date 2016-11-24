@@ -83,7 +83,7 @@ public class GroupChatJPanel extends JPanel
     	groupMembersScroll = new JScrollPane(groupMembersTextArea);
 
    	//List of GroupChats and select Components
-    	groupChatsListTextArea = new JTextArea("Groups:\n"+DBInteractor.getGroupMembers(BuzmoJFrame.con));
+    	groupChatsListTextArea = new JTextArea("Groups:\n"+DBInteractor.getGroups(BuzmoJFrame.con));
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
@@ -237,7 +237,6 @@ public class GroupChatJPanel extends JPanel
 			String temp = createField.getText();
 			Boolean complete = DBInteractor.createGroup(BuzmoJFrame.con, temp);
 			if(complete){
-				recipientEmail = temp;
 				historyTextArea.setText("You created chat group: "+temp+"\n");
 			}
 			else{
@@ -245,7 +244,7 @@ public class GroupChatJPanel extends JPanel
 			}
 		}
 	});
-	sendButton.addMouseListener(new MouseAdapter() {
+	/*sendButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if(currentGroupName.equals("")){
@@ -260,7 +259,7 @@ public class GroupChatJPanel extends JPanel
 				historyTextArea.append("Sending message failed\n");
 			}
 		}
-	});
+	});*/
 	backButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
