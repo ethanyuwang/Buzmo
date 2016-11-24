@@ -267,17 +267,20 @@ public class DBInteractor {
 	//Used for GroupChatJPanel 
 	public static Boolean changeGroupChatName(Connection con, String groupName, String newGroupName){
 		/*try {
-			String ret = "";
-			String myEmail = BuzmoJFrame.userEmail;
+			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
-			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
-			"WHERE C.owner='" + myEmail + "'";
-			ResultSet rs = st.executeQuery(sql);
+			String sql = "SELECT C.group_name FROM Group_chats C WHERE " +
+			"(C.owner='" + myEmail + "')"; 
+			ResultSet rs = st.executeQuery(sql);			
 			while(rs.next()){
-				ret += rs.getString(1);
-				ret += "\n";
+				if (groupName==rs.getString(1)){
+					return true;
+				}
+				else{
+					return false;
+				}
 			}
-			return ret;
+			return true;
 		}
 		catch(Exception e){System.out.println(e); return "";}*/
 		return true;
@@ -305,7 +308,7 @@ public class DBInteractor {
 		try {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
-			String sql = "SELECT count(*) FROM Group_chats C WHERE " +
+			String sql = "SELECT C.group_name FROM Group_chats C WHERE " +
 			"(C.owner='" + myEmail + "')"; 
 			ResultSet rs = st.executeQuery(sql);			
 			while(rs.next()){
@@ -320,6 +323,27 @@ public class DBInteractor {
 		}
 		catch(Exception e){System.out.println(e); return false;}
 }
+	public static int getGroupChatDuration(Connection con, String groupName){
+		/*try {
+			String myEmail = BuzmoJFrame.userEmail;	
+			Statement st = con.createStatement();
+			String sql = "SELECT C.group_name FROM Group_chats C WHERE " +
+			"(C.owner='" + myEmail + "')"; 
+			ResultSet rs = st.executeQuery(sql);			
+			while(rs.next()){
+				if (groupName==rs.getString(1)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}*/
+		return 7;
+}
+
 	//Used for GroupChatJPanel 
 	public static String loadGroupChatHistory(Connection con, String groupName){
 		/*try {

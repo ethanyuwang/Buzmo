@@ -12,6 +12,7 @@ public class GroupChatJPanel extends JPanel
 
     GridBagConstraints gbc;
     JPanel topPanel;
+    JPanel medPanel;
     JPanel botPanel;
 
     //Naviagtion Components
@@ -53,6 +54,14 @@ public class GroupChatJPanel extends JPanel
     JScrollPane contactsScroll;
     JScrollPane inviteScroll;
     JButton inviteButton;
+
+    //change current group name and duration Components
+    JTextField changeGroupNameTextField;
+    JTextField changeGroupDurationTextField;
+    JScrollPane changeGroupNameScroll;
+    JScrollPane changeGroupDurationScroll;
+    JButton changeGroupNameBUtton;
+    JButton changeGroupDurationBUtton;
 
 
 
@@ -120,12 +129,21 @@ public class GroupChatJPanel extends JPanel
 
     	addButton = new JButton("add");
 
+    //change current group name and duration Components
+    changeGroupNameTextField = new JTextField("Change group name to");
+    changeGroupDurationTextField = new JTextField("Current duration is " + DBInteractor.getGroupChatDuration(BuzmoJFrame.con, currentGroupName) +" days");
+    changeGroupNameScroll = new JScrollPane(changeGroupNameTextField);
+    changeGroupDurationScroll = new JScrollPane(changeGroupDurationTextField);
+    changeGroupNameBUtton = new JButton("Change");
+    changeGroupDurationBUtton = new JButton("Set to");
+
 	//Naviagtion Components
 	backButton = new JButton("Back");
 
 	//Pannels
 	gbc = new GridBagConstraints();
 	topPanel = new JPanel(new BorderLayout());
+	medPanel = new JPanel(new GridBagLayout());
 	botPanel = new JPanel(new GridBagLayout());
 
 	//set layout manager for this panel
@@ -136,7 +154,7 @@ public class GroupChatJPanel extends JPanel
 	topPanel.add(groupChatsListScroll, BorderLayout.WEST);
 	topPanel.add(groupMembersScroll, BorderLayout.EAST);
 
-	//add components to bot panel
+	//add components to med panel
 	//Select chat group components
 	gbc.gridx = 0;
 	gbc.gridy = 0;
@@ -145,12 +163,12 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(groupChatSelectScroll, gbc);
+	medPanel.add(groupChatSelectScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 3;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	botPanel.add(selectButton, gbc);
+	medPanel.add(selectButton, gbc);
 
 	//edit message components
 	gbc.gridx = 0;
@@ -160,12 +178,12 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(draftScroll, gbc);
+	medPanel.add(draftScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 3;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	botPanel.add(sendButton, gbc);
+	medPanel.add(sendButton, gbc);
 
 	//Create new group Components
 	gbc.gridx = 0;
@@ -175,18 +193,19 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(createScroll, gbc);
+	medPanel.add(createScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 9;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	botPanel.add(createButton, gbc);
+	medPanel.add(createButton, gbc);
 
 	//Navigation Components
 	gbc.gridx = 0;
 	gbc.gridy = 12;
-	botPanel.add(backButton, gbc);
+	medPanel.add(backButton, gbc);
 
+	//add components to bot panel
 	//answer pending request components
 	gbc.gridx = 3;
 	gbc.gridy = 0;
@@ -224,10 +243,12 @@ public class GroupChatJPanel extends JPanel
 	botPanel.add(inviteButton, gbc);
 
 	topPanel.setOpaque(false);
+	medPanel.setOpaque(false);
 	botPanel.setOpaque(false);
 
 	//add bot and top panel to this.panel
 	add(topPanel);
+	add(medPanel);
 	add(botPanel);
 
 	//event managers
@@ -238,6 +259,7 @@ public class GroupChatJPanel extends JPanel
 			Boolean complete = DBInteractor.createGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				historyTextArea.append("You created chat group: "+temp+"\n");
+				groupChatsListTextArea.setText("Groups:\n"+DBInteractor.getGroups(BuzmoJFrame.con));
 			}
 			else{
 				historyTextArea.append("Can not create chat group: "+temp+"\n");

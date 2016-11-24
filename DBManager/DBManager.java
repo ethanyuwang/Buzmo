@@ -8,9 +8,9 @@ public class DBManager {
 			// Get connection to database
                         Class.forName("oracle.jdbc.driver.OracleDriver");
                         //use this for csil machine
-                        //String url = "jdbc:oracle:thin:@uml.cs.ucsb.edu:1521:xe";
+                        String url = "jdbc:oracle:thin:@uml.cs.ucsb.edu:1521:xe";
                         //use this for non csil machine
-                        String url = "jdbc:oracle:thin:@localhost:1521:xe";
+                        //String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			String username = "glee";
 			String password = "304";
                         Connection con = DriverManager.getConnection(url,username, password);
