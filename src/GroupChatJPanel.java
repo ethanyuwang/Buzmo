@@ -247,21 +247,21 @@ public class GroupChatJPanel extends JPanel
 
 	//change current group name and duration Components
 	gbc.gridx = 3;
-	gbc.gridy = 17;
+	gbc.gridy = 19;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
 	botPanel.add(changeGroupNameScroll, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 20;
+	gbc.gridy = 22;
 	gbc.ipady = 0;
 	botPanel.add(changeGroupNameBUtton, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 21;
+	gbc.gridy = 23;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
 	botPanel.add(changeGroupDurationScroll, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 24;
+	gbc.gridy = 26;
 	gbc.ipady = 0;
 	botPanel.add(changeGroupDurationBUtton, gbc);
 

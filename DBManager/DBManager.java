@@ -15,12 +15,14 @@ public class DBManager {
 			String password = "304";
                         Connection con = DriverManager.getConnection(url,username, password);
 
+			//Delete Tables
+			deleteTables(con);
+
 			//Create Tables
 			createTables(con);
 			addForeignKeys(con);
 
-			//Delete Tables
-			//deleteTables(con);
+
 
 			//Print Table
 			//printTable(con, "USERS");
@@ -63,10 +65,12 @@ public class DBManager {
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_chats " +
-	  		"(group_name VARCHAR(20) NOT NULL, " +
+			"(group_id INT NOT NULL, " +
+	  		" group_name VARCHAR(20) NOT NULL, " +
 	  		" duration INT NOT NULL, " +
 	  		" owner VARCHAR(20) NOT NULL, " +
-	  		" PRIMARY KEY (group_name))";
+	  		" PRIMARY KEY (group_id), " +
+	  		" UNIQUE (group_name))";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Private_chats " +
@@ -100,11 +104,11 @@ public class DBManager {
 
 			sql = "CREATE TABLE Group_pending_lists " +
 	  		"(pending_people VARCHAR(20) NOT NULL, " +
-  			" group_name VARCHAR(20) NOT NULL)";
+  			" group_id VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_chat_members " +
-	  		"(group_name VARCHAR(20) NOT NULL, " +
+	  		"(group_id VARCHAR(20) NOT NULL, " +
   			" member VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 			
@@ -119,7 +123,7 @@ public class DBManager {
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_chat_messages " +
-	  		"(group_name VARCHAR(20) NOT NULL, " +
+	  		"(group_id VARCHAR(20) NOT NULL, " +
 	  		" message_id INT NOT NULL)";
 			st.executeQuery(sql);
 
@@ -181,7 +185,7 @@ public class DBManager {
 
 			sql = "ALTER TABLE Group_pending_lists " +
 	  		"ADD FOREIGN KEY (pending_people) REFERENCES Users(email_address) " +
-	  		"ADD FOREIGN KEY (group_name) REFERENCES Group_chats(group_name)";
+	  		"ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id)";
 			st.executeQuery(sql);
 
 			sql = "ALTER TABLE Message_topic_words " +
@@ -189,7 +193,7 @@ public class DBManager {
 			st.executeQuery(sql);
 
 			sql = "ALTER TABLE Group_chat_messages " +
-			"ADD FOREIGN KEY (group_name) REFERENCES Group_chats(group_name) " +
+			"ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id) " +
 	  		"ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
 			st.executeQuery(sql);
 
@@ -199,7 +203,7 @@ public class DBManager {
 			st.executeQuery(sql);
 
 			sql = "ALTER TABLE Group_chat_members " +
-			"ADD FOREIGN KEY (group_name) REFERENCES Group_chats(group_name) " +
+			"ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id) " +
 	  		"ADD FOREIGN KEY (member) REFERENCES Users(email_address)";
 			st.executeQuery(sql);
 
