@@ -326,11 +326,114 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return "";}*/
 		return true;
 }
-
+	//Used for GroupChatJPanel 
+	public static Boolean isGroup(Connection con, String groupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
+	//Used for GroupChatJPanel 
+	public static String loadGroupChatHistory(Connection con, String groupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;	
+			Statement st = con.createStatement();
+			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
+			"M.type='private' AND M.owner='" + myEmail + "' AND " + 
+			"((M.sender='" + myEmail + "' AND " + 
+			" M.receiver='" + recipientEmail + "') " +
+			"OR " +
+			"(M.sender='" + recipientEmail + "' AND " + 
+			" M.receiver='" + myEmail + "')) ORDER BY M.timestamp";
+			ResultSet rs = st.executeQuery(sql);			
+			while(rs.next()){
+				ret += rs.getString(2) + " (";
+				ret += rs.getString(3) + "): ";
+				ret += rs.getString(1) + "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return "empty";
+}
+	//Used for GroupChatJPanel 
+	public static Boolean inviteToGroupChat(Connection con, String groupName, String userName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
+	//Used for GroupChatJPanel 
+	public static Boolean addGroupChat(Connection con, String groupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
+	//Used for GroupChatJPanel 
+	public static Boolean addMessageToGroupChat(Connection con, String message, String groupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
 
 	//Helper functions 
 	private static Timestamp getCurrentTimeStamp() {
 		java.util.Date today = new java.util.Date();
 		return new Timestamp(today.getTime());
+	}
+
+	public static Boolean loadDB(Connection con){
+		//try {
+
+			return true;
+		//}
+		//catch(Exception e){System.out.println(e); return false;}
 	}
 }

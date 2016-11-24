@@ -237,29 +237,71 @@ public class GroupChatJPanel extends JPanel
 			String temp = createField.getText();
 			Boolean complete = DBInteractor.createGroup(BuzmoJFrame.con, temp);
 			if(complete){
-				historyTextArea.setText("You created chat group: "+temp+"\n");
+				historyTextArea.append("You created chat group: "+temp+"\n");
 			}
 			else{
 				historyTextArea.append("Can not create chat group: "+temp+"\n");
 			}
 		}
 	});
-	/*sendButton.addMouseListener(new MouseAdapter() {
+	selectButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			String temp = groupChatSelectTextField.getText();
+			Boolean complete = DBInteractor.isGroup(BuzmoJFrame.con, temp);
+			if(complete){
+				currentGroupName=temp;
+				historyTextArea.setText("You entered chat group: "+temp+"\n");
+				historyTextArea.append(DBInteractor.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
+			}
+			else{
+				historyTextArea.append("Can not find chat group: "+temp+"\n");
+			}
+		}
+	});
+	inviteButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			String temp = inviteTextField.getText();
+			Boolean complete = DBInteractor.inviteToGroupChat(BuzmoJFrame.con, currentGroupName, temp);
+			if(complete){
+				historyTextArea.append("You invited "+temp+" to this chat group\n");
+			}
+			else{
+				historyTextArea.append("Can not invite "+temp+" to this chat group:\n");
+			}
+		}
+	});
+	addButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			String temp = addTextField.getText();
+			Boolean complete = DBInteractor.addGroupChat(BuzmoJFrame.con, temp);
+			if(complete){
+				historyTextArea.append("You added chat group: "+temp+"\n");
+			}
+			else{
+				historyTextArea.append("Can not add chat group: "+temp+"\n");
+			}
+		}
+	});
+
+	sendButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if(currentGroupName.equals("")){
-				historyTextArea.append("Please select a friend\n");
+				historyTextArea.append("Please select a group\n");
 				return;
 			}
-			Boolean complete = DBInteractor.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientEmail);
+			Boolean complete = DBInteractor.addMessageToGroupChat(BuzmoJFrame.con, draftTextField.getText(), currentGroupName);
 			if(complete){
-				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
+				historyTextArea.setText(DBInteractor.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
 			}
 			else{
 				historyTextArea.append("Sending message failed\n");
 			}
 		}
-	});*/
+	});
 	backButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
