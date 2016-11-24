@@ -250,66 +250,40 @@ public class DBInteractor {
 	}
 	
 
-
-	//Used for GroupChatJPanel 
-	public static String getGroupMembers(Connection con, String currentGroupName){
-		/*try {
-			String ret = "";
-			String myEmail = BuzmoJFrame.userEmail;
-			Statement st = con.createStatement();
-			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
-			"WHERE C.owner='" + myEmail + "'";
-			ResultSet rs = st.executeQuery(sql);
-			while(rs.next()){
-				ret += rs.getString(1);
-				ret += "\n";
-			}
-			return ret;
-		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return "empty";
-}
-
-	//Used for GroupChatJPanel 
-	public static String getGroups(Connection con){
-		/*try {
-			String ret = "";
-			String myEmail = BuzmoJFrame.userEmail;
-			Statement st = con.createStatement();
-			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
-			"WHERE C.owner='" + myEmail + "'";
-			ResultSet rs = st.executeQuery(sql);
-			while(rs.next()){
-				ret += rs.getString(1);
-				ret += "\n";
-			}
-			return ret;
-		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return "empty";
-}
-
-	//Used for GroupChatJPanel 
-	public static String getPendingGroupChatInvites(Connection con){
-		/*try {
-			String ret = "";
-			String myEmail = BuzmoJFrame.userEmail;
-			Statement st = con.createStatement();
-			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
-			"WHERE C.owner='" + myEmail + "'";
-			ResultSet rs = st.executeQuery(sql);
-			while(rs.next()){
-				ret += rs.getString(1);
-				ret += "\n";
-			}
-			return ret;
-		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return "empty";
-}
-
 	//Used for GroupChatJPanel 
 	public static Boolean createGroup(Connection con, String groupName){
+		try {
+			Statement st = con.createStatement();
+			// Note: insert order needs to match table column order
+			String sql = "INSERT INTO Group_chats " +
+			"VALUES ('" + groupName + "', " +
+			7 + ", " +
+			"'" + BuzmoJFrame.userEmail + "')";
+			st.executeUpdate(sql);
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+}
+	//Used for GroupChatJPanel 
+	public static Boolean changeGroupChatName(Connection con, String groupName, String newGroupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
+	//Used for GroupChatJPanel 
+	public static Boolean changeGroupChatDuration(Connection con, String groupName, int newDuration){
 		/*try {
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;
@@ -328,21 +302,23 @@ public class DBInteractor {
 }
 	//Used for GroupChatJPanel 
 	public static Boolean isGroup(Connection con, String groupName){
-		/*try {
-			String ret = "";
-			String myEmail = BuzmoJFrame.userEmail;
+		try {
+			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
-			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
-			"WHERE C.owner='" + myEmail + "'";
-			ResultSet rs = st.executeQuery(sql);
+			String sql = "SELECT count(*) FROM Group_chats C WHERE " +
+			"(C.owner='" + myEmail + "')"; 
+			ResultSet rs = st.executeQuery(sql);			
 			while(rs.next()){
-				ret += rs.getString(1);
-				ret += "\n";
+				if (groupName==rs.getString(1)){
+					return true;
+				}
+				else{
+					return false;
+				}
 			}
-			return ret;
+			return true;
 		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return true;
+		catch(Exception e){System.out.println(e); return false;}
 }
 	//Used for GroupChatJPanel 
 	public static String loadGroupChatHistory(Connection con, String groupName){
@@ -368,6 +344,86 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return "";}*/
 		return "empty";
 }
+
+	public static Boolean cleanOldGroupChatHistory(Connection con, String groupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;	
+			Statement st = con.createStatement();
+			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
+			"M.type='private' AND M.owner='" + myEmail + "' AND " + 
+			"((M.sender='" + myEmail + "' AND " + 
+			" M.receiver='" + recipientEmail + "') " +
+			"OR " +
+			"(M.sender='" + recipientEmail + "' AND " + 
+			" M.receiver='" + myEmail + "')) ORDER BY M.timestamp";
+			ResultSet rs = st.executeQuery(sql);			
+			while(rs.next()){
+				ret += rs.getString(2) + " (";
+				ret += rs.getString(3) + "): ";
+				ret += rs.getString(1) + "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return true;
+}
+	//Used for GroupChatJPanel 
+	public static String getGroupMembers(Connection con, String currentGroupName){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return "empty";
+}
+
+	//Used for GroupChatJPanel 
+	public static String getGroups(Connection con){
+		try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.group_name FROM Group_chats C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}
+}
+
+	//Used for GroupChatJPanel 
+	public static String getPendingGroupChatInvites(Connection con){
+		/*try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+			"WHERE C.owner='" + myEmail + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret += rs.getString(1);
+				ret += "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "";}*/
+		return "empty";
+}
+
 	//Used for GroupChatJPanel 
 	public static Boolean inviteToGroupChat(Connection con, String groupName, String userName){
 		/*try {
