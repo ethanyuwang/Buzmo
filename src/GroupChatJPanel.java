@@ -12,6 +12,7 @@ public class GroupChatJPanel extends JPanel
 
     GridBagConstraints gbc;
     JPanel topPanel;
+    JPanel topWestPanel;
     JPanel medPanel;
     JPanel botPanel;
 
@@ -142,6 +143,7 @@ public class GroupChatJPanel extends JPanel
 
 	//Pannels
 	gbc = new GridBagConstraints();
+	topWestPanel = new JPanel(new BorderLayout());
 	topPanel = new JPanel(new BorderLayout());
 	medPanel = new JPanel(new GridBagLayout());
 	botPanel = new JPanel(new GridBagLayout());
@@ -150,9 +152,10 @@ public class GroupChatJPanel extends JPanel
 	setLayout(new GridLayout());
 
 	//add components to top panel
+	topWestPanel.add(groupChatsListScroll, BorderLayout.NORTH);
+	topWestPanel.add(groupMembersScroll, BorderLayout.SOUTH);
 	topPanel.add(historyScroll, BorderLayout.CENTER);
-	topPanel.add(groupChatsListScroll, BorderLayout.WEST);
-	topPanel.add(groupMembersScroll, BorderLayout.EAST);
+	topPanel.add(topWestPanel, BorderLayout.WEST);
 
 	//add components to med panel
 	//Select chat group components
