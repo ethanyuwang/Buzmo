@@ -286,8 +286,9 @@ public class DBInteractor {
 		return true;
 }
 	//Used for GroupChatJPanel 
-	public static Boolean changeGroupChatDuration(Connection con, String groupName, int newDuration){
+	public static Boolean changeGroupChatDuration(Connection con, String groupName, String newDuration){
 		/*try {
+			check if newDuration is int
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();

@@ -153,7 +153,7 @@ public class GroupChatJPanel extends JPanel
 
 	//add components to top panel
 	topWestPanel.add(groupChatsListScroll, BorderLayout.NORTH);
-	topWestPanel.add(groupMembersScroll, BorderLayout.SOUTH);
+	topWestPanel.add(groupMembersScroll, BorderLayout.CENTER);
 	topPanel.add(historyScroll, BorderLayout.CENTER);
 	topPanel.add(topWestPanel, BorderLayout.WEST);
 
@@ -245,6 +245,26 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipady = 0;
 	botPanel.add(inviteButton, gbc);
 
+	//change current group name and duration Components
+	gbc.gridx = 3;
+	gbc.gridy = 17;
+	gbc.gridheight = 3;
+	gbc.ipady = 20;
+	botPanel.add(changeGroupNameScroll, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 20;
+	gbc.ipady = 0;
+	botPanel.add(changeGroupNameBUtton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 21;
+	gbc.gridheight = 3;
+	gbc.ipady = 20;
+	botPanel.add(changeGroupDurationScroll, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 24;
+	gbc.ipady = 0;
+	botPanel.add(changeGroupDurationBUtton, gbc);
+
 	topPanel.setOpaque(false);
 	medPanel.setOpaque(false);
 	botPanel.setOpaque(false);
@@ -327,6 +347,34 @@ public class GroupChatJPanel extends JPanel
 			}
 		}
 	});
+
+	changeGroupNameBUtton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			String temp = changeGroupNameTextField.getText();
+			Boolean complete = DBInteractor.changeGroupChatName(BuzmoJFrame.con, currentGroupName, temp);
+			if(complete){
+				historyTextArea.append("You changed current group name to: "+temp+"\n");
+			}
+			else{
+				historyTextArea.append("Change current group name to: "+temp+"failed\n");
+			}
+		}
+	});
+	changeGroupDurationBUtton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			String temp = changeGroupDurationTextField.getText();
+			Boolean complete = DBInteractor.changeGroupChatDuration(BuzmoJFrame.con, currentGroupName, temp);
+			if(complete){
+				historyTextArea.append("You changed current group duration to: "+temp+"\n");
+			}
+			else{
+				historyTextArea.append("Change current group duration to: "+temp+"failed\n");
+			}
+		}
+	});
+
 	backButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
