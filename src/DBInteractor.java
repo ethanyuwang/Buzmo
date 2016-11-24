@@ -252,11 +252,12 @@ public class DBInteractor {
 
 	//Used for GroupChatJPanel 
 	public static Boolean createGroup(Connection con, String groupName){
-		try {
+		try { 
 			Statement st = con.createStatement();
 			// Note: insert order needs to match table column order
 			String sql = "INSERT INTO Group_chats " +
-			"VALUES ('" + groupName + "', " +
+			"VALUES (" + groupName.hashCode() + ", '" +
+			groupName + "', " +
 			7 + ", " +
 			"'" + BuzmoJFrame.userEmail + "')";
 			st.executeUpdate(sql);
