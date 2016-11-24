@@ -152,7 +152,7 @@ public class GroupChatJPanel extends JPanel
 	setLayout(new GridLayout());
 
 	//add components to top panel
-	topWestPanel.add(groupChatsListScroll, BorderLayout.NORTH);
+	topWestPanel.add(groupChatsListScroll, BorderLayout.CENTER);
 	topWestPanel.add(groupMembersScroll, BorderLayout.SOUTH);
 	topPanel.add(historyScroll, BorderLayout.CENTER);
 	topPanel.add(topWestPanel, BorderLayout.WEST);
