@@ -7,7 +7,7 @@ public class BuzmoJFrame
 {
 	//GUI Constants
 	public static JFrame mainWindow;
-	public static final int WIDTH = 900;
+	public static final int WIDTH = 1200;
 	public static final int HEIGHT = 700;
 	// Database
 	public static Connection con;
