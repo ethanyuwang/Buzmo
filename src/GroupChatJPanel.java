@@ -100,7 +100,9 @@ public class GroupChatJPanel extends JPanel
  
    	groupChatSelectTextField = new JTextField("Select group to chat with");
  
-   	groupChatsListScroll = new JScrollPane(groupChatsListTextArea);
+   	groupChatsListScroll = new JScrollPane(groupChatsListTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    JScrollBar bar = groupChatsListScroll.getVerticalScrollBar();
+	bar.setPreferredSize(new Dimension(40, 60));
     	groupChatSelectScroll = new JScrollPane(groupChatSelectTextField);
     	selectButton = new JButton("Select");
 
@@ -261,7 +263,7 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipady = 20;
 	botPanel.add(changeGroupDurationScroll, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 27;
+	gbc.gridy = 28;
 	gbc.ipady = 0;
 	botPanel.add(changeGroupDurationBUtton, gbc);
 
