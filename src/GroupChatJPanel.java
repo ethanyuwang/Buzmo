@@ -261,7 +261,7 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipady = 20;
 	botPanel.add(changeGroupDurationScroll, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 26;
+	gbc.gridy = 27;
 	gbc.ipady = 0;
 	botPanel.add(changeGroupDurationBUtton, gbc);
 
