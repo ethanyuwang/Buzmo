@@ -7,7 +7,13 @@ import java.awt.event.MouseEvent;
 
 public class GroupChatJPanel extends JPanel
 {
-    //Variables
+    //set Variables
+    int topPanelWidth = (int) (BuzmoJFrame.WIDTH*0.5);
+    int medPanelWidth = (int) (BuzmoJFrame.WIDTH*0.25);
+    int botPanelWidth = (int) (BuzmoJFrame.WIDTH*0.25);
+    int pannelHeight = BuzmoJFrame.HEIGHT;
+
+    //Dynamic Variables
     String currentGroupName = "";
 
     GridBagConstraints gbc;
@@ -147,8 +153,13 @@ public class GroupChatJPanel extends JPanel
 	gbc = new GridBagConstraints();
 	topWestPanel = new JPanel(new BorderLayout());
 	topPanel = new JPanel(new BorderLayout());
+	topPanel.setPreferredSize(new Dimension(topPanelWidth, pannelHeight));
+
 	medPanel = new JPanel(new GridBagLayout());
+	medPanel.setPreferredSize(new Dimension(medPanelWidth, pannelHeight));
+
 	botPanel = new JPanel(new GridBagLayout());
+	botPanel.setPreferredSize(new Dimension(botPanelWidth, pannelHeight));
 
 	//set layout manager for this panel
 	setLayout(new GridLayout());
@@ -258,7 +269,7 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipady = 0;
 	botPanel.add(changeGroupNameBUtton, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 23;
+	gbc.gridy = 24;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
 	botPanel.add(changeGroupDurationScroll, gbc);
