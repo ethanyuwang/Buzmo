@@ -153,14 +153,17 @@ public class GroupChatJPanel extends JPanel
 	gbc = new GridBagConstraints();
 	topWestPanel = new JPanel(new BorderLayout());
 	topPanel = new JPanel(new BorderLayout());
-	topPanel.setPreferredSize(new Dimension(topPanelWidth, pannelHeight));
+	//topPanel.setPreferredSize(new Dimension(topPanelWidth, pannelHeight));
+	topPanel.setSize(topPanelWidth, pannelHeight);
 
 	medPanel = new JPanel(new GridBagLayout());
-	medPanel.setPreferredSize(new Dimension(medPanelWidth, pannelHeight));
+	//medPanel.setPreferredSize(new Dimension(medPanelWidth, pannelHeight));
+	medPanel.setSize(medPanelWidth, pannelHeight);
 
 	botPanel = new JPanel(new GridBagLayout());
-	botPanel.setPreferredSize(new Dimension(botPanelWidth, pannelHeight));
-
+	//botPanel.setPreferredSize(new Dimension(botPanelWidth, pannelHeight));
+	botPanel.setSize(botPanelWidth, pannelHeight);
+	
 	//set layout manager for this panel
 	setLayout(new GridLayout());
 
