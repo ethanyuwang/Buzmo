@@ -718,14 +718,13 @@ public class DBInteractor {
 	//Used for GroupChatJPanel 
 	public static String getEmialWithName(Connection con, String name){
 		try {
-			String ret = "";
 			Statement st = con.createStatement();
 			String sql = "SELECT U.email_address FROM Users U " +
 			"WHERE U.name='" + name + "'";
 			ResultSet rs = st.executeQuery(sql);
-			ret == rs.getString(1);
+			String ret = rs.getString(1);
 			return ret;
 		}
 		catch(Exception e){System.out.println(e); return "";}
-}
+	}
 }
