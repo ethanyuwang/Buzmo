@@ -45,7 +45,7 @@ public class DBManager {
 			Statement st = con.createStatement();
 			
 			String sql = "CREATE TABLE Users " +
-	  		"(email_address VARCHAR(20) NOT NULL, " +
+	  		"(email_address VARCHAR(40) NOT NULL, " +
 	  		" password VARCHAR(10) NOT NULL, " +
 	  		" name VARCHAR(20) NOT NULL, " +
 	  		" phone_number NUMERIC(10) NOT NULL, " +
