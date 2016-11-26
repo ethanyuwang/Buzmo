@@ -287,8 +287,16 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipady = 0;
 	GroupControlPanel.add(changeGroupDurationBUtton, gbc);
 
-	ControlPanel.add(ChatDispalyPanel, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = 0;
+	gbc.ipadx = 0;
+	gbc.gridheight = 0;
+	gbc.gridwidth = 0;
 	ControlPanel.add(ChatControlPanel, gbc);
+	gbc.gridx = 1;
+	gbc.gridy = 0;
+	ControlPanel.add(GroupControlPanel, gbc);
 
 	ChatDispalyPanel.setOpaque(false);
 	ChatControlPanel.setOpaque(false);
