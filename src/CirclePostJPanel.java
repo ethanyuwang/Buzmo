@@ -9,7 +9,7 @@ import java.awt.event.ItemEvent;
 
 public class CirclePostJPanel extends JPanel
 {
-   /* //JPanel
+    //JPanel
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
@@ -44,7 +44,7 @@ public class CirclePostJPanel extends JPanel
 
 	//CheckBoxList
 	checkBoxList = new CheckBoxList();
-	strList = DBInteractor.getContactListsAsArray(BuzmoJFrame.con);
+	strList = DBInteractorCirclePost.getContactListsAsArray(BuzmoJFrame.con);
 	if(strList != null){ // if user has friends
 		checkBoxList = new CheckBoxList();
 		cbList = new JCheckBox[strList.length + 1];
@@ -60,7 +60,7 @@ public class CirclePostJPanel extends JPanel
         checkBoxList.setListData(cbList);
 
 	//Scroll displays
-	historyTextArea = new JTextArea("<Circle Feed>\n" + DBInteractor.getCircleFeedHistory(BuzmoJFrame.con));
+	historyTextArea = new JTextArea("<Circle Feed>\n" + DBInteractorCirclePost.getCircleFeedHistory(BuzmoJFrame.con));
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
@@ -76,7 +76,7 @@ public class CirclePostJPanel extends JPanel
 	topicTextArea.setWrapStyleWord(false);
 	topicScroll = new JScrollPane(topicTextArea);
 
-	searchTextArea= new JTextArea(DBInteractor.defaultUsersTopicWords(BuzmoJFrame.con));
+	searchTextArea= new JTextArea(DBInteractorCirclePost.defaultUsersTopicWords(BuzmoJFrame.con));
 	searchTextArea.setLineWrap(true);
 	searchTextArea.setWrapStyleWord(false);
 	searchScroll = new JScrollPane(searchTextArea);
@@ -178,33 +178,33 @@ public class CirclePostJPanel extends JPanel
 			String[] topicArray = topicTextArea.getText().split("\\s+");		
 			Boolean publicChecked = publicCheckBox.isSelected();
 			// Create circle post & handle topic word links to user/message
-			int post_id = DBInteractor.createCirclePost(BuzmoJFrame.con, msgStr, topicArray, publicChecked);
+			int post_id = DBInteractorCirclePost.createCirclePost(BuzmoJFrame.con, msgStr, topicArray, publicChecked);
 			if(post_id == -1){System.out.println("FAILED to create circle post"); return;}
 			System.out.println("SUCCESS created circle post");
 			// Link circle feed to viewers
 			for(int i=0; i<cbList.length; i++){
 				//cbList length has due to "All"
 				if(i==0){
-					if(DBInteractor.linkReceiversToCirclePost(BuzmoJFrame.con, BuzmoJFrame.userEmail, post_id)){
+					if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, BuzmoJFrame.userEmail, post_id)){
 						System.out.println("SUCCESS linked user to circle feed");}
 					else{System.out.println("FAILED to link user to circle feed"); return;}	
 				}
 				else if(cbList[i].isSelected()){
-					if(DBInteractor.linkReceiversToCirclePost(BuzmoJFrame.con, strList[i-1], post_id)){
+					if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, strList[i-1], post_id)){
 						System.out.println("SUCCESS linked user to circle feed");}
 					else{System.out.println("FAILED to link user to circle feed"); return;}	
 				}
 			}
 			// reload
 			System.out.println("Reloading circle posts");
-			historyTextArea.setText("<Circle Feed>\n" + DBInteractor.getCircleFeedHistory(BuzmoJFrame.con));
+			historyTextArea.setText("<Circle Feed>\n" + DBInteractorCirclePost.getCircleFeedHistory(BuzmoJFrame.con));
 		}
 	});
         searchButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
 			String[] topicArray = searchTextArea.getText().split("\\s+");
-			String found = DBInteractor.searchCirclePosts(BuzmoJFrame.con, topicArray);
+			String found = DBInteractorCirclePost.searchCirclePosts(BuzmoJFrame.con, topicArray);
 			System.out.println("Reloading circle posts");
 			historyTextArea.setText("<Circle Feed>\n" + found);	
                 }
@@ -230,5 +230,6 @@ public class CirclePostJPanel extends JPanel
 			}
 		}
 	});
-    }*/
+    }
 }
+
