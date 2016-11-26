@@ -25,7 +25,7 @@ public class LoginJPanel extends JPanel
 	this.repaint();
 	loginButton = new JButton("Login");
 	signUpButton = new JButton("Sign up");
-	loadDBButton = JButton("Load Existing Database");
+	loadDBButton = new JButton("Load Existing Database");
 	titleLabel = new JLabel("Buzmo");
 	emailField = new JTextField("email");
 	passField = new JTextField("password");

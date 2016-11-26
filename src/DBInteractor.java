@@ -581,11 +581,11 @@ public class DBInteractor {
 		none, addUser, addContacts, addPrivateMessages, addGroups, addCircle, addTopicWords, addManager
 	} 
 
-	loadDBControl ldbc=loadDBControl.none;
-	String database="data_base_sampler.txt";
-
-	public Boolean loadDB(Connection con){
-
+	public static Boolean loadDB(Connection con){
+		
+		loadDBControl ldbc=loadDBControl.none;
+		String database="data_base_sampler.txt";
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(database))){
 			String line;
 			while ((line = br.readLine())!=null){
