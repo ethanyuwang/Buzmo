@@ -2,6 +2,7 @@ package buzmo;
 
 import java.sql.*;
 import java.io.*;
+import java.net.*;
 
 public class DBInteractor {
 
@@ -584,9 +585,12 @@ public class DBInteractor {
 	public static Boolean loadDB(Connection con){
 		
 		loadDBControl ldbc=loadDBControl.none;
-		String database="data_base_sampler.txt";
-		
-		try (BufferedReader br = new BufferedReader(new FileReader(database))){
+		String database="resource/data_base_sampler.txt";
+		//URL url=getClass().getResource(database);
+		//File db = new File(url.getPath());
+		File db = new File(database);
+
+		try (BufferedReader br = new BufferedReader(new FileReader(db))){
 			String line;
 			while ((line = br.readLine())!=null){
 
