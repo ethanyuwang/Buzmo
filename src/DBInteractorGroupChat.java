@@ -291,22 +291,23 @@ public class DBInteractorGroupChat {
 		return true;
 	}
 	//Used for GroupChatJPanel 
-	public static String getGroupMembers(Connection con, String currentGroupName){
-		/*try {
+	public static String getGroupMembers(Connection con, String groupName){
+		try {
 			String ret = "";
+			int groupId = getGroupID(con, groupName);
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
-			String sql = "SELECT C.friend FROM CONTACT_LISTS C " +
-			"WHERE C.owner='" + myEmail + "'";
-			ResultSet rs = st.executeQuery(sql);
+			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +
+			"(G.group_id=" + groupId + ")"; 
+			ResultSet rs = st.executeQuery(sql);			
 			while(rs.next()){
-				ret += rs.getString(1);
+				ret+=rs.getString(1);
 				ret += "\n";
 			}
 			return ret;
+
 		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return "empty";
+		catch(Exception e){System.out.println(e); return "";}
 }
 
 

@@ -189,14 +189,14 @@ public class GroupChatJPanel extends JPanel
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 	ChatControlPanel.add(groupChatSelectScroll, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 3;
+	gbc.gridy = 6;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
 	ChatControlPanel.add(selectButton, gbc);
 
 	//edit message components
 	gbc.gridx = 0;
-	gbc.gridy = 0;
+	gbc.gridy = 9;
 	gbc.ipady = 50;
 	gbc.ipadx = 70;
 	gbc.gridwidth = 3;
@@ -204,29 +204,29 @@ public class GroupChatJPanel extends JPanel
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 	ChatControlPanel.add(draftScroll, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 3;
+	gbc.gridy = 12;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
 	ChatControlPanel.add(sendButton, gbc);
 
 	//Create new group Components
 	gbc.gridx = 0;
-	gbc.gridy = 6;
+	gbc.gridy = 15;
 	gbc.ipady = 50;
-	gbc.ipadx = 70;
+	gbc.ipadx = 80;
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 	ChatControlPanel.add(createScroll, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 9;
+	gbc.gridy = 18;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
 	ChatControlPanel.add(createButton, gbc);
 
 	//Navigation Components
 	gbc.gridx = 0;
-	gbc.gridy = 12;
+	gbc.gridy = 21;
 	ChatControlPanel.add(backButton, gbc);
 
 	//add components to bot panel
