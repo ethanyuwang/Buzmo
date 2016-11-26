@@ -723,7 +723,7 @@ public class DBInteractor {
 			String sql = "SELECT U.email_address FROM Users U " +
 			"WHERE U.name='" + name + "'";
 			ResultSet rs = st.executeQuery(sql);
-			ret += rs.getString(1);
+			ret == rs.getString(1);
 			return ret;
 		}
 		catch(Exception e){System.out.println(e); return "";}
