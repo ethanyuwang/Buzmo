@@ -592,6 +592,10 @@ public class DBInteractor {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(db))){
 			String line;
+			line = br.readLine();
+			if (line==null) 
+				System.out.println("null file");
+			
 			while ((line = br.readLine())!=null){
 
 				//decide what to do
