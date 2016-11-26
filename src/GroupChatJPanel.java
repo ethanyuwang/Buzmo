@@ -8,19 +8,22 @@ import java.awt.event.MouseEvent;
 public class GroupChatJPanel extends JPanel
 {
     //set Variables
-    int topPanelWidth = (int) (BuzmoJFrame.WIDTH*0.5);
-    int medPanelWidth = (int) (BuzmoJFrame.WIDTH*0.25);
-    int botPanelWidth = (int) (BuzmoJFrame.WIDTH*0.25);
+    int ChatDispalyPanelWidth = (int) (BuzmoJFrame.WIDTH*0.5);
+    int ChatControlPanelWidth = (int) (BuzmoJFrame.WIDTH*0.25);
+    int GroupControlPanelWidth = (int) (BuzmoJFrame.WIDTH*0.25);
     int pannelHeight = BuzmoJFrame.HEIGHT;
 
     //Dynamic Variables
     String currentGroupName = "";
 
+    //GUI
     GridBagConstraints gbc;
-    JPanel topPanel;
-    JPanel topWestPanel;
-    JPanel medPanel;
-    JPanel botPanel;
+    JPanel ChatDispalyPanel;
+    JPanel ChatDispalSubyPanel;
+
+    JPanel ChatControlPanel;
+    JPanel GroupControlPanel;
+    JPanel ControlPanel;
 
     //Naviagtion Components
     JButton backButton;
@@ -151,40 +154,29 @@ public class GroupChatJPanel extends JPanel
 
 	//Pannels
 	gbc = new GridBagConstraints();
-	topPanel = new JPanel(new GridBagLayout());
-	//topPanel.setPreferredSize(new Dimension(topPanelWidth, pannelHeight));
-	topPanel.setSize(topPanelWidth, pannelHeight);
+	ChatDispalSubyPanel = new JPanel(new GridLayout(2,1));
+	ChatDispalyPanel = new JPanel(new GridLayout(1,2));
+	//ChatDispalyPanel.setPreferredSize(new Dimension(ChatDispalyPanelWidth, pannelHeight));
+	ChatDispalyPanel.setSize(ChatDispalyPanelWidth, pannelHeight);
 
-	medPanel = new JPanel(new GridBagLayout());
-	//medPanel.setPreferredSize(new Dimension(medPanelWidth, pannelHeight));
-	medPanel.setSize(medPanelWidth, pannelHeight);
+	ChatControlPanel = new JPanel(new GridBagLayout());
+	//ChatControlPanel.setPreferredSize(new Dimension(ChatControlPanelWidth, pannelHeight));
+	ChatControlPanel.setSize(ChatControlPanelWidth, pannelHeight);
 
-	botPanel = new JPanel(new GridBagLayout());
-	//botPanel.setPreferredSize(new Dimension(botPanelWidth, pannelHeight));
-	botPanel.setSize(botPanelWidth, pannelHeight);
+	GroupControlPanel = new JPanel(new GridBagLayout());
+	//GroupControlPanel.setPreferredSize(new Dimension(GroupControlPanelWidth, pannelHeight));
+	GroupControlPanel.setSize(GroupControlPanelWidth, pannelHeight);
+
+	ControlPanel = new JPanel(new GridLayout());
 
 	//set layout manager for this panel
-	setLayout(new GridBagLayout());
+	setLayout(new GridLayout());
 
 	//add components to top panel
-	gbc.gridx = 0;
-	gbc.gridy = 0;
-	gbc.ipady = (int) (pannelHeight * 0.5);
-	gbc.ipadx = (int) (topPanelWidth * 0.25);
-	topPanel.add(groupChatsListScroll, gbc);
-
-	gbc.gridx = 0;
-	gbc.gridy = 1;
-	gbc.ipady = (int) (pannelHeight * 0.5);
-	gbc.ipadx = (int) (topPanelWidth * 0.25);
-	topPanel.add(groupMembersScroll, gbc);
-
-	gbc.gridx = 1;
-	gbc.gridy = 0;
-	gbc.ipady = pannelHeight;
-	gbc.ipadx = (int) (topPanelWidth * 0.5);
-	topPanel.add(historyScroll, gbc);
-
+	ChatDispalSubyPanel.add(groupChatsListScroll);
+	ChatDispalSubyPanel.add(groupMembersScroll);
+	ChatDispalyPanel.add(ChatDispalSubyPanel);
+	ChatDispalyPanel.add(historyScroll);
 
 	//add components to med panel
 	//Select chat group components
@@ -195,12 +187,12 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	medPanel.add(groupChatSelectScroll, gbc);
+	ChatControlPanel.add(groupChatSelectScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 3;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	medPanel.add(selectButton, gbc);
+	ChatControlPanel.add(selectButton, gbc);
 
 	//edit message components
 	gbc.gridx = 0;
@@ -210,12 +202,12 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	medPanel.add(draftScroll, gbc);
+	ChatControlPanel.add(draftScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 3;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	medPanel.add(sendButton, gbc);
+	ChatControlPanel.add(sendButton, gbc);
 
 	//Create new group Components
 	gbc.gridx = 0;
@@ -225,17 +217,17 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	medPanel.add(createScroll, gbc);
+	ChatControlPanel.add(createScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 9;
 	gbc.ipady = 0;
 	gbc.gridheight = 3;
-	medPanel.add(createButton, gbc);
+	ChatControlPanel.add(createButton, gbc);
 
 	//Navigation Components
 	gbc.gridx = 0;
 	gbc.gridy = 12;
-	medPanel.add(backButton, gbc);
+	ChatControlPanel.add(backButton, gbc);
 
 	//add components to bot panel
 	//answer pending request components
@@ -246,16 +238,16 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 1;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(pendingRequestsScroll, gbc);
+	GroupControlPanel.add(pendingRequestsScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 3;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
-	botPanel.add(addScroll, gbc);
+	GroupControlPanel.add(addScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 6;
 	gbc.ipady = 0;
-	botPanel.add(addButton, gbc);
+	GroupControlPanel.add(addButton, gbc);
 
 	//edit contact list components
 	gbc.gridx = 3;
@@ -264,59 +256,49 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridwidth = 1;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	botPanel.add(contactsScroll, gbc);
+	GroupControlPanel.add(contactsScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 13;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
-	botPanel.add(inviteScroll, gbc);
+	GroupControlPanel.add(inviteScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 16;
 	gbc.ipady = 0;
-	botPanel.add(inviteButton, gbc);
+	GroupControlPanel.add(inviteButton, gbc);
 
 	//change current group name and duration Components
 	gbc.gridx = 3;
 	gbc.gridy = 19;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
-	botPanel.add(changeGroupNameScroll, gbc);
+	GroupControlPanel.add(changeGroupNameScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 22;
 	gbc.ipady = 0;
-	botPanel.add(changeGroupNameBUtton, gbc);
+	GroupControlPanel.add(changeGroupNameBUtton, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 25;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
-	botPanel.add(changeGroupDurationScroll, gbc);
+	GroupControlPanel.add(changeGroupDurationScroll, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 28;
 	gbc.ipady = 0;
-	botPanel.add(changeGroupDurationBUtton, gbc);
+	GroupControlPanel.add(changeGroupDurationBUtton, gbc);
 
-	topPanel.setOpaque(false);
-	medPanel.setOpaque(false);
-	botPanel.setOpaque(false);
+	ControlPanel.add(ChatDispalyPanel, gbc);
+	ControlPanel.add(ChatControlPanel, gbc);
+
+	ChatDispalyPanel.setOpaque(false);
+	ChatControlPanel.setOpaque(false);
+	GroupControlPanel.setOpaque(false);
 
 	//add bot and top panel to this.panel
-	gbc.gridx = 0;
-	gbc.gridy = 0;
-	gbc.ipady = pannelHeight;
-	gbc.ipadx = topPanelWidth;
-	add(topPanel, gbc);
 
-	gbc.gridx = 1;
-	gbc.gridy = 0;
-	gbc.ipady = pannelHeight;
-	gbc.ipadx = medPanelWidth;
-	add(medPanel, gbc);
+	add(ChatDispalyPanel);
+	add(ControlPanel);
 
-	gbc.gridx = 2;
-	gbc.gridy = 0;
-	gbc.ipady = pannelHeight;
-	gbc.ipadx = botPanelWidth;
-	add(botPanel, gbc);
 
 	//event managers
 	createButton.addMouseListener(new MouseAdapter() {
