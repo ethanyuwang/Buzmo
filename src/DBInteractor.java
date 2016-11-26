@@ -596,30 +596,55 @@ public class DBInteractor {
 
 				//decide what to do
 				if (line=="Users")
+				{
 					ldbc=loadDBControl.addUser;
+					continue;
+				}
 				else if(line=="Friends")
+				{
 					ldbc=loadDBControl.addContacts;
+					continue;
+				}
 				else if(line=="Private_Messages")
+				{
 					ldbc=loadDBControl.addPrivateMessages;
+					continue;
+				}
 				else if(line=="Chat_groups")
+				{
 					ldbc=loadDBControl.addGroups;
+					continue;
+				}
 				else if(line=="Circle_feeds")
+				{
 					ldbc=loadDBControl.addCircle;
+					continue;
+				}
 				else if(line=="User_Topic_words")
+				{
 					ldbc=loadDBControl.addTopicWords;
+					continue;
+				}
 				else if(line=="Managers")
+				{
 					ldbc=loadDBControl.addManager;
+					continue;
+				}
 
 				//do specific task
 				switch(ldbc) {
 					case addUser: {
 						if (addUser(con, line)==false)
 							return false;
+						else
+							System.out.println("Adding user " + line);
 						break;
 					}
 					case addContacts: {
 						if (addContactsCircle(con, line)==false)
 							return false;
+						else
+							System.out.println("Adding contacts " + line);
 						break;
 					}
 					case addPrivateMessages: {
