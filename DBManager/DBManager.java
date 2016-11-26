@@ -46,7 +46,7 @@ public class DBManager {
 			
 			String sql = "CREATE TABLE Users " +
 	  		"(email_address VARCHAR(40) NOT NULL, " +
-	  		" password VARCHAR(10) NOT NULL, " +
+	  		" password VARCHAR(20) NOT NULL, " +
 	  		" name VARCHAR(20) NOT NULL, " +
 	  		" phone_number NUMERIC(10) NOT NULL, " +
 	  		" screenname VARCHAR(20), " +
