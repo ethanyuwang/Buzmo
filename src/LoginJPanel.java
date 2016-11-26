@@ -94,7 +94,7 @@ public class LoginJPanel extends JPanel
 	loadDBButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			Boolean complete = DBInteractor.loadDB(BuzmoJFrame.con);
+			Boolean complete = DBInteractorManager.loadDB(BuzmoJFrame.con);
 			if(complete){
 				System.out.println("Load existing data base SUCCESS");
 			}

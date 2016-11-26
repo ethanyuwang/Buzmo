@@ -95,11 +95,11 @@ public class GroupChatJPanel extends JPanel
     	createButton = new JButton("Create");
 
     	//List of GroupMembers Components
-    	groupMembersTextArea = new JTextArea("Members:\n"+DBInteractor.getGroupMembers(BuzmoJFrame.con, currentGroupName));
+    	groupMembersTextArea = new JTextArea("Members:\n"+DBInteractorGroupChat.getGroupMembers(BuzmoJFrame.con, currentGroupName));
     	groupMembersScroll = new JScrollPane(groupMembersTextArea);
 
    	//List of GroupChats and select Components
-    	groupChatsListTextArea = new JTextArea("Groups:\n"+DBInteractor.getGroups(BuzmoJFrame.con));
+    	groupChatsListTextArea = new JTextArea("Groups:\n"+DBInteractorGroupChat.getGroups(BuzmoJFrame.con));
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
@@ -126,7 +126,7 @@ public class GroupChatJPanel extends JPanel
 	inviteButton = new JButton("Invite");
 
     	//List of request and add Components
-   	pendingRequestsTextArea = new JTextArea("You're invited to the following groups:\n"+DBInteractor.getPendingGroupChatInvites(BuzmoJFrame.con));
+   	pendingRequestsTextArea = new JTextArea("You're invited to the following groups:\n"+DBInteractorGroupChat.getPendingGroupChatInvites(BuzmoJFrame.con));
 	pendingRequestsTextArea.setEditable(false);
 	pendingRequestsTextArea.setLineWrap(true);
 	pendingRequestsTextArea.setWrapStyleWord(false);
@@ -140,7 +140,7 @@ public class GroupChatJPanel extends JPanel
 
     //change current group name and duration Components
     changeGroupNameTextField = new JTextField("Change group name to");
-    changeGroupDurationTextField = new JTextField("Current duration is " + DBInteractor.getGroupChatDuration(BuzmoJFrame.con, currentGroupName) +" days");
+    changeGroupDurationTextField = new JTextField("Current duration is " + DBInteractorGroupChat.getGroupChatDurationWrapper(BuzmoJFrame.con, currentGroupName) +" days");
     changeGroupNameScroll = new JScrollPane(changeGroupNameTextField);
     changeGroupDurationScroll = new JScrollPane(changeGroupDurationTextField);
     changeGroupNameBUtton = new JButton("Change");
@@ -295,10 +295,10 @@ public class GroupChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = createField.getText();
-			Boolean complete = DBInteractor.createGroup(BuzmoJFrame.con, temp);
+			Boolean complete = DBInteractorGroupChat.createGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				historyTextArea.append("You created chat group: "+temp+"\n");
-				groupChatsListTextArea.setText("Groups:\n"+DBInteractor.getGroups(BuzmoJFrame.con));
+				groupChatsListTextArea.setText("Groups:\n"+DBInteractorGroupChat.getGroups(BuzmoJFrame.con));
 			}
 			else{
 				historyTextArea.append("Can not create chat group: "+temp+"\n");
@@ -309,11 +309,11 @@ public class GroupChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = groupChatSelectTextField.getText();
-			Boolean complete = DBInteractor.isGroup(BuzmoJFrame.con, temp);
+			Boolean complete = DBInteractorGroupChat.isGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				currentGroupName=temp;
 				historyTextArea.setText("You entered chat group: "+temp+"\n");
-				historyTextArea.append(DBInteractor.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
+				historyTextArea.append(DBInteractorGroupChat.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
 			}
 			else{
 				historyTextArea.append("Can not find chat group: "+temp+"\n");
@@ -324,7 +324,7 @@ public class GroupChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = inviteTextField.getText();
-			Boolean complete = DBInteractor.inviteToGroupChat(BuzmoJFrame.con, currentGroupName, temp);
+			Boolean complete = DBInteractorGroupChat.inviteToGroupChat(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
 				historyTextArea.append("You invited "+temp+" to this chat group\n");
 			}
@@ -337,7 +337,7 @@ public class GroupChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = addTextField.getText();
-			Boolean complete = DBInteractor.addGroupChat(BuzmoJFrame.con, temp);
+			Boolean complete = DBInteractorGroupChat.addGroupChat(BuzmoJFrame.con, temp);
 			if(complete){
 				historyTextArea.append("You added chat group: "+temp+"\n");
 			}
@@ -354,9 +354,9 @@ public class GroupChatJPanel extends JPanel
 				historyTextArea.append("Please select a group\n");
 				return;
 			}
-			Boolean complete = DBInteractor.addMessageToGroupChat(BuzmoJFrame.con, draftTextField.getText(), currentGroupName);
+			Boolean complete = DBInteractorGroupChat.addMessageToGroupChat(BuzmoJFrame.con, draftTextField.getText(), currentGroupName);
 			if(complete){
-				historyTextArea.setText(DBInteractor.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
+				historyTextArea.setText(DBInteractorGroupChat.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
 			}
 			else{
 				historyTextArea.append("Sending message failed\n");
@@ -368,7 +368,7 @@ public class GroupChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = changeGroupNameTextField.getText();
-			Boolean complete = DBInteractor.changeGroupChatName(BuzmoJFrame.con, currentGroupName, temp);
+			Boolean complete = DBInteractorGroupChat.changeGroupChatName(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
 				historyTextArea.append("You changed current group name to: "+temp+"\n");
 			}
@@ -381,7 +381,7 @@ public class GroupChatJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			String temp = changeGroupDurationTextField.getText();
-			Boolean complete = DBInteractor.changeGroupChatDuration(BuzmoJFrame.con, currentGroupName, temp);
+			Boolean complete = DBInteractorGroupChat.changeGroupChatDuration(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
 				historyTextArea.append("You changed current group duration to: "+temp+"\n");
 			}

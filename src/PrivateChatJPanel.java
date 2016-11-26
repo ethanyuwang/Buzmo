@@ -128,7 +128,7 @@ public class PrivateChatJPanel extends JPanel
 			Boolean complete = DBInteractor.isContact(BuzmoJFrame.con, temp);
 			if(complete){
 				recipientEmail = temp;
-				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
+				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractorPrivateChat.loadChatHistory(BuzmoJFrame.con, recipientEmail));
 			}
 			else{
 				historyTextArea.append("Can not find "+temp+" in your contact list\n");
@@ -142,9 +142,9 @@ public class PrivateChatJPanel extends JPanel
 				historyTextArea.append("Please select a friend\n");
 				return;
 			}
-			Boolean complete = DBInteractor.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientEmail);
+			Boolean complete = DBInteractorPrivateChat.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientEmail);
 			if(complete){
-				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractor.loadChatHistory(BuzmoJFrame.con, recipientEmail));
+				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractorPrivateChat.loadChatHistory(BuzmoJFrame.con, recipientEmail));
 			}
 			else{
 				historyTextArea.append("Sending message failed\n");
