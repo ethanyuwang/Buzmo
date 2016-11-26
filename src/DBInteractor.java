@@ -642,7 +642,7 @@ public class DBInteractor {
 				//do specific task
 				switch(ldbc) {
 					case addUser: {
-						if (addUser(con, line)==false)
+						if (addUserWithString(con, line)==false)
 							return false;
 						else
 							System.out.println("Adding user " + line);
@@ -679,8 +679,9 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return false;}
 	}
 
-	public static Boolean addUser(Connection con, String line){
+	public static Boolean addUserWithString(Connection con, String line){
 		String[] informations = line.split(",");
+		System.out.println(informations[1]+ informations[2]+ informations[0]+ informations[3]+ informations[4]);
 		return addUser(con, informations[1], informations[2], informations[0], informations[3], informations[4]);
 	}
 
