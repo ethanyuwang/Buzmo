@@ -10,9 +10,11 @@ public class LoginJPanel extends JPanel
     //Java GUI Components
     JButton loginButton;
     JButton signUpButton;
+    JButton loadDBButton;
     JLabel titleLabel;
     JTextField emailField;
     JTextField passField;
+
 
     GridBagConstraints gbc;
     JPanel topPanel;
@@ -23,6 +25,7 @@ public class LoginJPanel extends JPanel
 	this.repaint();
 	loginButton = new JButton("Login");
 	signUpButton = new JButton("Sign up");
+	loadDBButton = JButton("Load Existing Database");
 	titleLabel = new JLabel("Buzmo");
 	emailField = new JTextField("email");
 	passField = new JTextField("password");
@@ -57,6 +60,9 @@ public class LoginJPanel extends JPanel
 	gbc.gridx = 3;
 	gbc.gridy = 4;
 	botPanel.add(signUpButton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 5;
+	botPanel.add(loadDBButton, gbc);
 
 	topPanel.setOpaque(false);
 	botPanel.setOpaque(false);
@@ -82,6 +88,18 @@ public class LoginJPanel extends JPanel
 			}
 			else{
 				System.out.println("Login FAIL");
+			}
+		}
+	});
+	loadDBButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Boolean complete = DBInteractor.loadDB(BuzmoJFrame.con);
+			if(complete){
+				System.out.println("Load existing data base SUCCESS");
+			}
+			else{
+				System.out.println("Load existing data base FAIL");
 			}
 		}
 	});
