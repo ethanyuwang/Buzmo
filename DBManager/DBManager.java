@@ -16,10 +16,10 @@ public class DBManager {
                         String url = "jdbc:oracle:thin:@uml.cs.ucsb.edu:1521:xe";
                         //use this for non csil machine
                         //String url = "jdbc:oracle:thin:@localhost:1521:xe";
-                        //String username = "glee";
-                        //String password = "304";
-                        String username = "yuxiang";
-                        String password = "049";
+                        String username = "glee";
+                        String password = "304";
+                        //String username = "yuxiang";
+                        //String password = "049";
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Create Tables
@@ -27,7 +27,7 @@ public class DBManager {
                         addForeignKeys(con);
 
                         //Delete Tables
-                        //deleteTables(con);
+                        deleteTables(con);
 
                         //Print Table
                         //printTable(con, "USERS");
@@ -258,12 +258,6 @@ public class DBManager {
                                                 System.out.print(rs.getString(i)+", ");
                                         }
                                 }
-                        }
-                        // print primary keys
-                        DatabaseMetaData dm = con.getMetaData();
-                        rs = dm.getPrimaryKeys(null, null, TBName);
-                        while(rs.next()){
-                                System.out.println("primary key ("+rs.getString("COLUMN_NAME")+")");
                         }
                         // print primary keys
                         DatabaseMetaData dm = con.getMetaData();
