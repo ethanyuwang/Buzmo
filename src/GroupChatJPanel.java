@@ -165,7 +165,7 @@ public class GroupChatJPanel extends JPanel
 	botPanel.setSize(botPanelWidth, pannelHeight);
 
 	//set layout manager for this panel
-	setLayout(new GridLayout());
+	setLayout(new GridBagLayout());
 
 	//add components to top panel
 	topWestPanel.add(groupChatsListScroll, BorderLayout.NORTH);
@@ -229,6 +229,7 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridx = 3;
 	gbc.gridy = 0;
 	gbc.ipady = 50;
+	gbc.ipadx = 70;
 	gbc.gridwidth = 1;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -286,9 +287,23 @@ public class GroupChatJPanel extends JPanel
 	botPanel.setOpaque(false);
 
 	//add bot and top panel to this.panel
-	add(topPanel);
-	add(medPanel);
-	add(botPanel);
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = pannelHeight;
+	gbc.ipadx = topPanelWidth;
+	add(topPanel, gbc);
+
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = pannelHeight;
+	gbc.ipadx = medPanelWidth;
+	add(medPanel, gbc);
+
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = pannelHeight;
+	gbc.ipadx = botPanelWidth;
+	add(botPanel, gbc);
 
 	//event managers
 	createButton.addMouseListener(new MouseAdapter() {
