@@ -45,8 +45,8 @@ public class DBManager {
 			Statement st = con.createStatement();
 			
 			String sql = "CREATE TABLE Users " +
-	  		"(email_address VARCHAR(40) NOT NULL, " +
-	  		" password VARCHAR(20) NOT NULL, " +
+	  		"(email_address VARCHAR(20) NOT NULL, " +
+	  		" password VARCHAR(10) NOT NULL, " +
 	  		" name VARCHAR(20) NOT NULL, " +
 	  		" phone_number NUMERIC(10) NOT NULL, " +
 	  		" screenname VARCHAR(20), " +
@@ -54,12 +54,12 @@ public class DBManager {
 			st.executeQuery(sql);	
 		
 			sql = "CREATE TABLE Managers " +
-	  		"(email_address VARCHAR(40) NOT NULL)";
+	  		"(email_address VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Circle_feeds " +
 	  		"(circle_id INT NOT NULL, " +
-	  		" owner VARCHAR(40) NOT NULL, " +
+	  		" owner VARCHAR(20) NOT NULL, " +
 	  		" PRIMARY KEY (Circle_id), " +
 	  		" UNIQUE (owner))";
 			st.executeQuery(sql);
@@ -68,48 +68,48 @@ public class DBManager {
 			"(group_id INT NOT NULL, " +
 	  		" group_name VARCHAR(20) NOT NULL, " +
 	  		" duration INT NOT NULL, " +
-	  		" owner VARCHAR(40) NOT NULL, " +
+	  		" owner VARCHAR(20) NOT NULL, " +
 	  		" PRIMARY KEY (group_id), " +
 	  		" UNIQUE (group_name))";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Private_chats " +
 	  		"(pc_id INT NOT NULL, " +
-	  		" member_1 VARCHAR(40) NOT NULL, " +
-	  		" member_2 VARCHAR(40) NOT NULL, " +
+	  		" member_1 VARCHAR(20) NOT NULL, " +
+	  		" member_2 VARCHAR(20) NOT NULL, " +
 			" PRIMARY KEY (pc_id))";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Messages " + 
 	  		"(message_id INT NOT NULL, " +
-	  		" text_string VARCHAR(1400) NOT NULL, " +
+	  		" text_string VARCHAR(1200) NOT NULL, " +
 	  		" timestamp DATE NOT NULL, " +
 	  		" type VARCHAR(15) NOT NULL, " +
 	  		" is_public VARCHAR(15) NOT NULL, " +
-	  		" owner VARCHAR(40) NOT NULL, " +
-	  		" sender VARCHAR(40) NOT NULL, " +
-	  		" receiver VARCHAR(40) NOT NULL, " +
+	  		" owner VARCHAR(20) NOT NULL, " +
+	  		" sender VARCHAR(20) NOT NULL, " +
+	  		" receiver VARCHAR(20) NOT NULL, " +
 	  		" PRIMARY KEY (message_id))";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Contact_pending_lists " +
-	  		"(receiver VARCHAR(40) NOT NULL, " +
-	  		" sender VARCHAR(40) NOT NULL)";
+	  		"(receiver VARCHAR(20) NOT NULL, " +
+	  		" sender VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Contact_lists " +
-	  		"(owner VARCHAR(40) NOT NULL, " +
-	  		" friend VARCHAR(40) NOT NULL)";
+	  		"(owner VARCHAR(20) NOT NULL, " +
+	  		" friend VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_pending_lists " +
-	  		"(pending_people VARCHAR(40) NOT NULL, " +
+	  		"(pending_people VARCHAR(20) NOT NULL, " +
   			" group_id INT NOT NULL)";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_chat_members " +
 	  		"(group_id INT NOT NULL, " +
-  			" member VARCHAR(40) NOT NULL)";
+  			" member VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 			
 			sql = "CREATE TABLE Message_topic_words " +
@@ -119,7 +119,7 @@ public class DBManager {
 
 			sql = "CREATE TABLE User_topic_words " +
 	  		"(Topic_word VARCHAR(256) NOT NULL, " +
-	  		" email_address VARCHAR(40) NOT NULL)";
+	  		" email_address VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_chat_messages " +
