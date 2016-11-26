@@ -11,8 +11,10 @@ public class DBManager {
                         String url = "jdbc:oracle:thin:@uml.cs.ucsb.edu:1521:xe";
                         //use this for non csil machine
                         //String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String username = "glee";
-			String password = "304";
+			//String username = "glee";
+			//String password = "304";
+			String username = "yuxiang";
+			String password = "049";
                         Connection con = DriverManager.getConnection(url,username, password);
 
 			//Delete Tables
