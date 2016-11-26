@@ -692,7 +692,9 @@ public class DBInteractor {
 
 	public static Boolean addContactsCircle(Connection con, String line){
 		String[] contacts = line.split(",");
-
+		for (int i=0; i<contacts.length;i++)
+			System.out.println("We are contacts: "+contacts[i]+"\n");
+		
 		for (int owner = 0; owner<(contacts.length-1); owner++) {
 			for (int contact = owner+1; contact<(contacts.length); contact++) {
 				if (addContactsDirectly(con, contacts[owner], contacts[contact])==false)
