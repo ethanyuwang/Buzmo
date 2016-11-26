@@ -694,7 +694,7 @@ public class DBInteractor {
 		String[] contacts = line.split(",");
 
 		for (int owner = 0; owner<(contacts.length-1); owner++) {
-			for (int contact = owner+1; contact<(contacts.length-1); contact++) {
+			for (int contact = owner+1; contact<(contacts.length); contact++) {
 				if (addContactsDirectly(con, contacts[owner], contacts[contact])==false)
 					return false;
 			}
@@ -705,6 +705,7 @@ public class DBInteractor {
 	//debug and managing purpose, not normal program flow
 	public static Boolean addContactsDirectly(Connection con, String owner, String contact){
 		try {
+			System.out.println("Adding contacts: "+owner+contact);
 			Statement st = con.createStatement();
 			// check pending list
 			String acceptEmail = getEmialWithName(con, owner);
