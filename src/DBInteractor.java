@@ -644,7 +644,7 @@ public class DBInteractor {
 
 	public static Boolean addUser(Connection con, String line){
 		String[] informations = line.split(",");
-		return addUser(con, informations[0], informations[1], informations[2], informations[3], informations[4]);
+		return addUser(con, informations[1], informations[2], informations[0], informations[3], informations[4]);
 	}
 
 	public static Boolean addContactsCircle(Connection con, String line){
