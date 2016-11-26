@@ -1,5 +1,6 @@
 # Buzmo for F16 CS174a
 * Geon Lee, Ethan Wang
+
 # To-do:
 * 1. Merge: DBInteractor.java, DBManager.java
 * 2. Searches
