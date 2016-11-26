@@ -163,7 +163,7 @@ public class GroupChatJPanel extends JPanel
 	botPanel = new JPanel(new GridBagLayout());
 	//botPanel.setPreferredSize(new Dimension(botPanelWidth, pannelHeight));
 	botPanel.setSize(botPanelWidth, pannelHeight);
-	
+
 	//set layout manager for this panel
 	setLayout(new GridLayout());
 
@@ -272,7 +272,7 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipady = 0;
 	botPanel.add(changeGroupNameBUtton, gbc);
 	gbc.gridx = 3;
-	gbc.gridy = 24;
+	gbc.gridy = 25;
 	gbc.gridheight = 3;
 	gbc.ipady = 20;
 	botPanel.add(changeGroupDurationScroll, gbc);

@@ -1,0 +1,41 @@
+Users
+
+Chris Brown, ChrisBrown@gmail.com, ChrisBro1, 4008801345, CB
+Russell Westbrook, RWestbrook@gmail.com, RWesbrook1, 2318760989, Thunder Leader
+Kevin Durant, DurantKev@gmail.com, KDurant1, 5345298112, KDTrey5
+Iggy Azalea, Iggy@gmail.com, Iggy1, 6876498432, IGGY
+Mariah Carey, MariaCarey@gmail.com, MCarey1, 5540390182, MariahCarey
+Nicki Minaj, NickiMinaj@gmail.com, NMinaj1, 4764033082, NickiMalaji
+Daniel Radcliffe, DRadcliffe@gmail.com, DRad1, 2734063052, HP_Daniel
+Rihanna, Rihanna@gmail.com, Rihanna1, 2723060542, Rihanna
+Justin Bieber, JBieber@gmail.com, JBieber1, 8340740172, JBtheKing
+Larry Page, LarryPage@gmail.com, LarryPage1, 6540320172, LarryPage
+Stephen Curry, SCurry@gmail.com, SCurry1, 3412377584, WarriorChampion
+Emma Watson, EmmaWatson@yahoo.com, EWatson1, 8443298162, EmWatson
+Lena Headey, Lheadey@yahoo.com, LHeadey1, 1031973432, The Queen
+Ariana Grande, AGrande@yahoo.com, AGrande1, 9376498172, Ariana Grande
+Kit Harington, KHarin@gmail.com, KHarin1, 6340740172, Lord Commander
+Emilia Clarke, EClarke@gmail.com, EClarke1, 3431193740, Khaleesi
+Peter Dinklage, PDinklage@gmail.com, PDinklage1, 6753568567, The Imp
+James Harden, JHarden@gmail.com, JHarden1, 3416274384, James Harden
+Tim Cook, Timcook@gmail.com, TCook1, 4512756891, CookApple
+Elon Musk, Elonmusk@yahoo.com, EMusk1, 2847201343, Elon Musk
+Jeff Bezos, JeffBezos@yahoo.com, JBezos1, 3463712649, AmazonPrime
+
+Friends
+
+Russell Westbrook, Kevin Durant, James Harden, Stephen Curry
+Kit Harington, Emilia Clarke, Peter Dinklage, Lena Headey
+Chris Brown, Justin Bieber, Iggy Azalea, Rihanna, Ariana Grande, Nicki Minaj, Mariah Carey
+Emma Watson, Daniel Radcliffe
+Tim Cook, Jeff Bezos, Elon Musk, Larry Page
+
+Private_Messages
+
+Chat_groups
+
+Circle_feeds
+
+User_Topic_words
+
+Managers
