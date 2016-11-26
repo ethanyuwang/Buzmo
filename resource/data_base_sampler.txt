@@ -1,5 +1,4 @@
 Users
-
 Chris Brown, ChrisBrown@gmail.com, ChrisBro1, 4008801345, CB
 Russell Westbrook, RWestbrook@gmail.com, RWesbrook1, 2318760989, Thunder Leader
 Kevin Durant, DurantKev@gmail.com, KDurant1, 5345298112, KDTrey5
@@ -21,23 +20,15 @@ James Harden, JHarden@gmail.com, JHarden1, 3416274384, James Harden
 Tim Cook, Timcook@gmail.com, TCook1, 4512756891, CookApple
 Elon Musk, Elonmusk@yahoo.com, EMusk1, 2847201343, Elon Musk
 Jeff Bezos, JeffBezos@yahoo.com, JBezos1, 3463712649, AmazonPrime
-
 Friends
-
 Russell Westbrook, Kevin Durant, James Harden, Stephen Curry
 Kit Harington, Emilia Clarke, Peter Dinklage, Lena Headey
 Chris Brown, Justin Bieber, Iggy Azalea, Rihanna, Ariana Grande, Nicki Minaj, Mariah Carey
 Emma Watson, Daniel Radcliffe
 Tim Cook, Jeff Bezos, Elon Musk, Larry Page
-
 Private_Messages
-
 Chat_groups
-
 Circle_feeds
-
 User_Topic_words
-
 Managers
-
 Finish

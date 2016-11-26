@@ -595,9 +595,9 @@ public class DBInteractor {
 			line = br.readLine();
 			if (line==null) 
 				System.out.println("null file");
-			
-			while ((line = br.readLine())!=null){
 
+			while ((line = br.readLine())!=null){
+				System.out.println(line;
 				//decide what to do
 				if (line=="Users")
 				{
