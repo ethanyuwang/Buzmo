@@ -23,11 +23,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Create Tables
-                        createTables(con);
-                        addForeignKeys(con);
+                        //createTables(con);
+                        //addForeignKeys(con);
 
                         //Delete Tables
-                        deleteTables(con);
+                        //deleteTables(con);
 
                         //Print Table
                         //printTable(con, "USERS");
@@ -36,7 +36,7 @@ public class DBManager {
                         //printGLEETables(con);
 
                         //Print all tables
-                        //printAllTables(con);
+                        printAllTables(con);
 
                         // Close conenction
                         con.close();

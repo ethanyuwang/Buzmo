@@ -14,7 +14,7 @@ public class DBInteractorPrivateChat {
 			String messageWithTime = message+ts.toString();
 
 			//Add a copy to sender
-			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
 			String messageWithTimeAndOwner = messageWithTime + myEmail;
@@ -22,10 +22,9 @@ public class DBInteractorPrivateChat {
 			ps.setString(2, message);
 			ps.setTimestamp(3, ts);
 			ps.setString(4, "private");
-			ps.setString(5, "N/A");
+			ps.setString(5, myEmail);
 			ps.setString(6, myEmail);
-			ps.setString(7, myEmail);
-			ps.setString(8, recipientEmail);
+			ps.setString(7, recipientEmail);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -34,14 +33,12 @@ public class DBInteractorPrivateChat {
 			ps = con.prepareStatement(sql);
 			messageWithTimeAndOwner = messageWithTime + recipientEmail;
 			ps.setInt(1, messageWithTimeAndOwner.hashCode());
-			ps.setInt(1, messageWithTime.hashCode());
 			ps.setString(2, message);
 			ps.setTimestamp(3, ts);
 			ps.setString(4, "private");
-			ps.setString(5, "N/A");
-			ps.setString(6, recipientEmail);
-			ps.setString(7, myEmail);
-			ps.setString(8, recipientEmail);
+			ps.setString(5, recipientEmail);
+			ps.setString(6, myEmail);
+			ps.setString(7, recipientEmail);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();

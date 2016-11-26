@@ -11,10 +11,10 @@ public class DBInteractor {
 		try {	
                         Class.forName("oracle.jdbc.driver.OracleDriver");
                         String url = "jdbc:oracle:thin:@uml.cs.ucsb.edu:1521:xe";
-			//String username = "glee";
-			//String password = "304";
-			String username = "yuxiang";
-			String password = "049";
+			String username = "glee";
+			String password = "304";
+                        //String username = "yuxiang";
+                        //String password = "049";
                         Connection con = DriverManager.getConnection(url,username, password);
 			return con;
 		}

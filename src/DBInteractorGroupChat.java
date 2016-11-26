@@ -144,7 +144,7 @@ public class DBInteractorGroupChat {
 			String messageWithTime = message+ts.toString();
 
 			//Add a copy to sender
-			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
 			String messageWithTimeAndOwner = messageWithTime + myEmail;
@@ -152,10 +152,9 @@ public class DBInteractorGroupChat {
 			ps.setString(2, message);
 			ps.setTimestamp(3, ts);
 			ps.setString(4, "group");
-			ps.setString(5, "N/A");
+			ps.setString(5, myEmail);
 			ps.setString(6, myEmail);
-			ps.setString(7, myEmail);
-			ps.setString(8, groupName);
+			ps.setString(7, groupName);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
