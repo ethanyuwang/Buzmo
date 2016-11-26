@@ -3,6 +3,7 @@ package buzmo;
 import java.sql.*;
 import java.io.*;
 import java.net.*;
+import java.lang.*;
 
 public class DBInteractor {
 
@@ -252,6 +253,11 @@ public class DBInteractor {
 	}
 	
 
+
+
+
+
+
 	//Used for GroupChatJPanel 
 	public static Boolean createGroup(Connection con, String groupName){
 		try { 
@@ -285,23 +291,25 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return "";}
 }
 	//Used for GroupChatJPanel 
-	public static String getGroupID(Connection conm, String groupName){
-		/*try {
+	public static int getGroupID(Connection con, String groupName){
+		try {
 			int ret = -100;
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			String sql = "SELECT C.group_name FROM Group_chats C " +
 			"WHERE C.group_name='" + groupName + "'";
 			ResultSet rs = st.executeQuery(sql);
-			ret = rs.getString(1);
+			if(rs.next()){
+				ret = rs.getInt(1);
+			}
 			return ret;
+
 		}
-		catch(Exception e){System.out.println(e); return ret;}*/
-		return "Error";
+		catch(Exception e){System.out.println(e); return -100;}
 }
 	//Used for GroupChatJPanel 
 	public static Boolean changeGroupChatName(Connection con, String groupName, String newGroupName){
-		/*try {
+		try {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			String sql = "UPDATE Group_chats SET group_name = '" +
@@ -310,12 +318,11 @@ public class DBInteractor {
 			st.executeQuery(sql);			
 			return true;
 		}
-		catch(Exception e){System.out.println(e); return false;}*/
-		return false;
+		catch(Exception e){System.out.println(e); return false;}
 }
 	//Used for GroupChatJPanel 
 	public static Boolean changeGroupChatDuration(Connection con, String groupName, String newDuration){
-		/*try {
+		try {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			String sql = "UPDATE Group_chats SET duration = " +
@@ -324,8 +331,7 @@ public class DBInteractor {
 			st.executeQuery(sql);			
 			return true;
 		}
-		catch(Exception e){System.out.println(e); return false;}*/
-		return false;
+		catch(Exception e){System.out.println(e); return false;}
 }
 	//Used for GroupChatJPanel 
 	public static Boolean isGroup(Connection con, String groupName){
@@ -348,32 +354,33 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return false;}
 }
 	public static int getGroupChatDuration(Connection con, String groupName){
-		/*try {
+		try {
+			int ret=-10;
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			String sql = "SELECT C.duration FROM Group_chats C WHERE " +
 			"(C.owner='" + myEmail + "' AND C.group_name='" + groupName + "')"; 
-			ResultSet rs = st.executeQuery(sql);			
-			return rs.getInt(1));
+			ResultSet rs = st.executeQuery(sql);
+
+			if(rs.next()){
+				ret = rs.getInt(1);
+			}
+			return ret;
 		}
-		catch(Exception e){System.out.println(e); return -10;}*/
-		return -10;
-}
+
+		catch(Exception e){System.out.println(e); return -10;}
+	}
 
 	public static String getGroupChatDurationWrapper(Connection con, String groupName){
-		/*try {
-			int	duration = getGroupChatDuration(con, groupName)
-			if (duration>0) {
-				return String(duration);
-			}
-			else {
-				return "Error";
-			}
-			return rs.getInt(1));
+		int	duration = getGroupChatDuration(con, groupName);
+		if (duration>0) {
+			return Integer.toString(duration);
 		}
-		catch(Exception e){System.out.println(e); return "Error";;}*/
-		return "Error";
-}
+		else {
+			return "Error";
+		}
+	}
+
 	//Used for GroupChatJPanel 
 	public static Boolean addMessageToGroupChat(Connection con, String message, String groupName){
 		/*try {
@@ -718,11 +725,14 @@ public class DBInteractor {
 	//Used for GroupChatJPanel 
 	public static String getEmialWithName(Connection con, String name){
 		try {
+			String ret ="";
 			Statement st = con.createStatement();
 			String sql = "SELECT U.email_address FROM Users U " +
 			"WHERE U.name='" + name + "'";
 			ResultSet rs = st.executeQuery(sql);
-			String ret = rs.getString(1);
+			if(rs.next()){
+				ret = rs.getString(1);
+			}
 			return ret;
 		}
 		catch(Exception e){System.out.println(e); return "";}
