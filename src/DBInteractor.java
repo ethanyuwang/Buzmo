@@ -579,7 +579,7 @@ public class DBInteractor {
 	}
 
 	public enum loadDBControl {
-		none, addUser, addContacts, addPrivateMessages, addGroups, addCircle, addTopicWords, addManager
+		none, addUser, addContacts, addPrivateMessages, addGroups, addCircle, addTopicWords, addManager, finish
 	} 
 
 	public static Boolean loadDB(Connection con){
@@ -598,11 +598,13 @@ public class DBInteractor {
 				if (line=="Users")
 				{
 					ldbc=loadDBControl.addUser;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line=="Friends")
 				{
 					ldbc=loadDBControl.addContacts;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line=="Private_Messages")
@@ -628,6 +630,11 @@ public class DBInteractor {
 				else if(line=="Managers")
 				{
 					ldbc=loadDBControl.addManager;
+					continue;
+				}
+				else if(line=="Finish")
+				{
+					ldbc=loadDBControl.finish;
 					continue;
 				}
 
@@ -657,12 +664,16 @@ public class DBInteractor {
 						//	return false;
 						break;
 					}
+
 					default: {
 						break;
 					}				
 				}
 			}
-			return true;
+			if (ldbc==loadDBControl.finish)
+				return true;
+			else
+				return false;
 		}
 		catch(Exception e){System.out.println(e); return false;}
 	}
