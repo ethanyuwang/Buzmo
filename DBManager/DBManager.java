@@ -1,6 +1,11 @@
 import java.sql.*;
 
 public class DBManager {
+	
+	public String[] tbNames = {"USERS", "MANAGERS", "CIRCLE_POSTS", "GROUP_CHATS", "PRIVATE_CHATS", 
+				   "MESSAGES", "CONTACT_PENDING_LISTS", "CONTACT_LISTS", "GROUP_PENDING_LISTS",
+				   "GROUP_CHAT_MEMBERS", "POST_TOPIC_WORDS", "USER_TOPIC_WORDS", "GROUP_CHAT_MESSAGES", 
+				   "CIRCLE_POST_RECEIVERS", "PRIVATE_CHAT_MESSAGES"};
 
         public static void main(String[] args){
 
@@ -23,8 +28,6 @@ public class DBManager {
 			//Create Tables
 			createTables(con);
 			addForeignKeys(con);
-
-
 
 			//Print Table
 			//printTable(con, "USERS");
@@ -87,12 +90,25 @@ public class DBManager {
 	  		" text_string VARCHAR(1200) NOT NULL, " +
 	  		" timestamp DATE NOT NULL, " +
 	  		" type VARCHAR(15) NOT NULL, " +
-	  		" is_public VARCHAR(15) NOT NULL, " +
 	  		" owner VARCHAR(20) NOT NULL, " +
 	  		" sender VARCHAR(20) NOT NULL, " +
 	  		" receiver VARCHAR(20) NOT NULL, " +
 	  		" PRIMARY KEY (message_id))";
 			st.executeQuery(sql);
+
+			sql = "CREATE TABLE Circle_posts " +
+                        "(post_id INT NOT NULL, " +
+                        " post_string VARCHAR(1400) NOT NULL, " +
+                        " post_time DATE NOT NULL, " +
+                        " is_public VARCHAR(15) NOT NULL, " +
+                        " post_owner VARCHAR(20) NOT NULL, " +
+                        " PRIMARY KEY (post_id))";
+                        st.executeQuery(sql);
+
+			sql = "CREATE TABLE Circle_post_receivers " +
+                        "(post_receiver VARCHAR(256) NOT NULL, " +
+                        " post_id INT NOT NULL)";
+                        st.executeQuery(sql);
 
 			sql = "CREATE TABLE Contact_pending_lists " +
 	  		"(receiver VARCHAR(20) NOT NULL, " +
@@ -114,23 +130,20 @@ public class DBManager {
   			" member VARCHAR(20) NOT NULL)";
 			st.executeQuery(sql);
 			
-			sql = "CREATE TABLE Message_topic_words " +
-	  		"(Topic_word VARCHAR(256) NOT NULL, " +
-	  		" message_id INT NOT NULL)";
-			st.executeQuery(sql);
+                        sql = "CREATE TABLE Post_topic_words " +
+                        "(topic_word VARCHAR(256) NOT NULL, " +
+                        " post_id INT NOT NULL, " +
+                        " UNIQUE (topic_word, post_id))";
+                        st.executeQuery(sql);
 
-			sql = "CREATE TABLE User_topic_words " +
-	  		"(Topic_word VARCHAR(256) NOT NULL, " +
-	  		" email_address VARCHAR(20) NOT NULL)";
-			st.executeQuery(sql);
+                        sql = "CREATE TABLE User_topic_words " +
+                        "(topic_word VARCHAR(256) NOT NULL, " +
+                        " email_address VARCHAR(20) NOT NULL, " +
+                        " UNIQUE (topic_word, email_address))";
+                        st.executeQuery(sql);
 
 			sql = "CREATE TABLE Group_chat_messages " +
 	  		"(group_id INT NOT NULL, " +
-	  		" message_id INT NOT NULL)";
-			st.executeQuery(sql);
-
-			sql = "CREATE TABLE Circle_feed_messages " +
-	  		"(circle_id INT NOT NULL, " +
 	  		" message_id INT NOT NULL)";
 			st.executeQuery(sql);
 
@@ -138,7 +151,6 @@ public class DBManager {
 	  		"(pc_id INT NOT NULL, " +
 	  		" message_id INT NOT NULL)";
 			st.executeQuery(sql);
-
 		}
 		catch(Exception e){System.out.println(e);}
 	}
@@ -150,10 +162,6 @@ public class DBManager {
 		
 			String sql = "ALTER TABLE Managers " +
 	  		"ADD FOREIGN KEY (email_address) REFERENCES Users(email_address)";
-			st.executeQuery(sql);
-
-			sql = "ALTER TABLE Circle_feeds " +
-	  		"ADD FOREIGN KEY (owner) REFERENCES Users(email_address)";
 			st.executeQuery(sql);
 
 			sql = "ALTER TABLE Group_chats " +
@@ -170,10 +178,23 @@ public class DBManager {
 	  		"ADD FOREIGN KEY (sender) REFERENCES Users(email_address) " +
 	  		"ADD FOREIGN KEY (receiver) REFERENCES Users(email_address)";
 			st.executeQuery(sql);
+			
+            		sql = "ALTER TABLE Circle_posts " +
+                        "ADD FOREIGN KEY (post_owner) REFERENCES Users(email_address)";
+                        st.executeQuery(sql);
 
-			sql = "ALTER TABLE User_topic_words " + 
-	  		"ADD FOREIGN KEY (email_address) REFERENCES Users(email_address)";
-			st.executeQuery(sql);
+           		 sql = "ALTER TABLE Circle_post_receivers " +
+                        "ADD FOREIGN KEY (post_receiver) REFERENCES Users(email_address) " +
+                        "ADD FOREIGN KEY (post_id) REFERENCES Circle_posts(post_id)";
+                        st.executeQuery(sql);
+			
+                        sql = "ALTER TABLE User_topic_words " +
+                        "ADD FOREIGN KEY (email_address) REFERENCES Users(email_address)";
+                        st.executeQuery(sql);
+
+                        sql = "ALTER TABLE Post_topic_words " +
+                        "ADD FOREIGN KEY (post_id) REFERENCES Circle_posts(post_id)";
+                        st.executeQuery(sql);
 
 			sql = "ALTER TABLE Contact_pending_lists " + 
 	  		"ADD FOREIGN KEY (sender) REFERENCES Users(email_address) " +
@@ -190,17 +211,8 @@ public class DBManager {
 	  		"ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id)";
 			st.executeQuery(sql);
 
-			sql = "ALTER TABLE Message_topic_words " +
-	  		"ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
-			st.executeQuery(sql);
-
 			sql = "ALTER TABLE Group_chat_messages " +
 			"ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id) " +
-	  		"ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
-			st.executeQuery(sql);
-
-			sql = "ALTER TABLE Circle_feed_messages " +
-			"ADD FOREIGN KEY (circle_id) REFERENCES Circle_feeds(circle_id) " +
 	  		"ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
 			st.executeQuery(sql);
 
@@ -213,47 +225,22 @@ public class DBManager {
 			"ADD FOREIGN KEY (pc_id) REFERENCES Private_chats(pc_id) " +
 	  		"ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
 			st.executeQuery(sql);
-			
 		}
 		catch(Exception e){System.out.println(e);}
 	}
 
-	public static void deleteTables(Connection con){
-		try{
-			Statement st = con.createStatement();
-			String sql = "DROP TABLE USERS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE MANAGERS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE CIRCLE_FEEDS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE GROUP_CHATS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE PRIVATE_CHATS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE MESSAGES CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE CONTACT_PENDING_LISTS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE CONTACT_LISTS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE GROUP_PENDING_LISTS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE GROUP_CHAT_MEMBERS CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE Message_topic_Words CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE User_topic_words CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE Group_chat_messages CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE Circle_feed_messages CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-			sql = "DROP TABLE Private_chat_messages CASCADE CONSTRAINTS";
-			st.executeUpdate(sql);
-		}
-		catch(Exception e){System.out.println(e);}
-	}
+        public static void deleteTables(Connection con){
+                Statement st;
+                String sql;
+                for(int i=0; i<tbNames.length; i++){
+                        try{
+                                st = con.createStatement();
+                                sql = "DROP TABLE " + tbNames[i] + " CASCADE CONSTRAINTS";
+                                st.executeUpdate(sql);
+                        }
+                        catch(Exception e){System.out.println(e);}
+                }
+        }
 
 	public static void printTable(Connection con, String TBName){
 		try{
@@ -309,15 +296,13 @@ public class DBManager {
 		catch(Exception e){System.out.println(e);}
 	}
 
-	public static void printAllTables(Connection con){
-		try{
-			String[] tbNames = {"USERS", "MANAGERS", "CIRCLE_FEEDS", "GROUP_CHATS", "PRIVATE_CHATS", "MESSAGES", "CONTACT_PENDING_LISTS", "CONTACT_LISTS", "GROUP_PENDING_LISTS", "GROUP_CHAT_MEMBERS", "MESSAGE_TOPIC_WORDS", "USER_TOPIC_WORDS", "GROUP_CHAT_MESSAGES", "CIRCLE_FEED_MESSAGES", "PRIVATE_CHAT_MESSAGES"};
-			for(int i=0; i<15; i++){
-				printTable(con, tbNames[i]);
-				System.out.println();
-			}
-		}
-		catch(Exception e){System.out.println(e);}
-	}
-
+        public static void printAllTables(Connection con){
+                try{
+                        for(int i=0; i<15; i++){
+                                printTable(con, tbNames[i]);
+                                System.out.println();
+                        }
+                }
+                catch(Exception e){System.out.println(e);}
+        }
 }
