@@ -642,17 +642,15 @@ public class DBInteractor {
 				//do specific task
 				switch(ldbc) {
 					case addUser: {
+						System.out.println("Adding user " + line);
 						if (addUserWithString(con, line)==false)
 							return false;
-						else
-							System.out.println("Adding user " + line);
 						break;
 					}
 					case addContacts: {
+						System.out.println("Adding contacts " + line);
 						if (addContactsCircle(con, line)==false)
 							return false;
-						else
-							System.out.println("Adding contacts " + line);
 						break;
 					}
 					case addPrivateMessages: {
@@ -681,7 +679,7 @@ public class DBInteractor {
 
 	public static Boolean addUserWithString(Connection con, String line){
 		String[] informations = line.split(",");
-		System.out.println(informations[1]+ informations[2]+ informations[0]+ informations[3]+ informations[4]);
+		//System.out.println(informations[1]+ informations[2]+ informations[0]+ informations[3]+ informations[4]);
 		return addUser(con, informations[1], informations[2], informations[0], informations[3], informations[4]);
 	}
 
