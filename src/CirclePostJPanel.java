@@ -9,7 +9,7 @@ import java.awt.event.ItemEvent;
 
 public class CirclePostJPanel extends JPanel
 {
-    //JPanel
+   /* //JPanel
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
@@ -230,5 +230,5 @@ public class CirclePostJPanel extends JPanel
 			}
 		}
 	});
-    }
+    }*/
 }
