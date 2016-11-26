@@ -10,12 +10,20 @@ public class DBInteractorGroupChat {
 	public static Boolean createGroup(Connection con, String groupName){
 		try { 
 			Statement st = con.createStatement();
-			// Note: insert order needs to match table column order
+			int groupId = groupName.hashCode();
+			// Create table
 			String sql = "INSERT INTO Group_chats " +
-			"VALUES (" + groupName.hashCode() + ", '" +
+			"VALUES (" + groupId + ", '" +
 			groupName + "', " +
 			7 + ", " +
 			"'" + BuzmoJFrame.userEmail + "')";
+			st.executeUpdate(sql);
+
+			// link to group members
+			sql = "INSERT INTO Group_chat_members " +
+			"VALUES (" + groupId + ", '" +
+			BuzmoJFrame.userEmail + "')";
+
 			st.executeUpdate(sql);
 			return true;
 		}
@@ -86,18 +94,17 @@ public class DBInteractorGroupChat {
 		try {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
-			String sql = "SELECT C.group_name FROM Group_chats C WHERE " +
-			"(C.owner='" + myEmail + "')"; 
+			int groupId = getGroupID(con, groupName);
+
+			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +
+			"(G.group_id=" + groupId + ")"; 
 			ResultSet rs = st.executeQuery(sql);			
 			while(rs.next()){
-				if (groupName==rs.getString(1)){
+				if (myEmail.equals(rs.getString(1))){
 					return true;
 				}
-				else{
-					return false;
-				}
 			}
-			return true;
+			return false;
 		}
 		catch(Exception e){System.out.println(e); return false;}
 }
@@ -160,7 +167,7 @@ public class DBInteractorGroupChat {
 
 	//Used for GroupChatJPanel 
 	public static String loadGroupChatHistory(Connection con, String groupName){
-		/*try {
+		try {
 			//cleanOldGroupChatHistory(con, groupName);
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;	
@@ -177,8 +184,7 @@ public class DBInteractorGroupChat {
 			}
 			return ret;
 		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return "Error";
+		catch(Exception e){System.out.println(e); return "";}
 }
 
 	public static Boolean cleanOldGroupChatHistory(Connection con, String groupName){
