@@ -593,50 +593,47 @@ public class DBInteractor {
 		try (BufferedReader br = new BufferedReader(new FileReader(db))){
 			String line;
 			line = br.readLine();
-			if (line==null) 
-				System.out.println("null file");
 
 			while ((line = br.readLine())!=null){
-				System.out.println(line);
 				//decide what to do
-				if (line=="Users")
+				if (line.equals("Users"))
 				{
 					ldbc=loadDBControl.addUser;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line=="Friends")
+				else if(line.equals("Friends"))
 				{
 					ldbc=loadDBControl.addContacts;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line=="Private_Messages")
+				else if(line.equals("Private_Messages"))
 				{
 					ldbc=loadDBControl.addPrivateMessages;
 					continue;
 				}
-				else if(line=="Chat_groups")
+				else if(line.equals("Chat_groups"))
 				{
 					ldbc=loadDBControl.addGroups;
 					continue;
 				}
-				else if(line=="Circle_feeds")
+				else if(line.equals("Circle_feeds"))
 				{
 					ldbc=loadDBControl.addCircle;
 					continue;
 				}
-				else if(line=="User_Topic_words")
+				else if(line.equals("User_Topic_words"))
 				{
 					ldbc=loadDBControl.addTopicWords;
 					continue;
 				}
-				else if(line=="Managers")
+				else if(line.equals("Managers"))
 				{
 					ldbc=loadDBControl.addManager;
 					continue;
 				}
-				else if(line=="Finish")
+				else if(line.equals("Finish"))
 				{
 					ldbc=loadDBControl.finish;
 					continue;
