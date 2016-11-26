@@ -151,8 +151,7 @@ public class GroupChatJPanel extends JPanel
 
 	//Pannels
 	gbc = new GridBagConstraints();
-	topWestPanel = new JPanel(new BorderLayout());
-	topPanel = new JPanel(new BorderLayout());
+	topPanel = new JPanel(new GridBagLayout());
 	//topPanel.setPreferredSize(new Dimension(topPanelWidth, pannelHeight));
 	topPanel.setSize(topPanelWidth, pannelHeight);
 
@@ -168,10 +167,24 @@ public class GroupChatJPanel extends JPanel
 	setLayout(new GridBagLayout());
 
 	//add components to top panel
-	topWestPanel.add(groupChatsListScroll, BorderLayout.NORTH);
-	topWestPanel.add(groupMembersScroll, BorderLayout.CENTER);
-	topPanel.add(historyScroll, BorderLayout.CENTER);
-	topPanel.add(topWestPanel, BorderLayout.WEST);
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.ipady = (int) (pannelHeight * 0.5);
+	gbc.ipadx = (int) (topPanelWidth * 0.25);
+	topPanel.add(groupChatsListScroll, gbc);
+
+	gbc.gridx = 0;
+	gbc.gridy = 1;
+	gbc.ipady = (int) (pannelHeight * 0.5);
+	gbc.ipadx = (int) (topPanelWidth * 0.25);
+	topPanel.add(groupMembersScroll, gbc);
+
+	gbc.gridx = 1;
+	gbc.gridy = 0;
+	gbc.ipady = pannelHeight;
+	gbc.ipadx = (int) (topPanelWidth * 0.5);
+	topPanel.add(historyScroll, gbc);
+
 
 	//add components to med panel
 	//Select chat group components
@@ -293,13 +306,13 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipadx = topPanelWidth;
 	add(topPanel, gbc);
 
-	gbc.gridx = 0;
+	gbc.gridx = 1;
 	gbc.gridy = 0;
 	gbc.ipady = pannelHeight;
 	gbc.ipadx = medPanelWidth;
 	add(medPanel, gbc);
 
-	gbc.gridx = 0;
+	gbc.gridx = 2;
 	gbc.gridy = 0;
 	gbc.ipady = pannelHeight;
 	gbc.ipadx = botPanelWidth;
