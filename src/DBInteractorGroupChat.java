@@ -40,11 +40,12 @@ public class DBInteractorGroupChat {
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
-			String sql = "SELECT C.group_name FROM Group_chats C " +
-			"WHERE C.owner='" + myEmail + "'";
+			String sql = "SELECT C.group_id FROM Group_chat_members C " +
+			"WHERE C.member='" + myEmail + "'";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
-				ret += rs.getString(1);
+				String groupName = getGroupName(con, rs.getInt(1));
+				ret += groupName;
 				ret += "\n";
 			}
 			return ret;
