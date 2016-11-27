@@ -335,7 +335,7 @@ public class DBInteractorGroupChat {
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
-			String sql = "SELECT C.group_id FROM Group_pending_lists G " +
+			String sql = "SELECT G.group_id FROM Group_pending_lists G " +
 			"WHERE G.pending_people='" + myEmail + "'";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
