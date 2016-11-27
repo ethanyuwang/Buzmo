@@ -4,7 +4,7 @@
 # To-do:
 * ~~Merge: DBInteractor.java, DBManager.java~~
 
-* PrivateChats currently does not use Private_chats table. Update interactor so that it is used.
+* ~~PrivateChats currently does not use Private_chats table. Update interactor so that it is used.~~
 
 * Delete/delete on cascade
 
