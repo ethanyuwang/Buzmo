@@ -176,7 +176,7 @@ public class GroupChatJPanel extends JPanel
 	ChatDispalSubyPanel.add(groupChatsListScroll);
 	ChatDispalSubyPanel.add(groupMembersScroll);
 
-	ChatDispalyPanel.setPreferredSize(new java.awt.Dimension((int)(ChatDispalyPanelWidth*0.4), pannelHeight));
+	//ChatDispalyPanel.setPreferredSize(new java.awt.Dimension((int)(ChatDispalyPanelWidth*0.4), pannelHeight));
 	
 	ChatDispalyPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, ChatDispalSubyPanel, historyScroll);
 	ChatDispalyPanel.setDividerLocation(125);
