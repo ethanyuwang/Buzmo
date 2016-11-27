@@ -62,7 +62,25 @@ public class DBInteractorGroupChat {
 
 		}
 		catch(Exception e){System.out.println(e); return -100;}
-}
+	}
+	//Used for GroupChatJPanel 
+	public static String getGroupName(Connection con, int groupId){
+		try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			String sql = "SELECT C.group_name FROM Group_chats C " +
+			"WHERE C.group_id='" + groupId + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ret = rs.getString(1);
+			}
+			return ret;
+
+		}
+		catch(Exception e){System.out.println(e); return "";}
+	}
+
 	//Used for GroupChatJPanel 
 	public static Boolean changeGroupChatName(Connection con, String groupName, String newGroupName){
 		try {
@@ -215,9 +233,10 @@ public class DBInteractorGroupChat {
 }
 	//Used for GroupChatJPanel 
 	public static Boolean inviteToGroupChat(Connection con, String groupName, String requestEmail){
-		/*try {
+		try {
 			String senderEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
+			int groupId = getGroupID(con, groupName);
 			int count;
 			// check contact list
 			String sql = "SELECT count(*) FROM CONTACT_LISTS C WHERE " +
@@ -246,26 +265,27 @@ public class DBInteractorGroupChat {
 				}
 			}
 			else{return false;}
+
 			// add to table
-			sql = "INSERT INTO CONTACT_PENDING_LISTS " +
+			sql = "INSERT INTO Group_pending_lists " +
 			"VALUES ('" + requestEmail + "', " +
-			" '" + senderEmail + "')";
+			" '" + groupId + "')";
 			st.executeUpdate(sql);
 			return true;
 		}
-		catch(Exception e){System.out.println(e); return false;}*/
-		return true;
+		catch(Exception e){System.out.println(e); return false;}
 	}
 
 	//Used for GroupChatJPanel 
 	public static Boolean addGroupChat(Connection con, String groupName){
-		/*try {
+		try {
+			int groupId = getGroupID(con, groupName);
 			String receiverEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			// check pending list
-			String sql = "SELECT count(*) FROM CONTACT_PENDING_LISTS C WHERE " +
-			"(C.receiver='" + receiverEmail + "' AND " +
-			" C.sender='" + acceptEmail + "')"; 
+			String sql = "SELECT count(*) FROM Group_pending_lists G WHERE " +
+			"(G.pending_people='" + receiverEmail + "' AND " +
+			" G.group_id='" + groupId + "')"; 
 			ResultSet rs = st.executeQuery(sql);			
 			if(rs.next()){
 				int count = rs.getInt(1);
@@ -274,23 +294,19 @@ public class DBInteractorGroupChat {
 				}
 			}
 			// remove from pending list
-			sql = "DELETE FROM CONTACT_PENDING_LISTS C " +
-			"WHERE C.receiver='" + receiverEmail + "' " + 
-			"AND C.sender='" + acceptEmail + "'";
+			sql = "DELETE FROM Group_pending_lists G " +
+			"WHERE G.pending_people='" + receiverEmail + "' " + 
+			"AND G.group_id='" + groupId + "'";
 			st.executeUpdate(sql);
-			// add to contact list both ways
-			sql = "INSERT INTO CONTACT_LISTS " + 
-			"VALUES ('" + acceptEmail + "', " + 
+			// add to GROUP MEMEBERS list
+			sql = "INSERT INTO Group_chat_members " + 
+			"VALUES ('" + groupId + "', " + 
 			" '" + receiverEmail + "')";
 			st.executeUpdate(sql);
-			sql = "INSERT INTO CONTACT_LISTS " + 
-			"VALUES ('" + receiverEmail + "', " + 
-			" '" + acceptEmail + "')";
-			st.executeUpdate(sql);
+			
 			return true;
 		}
-		catch(Exception e){System.out.println(e); return false;}*/
-		return true;
+		catch(Exception e){System.out.println(e); return false;}
 	}
 	//Used for GroupChatJPanel 
 	public static String getGroupMembers(Connection con, String groupName){
@@ -310,26 +326,25 @@ public class DBInteractorGroupChat {
 
 		}
 		catch(Exception e){System.out.println(e); return "";}
-}
+	}
 
 
 	//Used for GroupChatJPanel 
 	public static String getPendingGroupChatInvites(Connection con){
-		/*try {
+		try {
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
-			String sql = "SELECT C.sender FROM CONTACT_PENDING_LISTS C " +
-			"WHERE C.receiver='" + myEmail + "'";
+			String sql = "SELECT C.group_id FROM Group_pending_lists G " +
+			"WHERE G.pending_people='" + myEmail + "'";
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
-				ret += rs.getString(1);
+				String groupName = getGroupName(con, rs.getInt(1));
+				ret += groupName;
 				ret += "\n";
 			}
 			return ret;
 		}
 		catch(Exception e){System.out.println(e); return "";}
-	}*/
-		return ":";
 	}
 }

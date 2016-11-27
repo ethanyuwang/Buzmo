@@ -18,7 +18,7 @@ public class GroupChatJPanel extends JPanel
 
     //GUI
     GridBagConstraints gbc;
-    JPanel ChatDispalyPanel;
+    JSplitPane ChatDispalyPanel;
     JPanel ChatDispalSubyPanel;
 
     JPanel ChatControlPanel;
@@ -155,9 +155,9 @@ public class GroupChatJPanel extends JPanel
 	//Pannels
 	gbc = new GridBagConstraints();
 	ChatDispalSubyPanel = new JPanel(new GridLayout(2,1));
-	ChatDispalyPanel = new JPanel(new BorderLayout());
+	//ChatDispalyPanel = new JPanel(new BorderLayout());
 	//ChatDispalyPanel.setPreferredSize(new Dimension(ChatDispalyPanelWidth, pannelHeight));
-	ChatDispalyPanel.setSize(ChatDispalyPanelWidth, pannelHeight);
+	//ChatDispalyPanel.setSize(ChatDispalyPanelWidth, pannelHeight);
 
 	ChatControlPanel = new JPanel(new GridBagLayout());
 	//ChatControlPanel.setPreferredSize(new Dimension(ChatControlPanelWidth, pannelHeight));
@@ -177,8 +177,12 @@ public class GroupChatJPanel extends JPanel
 	ChatDispalSubyPanel.add(groupMembersScroll);
 
 	ChatDispalyPanel.setPreferredSize(new java.awt.Dimension((int)(ChatDispalyPanelWidth*0.4), pannelHeight));
-	ChatDispalyPanel.add(ChatDispalSubyPanel, BorderLayout.WEST);
-	ChatDispalyPanel.add(historyScroll, BorderLayout.CENTER);
+	
+	ChatDispalyPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, ChatDispalSubyPanel, historyScroll);
+	ChatDispalyPanel.setDividerLocation(125);
+
+	//ChatDispalyPanel.add(ChatDispalSubyPanel, BorderLayout.WEST);
+	//ChatDispalyPanel.add(historyScroll, BorderLayout.CENTER);
 
 	//add components to med panel
 	//Select chat group components
@@ -314,6 +318,7 @@ public class GroupChatJPanel extends JPanel
 			Boolean complete = DBInteractorGroupChat.isGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				currentGroupName=temp;
+				changeGroupDurationTextField.setText("Current duration is " + DBInteractorGroupChat.getGroupChatDurationWrapper(BuzmoJFrame.con, currentGroupName) +" days");
 				groupMembersTextArea.setText("Members:\n"+DBInteractorGroupChat.getGroupMembers(BuzmoJFrame.con, currentGroupName));
 				historyTextArea.setText("You entered chat group: "+temp+"\n");
 				historyTextArea.append(DBInteractorGroupChat.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
@@ -326,6 +331,10 @@ public class GroupChatJPanel extends JPanel
 	inviteButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if(currentGroupName.equals("")){
+				historyTextArea.append("Please select a group\n");
+				return;
+			}
 			String temp = inviteTextField.getText();
 			Boolean complete = DBInteractorGroupChat.inviteToGroupChat(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
@@ -370,9 +379,14 @@ public class GroupChatJPanel extends JPanel
 	changeGroupNameBUtton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if(currentGroupName.equals("")){
+				historyTextArea.append("Please select a group\n");
+				return;
+			}
 			String temp = changeGroupNameTextField.getText();
 			Boolean complete = DBInteractorGroupChat.changeGroupChatName(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
+				changeGroupDurationTextField.setText("Current duration is " + DBInteractorGroupChat.getGroupChatDurationWrapper(BuzmoJFrame.con, currentGroupName) +" days");
 				historyTextArea.append("You changed current group name to: "+temp+"\n");
 			}
 			else{
@@ -383,6 +397,10 @@ public class GroupChatJPanel extends JPanel
 	changeGroupDurationBUtton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if(currentGroupName.equals("")){
+				historyTextArea.append("Please select a group\n");
+				return;
+			}
 			String temp = changeGroupDurationTextField.getText();
 			Boolean complete = DBInteractorGroupChat.changeGroupChatDuration(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
