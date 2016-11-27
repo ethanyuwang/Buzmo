@@ -11,6 +11,11 @@ public class DBInteractorGroupChat {
 		try { 
 			Statement st = con.createStatement();
 			int groupId = groupName.hashCode();
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
 			// Create table
 			String sql = "INSERT INTO Group_chats " +
 			"VALUES (" + groupId + ", '" +
@@ -49,7 +54,7 @@ public class DBInteractorGroupChat {
 	//Used for GroupChatJPanel 
 	public static int getGroupID(Connection con, String groupName){
 		try {
-			int ret = -100;
+			int ret = 0;
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			String sql = "SELECT C.group_id FROM Group_chats C " +
@@ -61,7 +66,7 @@ public class DBInteractorGroupChat {
 			return ret;
 
 		}
-		catch(Exception e){System.out.println(e); return -100;}
+		catch(Exception e){System.out.println(e); return 0;}
 	}
 	//Used for GroupChatJPanel 
 	public static String getGroupName(Connection con, int groupId){
@@ -123,9 +128,9 @@ public class DBInteractorGroupChat {
 				if (myEmail.equals(rs.getString(1)))
 					isOwner = true;
 			}
-			
+
 			if(isOwner == false) {
-				System.out.println("changeGroupChatDuration failed at current user isnt the owner\n");
+				System.out.println("changeGroupChatName failed at current user isnt the owner\n");
 				return false;
 			}
 
@@ -143,6 +148,11 @@ public class DBInteractorGroupChat {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
 			System.out.println("Group id is : "+groupId);
 			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +
 			"(G.group_id=" + groupId + ")"; 
@@ -191,6 +201,11 @@ public class DBInteractorGroupChat {
 			Timestamp ts = DBInteractor.getCurrentTimeStamp();
 			String messageWithTime = message+ts.toString();
 			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
 
 			//Add a copy to sender
 			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
@@ -221,6 +236,11 @@ public class DBInteractorGroupChat {
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;	
 			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return "";
+			}
 			Statement st = con.createStatement();
 			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
 			"M.type='group' AND M.group_id='" + groupId + 
@@ -267,6 +287,11 @@ public class DBInteractorGroupChat {
 			String senderEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
 			int count;
 			// check contact list
 			String sql = "SELECT count(*) FROM CONTACT_LISTS C WHERE " +
@@ -316,6 +341,11 @@ public class DBInteractorGroupChat {
 	public static Boolean addGroupChat(Connection con, String groupName){
 		try {
 			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
 			String receiverEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			// check pending list
@@ -349,6 +379,11 @@ public class DBInteractorGroupChat {
 		try {
 			String ret = "";
 			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return "";
+			}
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +
