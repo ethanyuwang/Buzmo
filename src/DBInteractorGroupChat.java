@@ -142,20 +142,21 @@ public class DBInteractorGroupChat {
 			String myEmail = BuzmoJFrame.userEmail;
 			Timestamp ts = DBInteractor.getCurrentTimeStamp();
 			String messageWithTime = message+ts.toString();
+			int groupId = getGroupID(con, groupName);
 
 			//Add a copy to sender
-			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?)";	
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
 			String messageWithTimeAndOwner = messageWithTime + myEmail;
-			
+
 			ps.setInt(1, messageWithTimeAndOwner.hashCode());
 			ps.setString(2, message);
 			ps.setTimestamp(3, ts);
 			ps.setString(4, "group");
 			ps.setString(5, myEmail);
 			ps.setString(6, myEmail);
-			ps.setString(7, groupName);
+			ps.setInt(8, groupId);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -170,11 +171,11 @@ public class DBInteractorGroupChat {
 			//cleanOldGroupChatHistory(con, groupName);
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;	
+			int groupId = getGroupID(con, groupName);
 			Statement st = con.createStatement();
 			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
-			"M.type='group' AND M.owner='" + groupName + "' AND " + 
-			"((M.sender='" + myEmail +
-			"')) ORDER BY M.timestamp";
+			"M.type='group' AND M.group_id='" + groupId + 
+			"' ORDER BY M.timestamp";
 			ResultSet rs = st.executeQuery(sql);			
 			while(rs.next()){
 				ret += rs.getString(2) + " (";

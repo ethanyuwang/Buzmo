@@ -85,7 +85,8 @@ public class DBManager {
                         " type VARCHAR(15) NOT NULL, " +
                         " owner VARCHAR(20) NOT NULL, " +
                         " sender VARCHAR(20) NOT NULL, " +
-                        " receiver VARCHAR(20) NOT NULL, " +
+                        " receiver VARCHAR(20), " +
+                        " group_id INT, " +
                         " PRIMARY KEY (message_id))";
                         st.executeQuery(sql);
                         sql = "CREATE TABLE Circle_posts " +
@@ -164,10 +165,11 @@ public class DBManager {
                         "ADD FOREIGN KEY (member_2) REFERENCES Users(email_address)";
                         st.executeQuery(sql);
 
-                        sql = "ALTER TABLE Messages " +
+                        sql = "ALTER TABLE Messages " + 
                         "ADD FOREIGN KEY (owner) REFERENCES Users(email_address) " +
                         "ADD FOREIGN KEY (sender) REFERENCES Users(email_address) " +
-                        "ADD FOREIGN KEY (receiver) REFERENCES Users(email_address)";
+                        "ADD FOREIGN KEY (receiver) REFERENCES Users(email_address) " +
+                        "ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id)";
                         st.executeQuery(sql);
 
                         sql = "ALTER TABLE Circle_posts " +
