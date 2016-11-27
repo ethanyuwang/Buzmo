@@ -26,6 +26,7 @@ public class GroupChatJPanel extends JPanel
     JPanel ControlPanel;
 
     //Naviagtion Components
+    JButton deleteButton;
     JButton backButton;
 
     //Chat dispaly and control Components
@@ -151,6 +152,7 @@ public class GroupChatJPanel extends JPanel
 
 	//Naviagtion Components
 	backButton = new JButton("Back");
+	deleteButton = new JButton("Deleteion Page");	
 
 	//Pannels
 	gbc = new GridBagConstraints();
@@ -230,9 +232,15 @@ public class GroupChatJPanel extends JPanel
 	gbc.gridheight = 3;
 	ChatControlPanel.add(createButton, gbc);
 
-	//Navigation Components
 	gbc.gridx = 0;
 	gbc.gridy = 21;
+	gbc.ipady = 0;
+	gbc.gridheight = 3;
+	ChatControlPanel.add(deleteButton, gbc);
+
+	//Navigation Components
+	gbc.gridx = 0;
+	gbc.gridy = 24;
 	ChatControlPanel.add(backButton, gbc);
 
 	//add components to bot panel
@@ -419,6 +427,12 @@ public class GroupChatJPanel extends JPanel
 		}
 	});
 
+	deleteButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new GroupChatDeleteJPanel());
+		}
+	});
 	backButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {

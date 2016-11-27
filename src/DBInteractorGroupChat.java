@@ -258,9 +258,48 @@ public class DBInteractorGroupChat {
 			}
 			return ret;
 		}
-		catch(Exception e){System.out.println(e); return "";}
+		catch(Exception e){System.out.println(e); return "FAILED to load group chat messages";}
 	}
-
+	public static String loadUsersMessages(Connection con, String groupName){
+		// with message_id -> used for delete selection
+		try {
+			String ret = "";
+			String myEmail = BuzmoJFrame.userEmail;	
+			int groupId = getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return "";
+			}
+			// get group chat messages
+			Statement st = con.createStatement();
+			String sql = "SELECT M.text_string, M.sender, M.timestamp, M.message_id FROM MESSAGES M WHERE " +
+			"M.type='group' AND M.group_id='" + groupId + 
+			"' AND M.owner='" + myEmail + "' ORDER BY M.timestamp";
+			ResultSet rs = st.executeQuery(sql);			
+			while(rs.next()){
+				ret += "<message_id: " + rs.getString(4) + ">\n";
+				ret += rs.getString(2) + " (";
+				ret += rs.getString(3) + "): ";
+				ret += rs.getString(1) + "\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "FAILED to load group chat messages";}
+	} 
+	// deletion
+        public static boolean deleteGroupMessage(Connection con, String message_id_str){
+                try {
+                        int message_id = Integer.parseInt(message_id_str);
+                        String myEmail = BuzmoJFrame.userEmail;
+                        String sql = "DELETE FROM MESSAGES M WHERE M.message_id=?";
+                        PreparedStatement ps = con.prepareStatement(sql);
+                        ps.setInt(1, message_id);
+                        ps.executeUpdate();
+                        return true;
+                }
+                catch(Exception e){System.out.println(e); return false;}
+        }
 	public static Boolean cleanOldGroupChatHistory(Connection con, String groupName, int groupId){
 		try {
 			int duration = getGroupChatDuration(con, groupName);
@@ -419,7 +458,6 @@ public class DBInteractorGroupChat {
 		}
 		catch(Exception e){System.out.println(e); return "";}
 	}
-
 
 	//Used for GroupChatJPanel 
 	public static String getPendingGroupChatInvites(Connection con){
