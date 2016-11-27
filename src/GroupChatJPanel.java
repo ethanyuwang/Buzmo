@@ -129,7 +129,7 @@ public class GroupChatJPanel extends JPanel
 	inviteButton = new JButton("Invite");
 
     	//List of request and add Components
-   	pendingRequestsTextArea = new JTextArea("You're invited to the following groups:\n"+DBInteractorGroupChat.getPendingGroupChatInvites(BuzmoJFrame.con));
+   	pendingRequestsTextArea = new JTextArea("You're invited to:\n"+DBInteractorGroupChat.getPendingGroupChatInvites(BuzmoJFrame.con));
 	pendingRequestsTextArea.setEditable(false);
 	pendingRequestsTextArea.setLineWrap(true);
 	pendingRequestsTextArea.setWrapStyleWord(false);
@@ -253,7 +253,7 @@ public class GroupChatJPanel extends JPanel
 
 	//edit contact list components
 	c.gridy = 3;
-	c.ipady = 90;
+	c.ipady = 120;
 	GroupControlPanel.add(contactsScroll, c);
 	c.gridy = 4;
 	c.ipady = 50;
@@ -357,6 +357,7 @@ public class GroupChatJPanel extends JPanel
 			else{
 				historyTextArea.append("Can not add chat group: "+temp+"\n");
 			}
+			addTextField.setText("Select a group to add");
 		}
 	});
 
