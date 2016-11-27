@@ -92,7 +92,7 @@ public class DBInteractorGroupChat {
 			"C.group_name='" + groupName + "'"; 
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
-				if (myEmail == rs.getString(1))
+				if (myEmail.equals(rs.getString(1)))
 					isOwner = true;
 			}
 
@@ -120,7 +120,7 @@ public class DBInteractorGroupChat {
 			"C.group_name='" + groupName + "'"; 
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
-				if (myEmail == rs.getString(1))
+				if (myEmail.equals(rs.getString(1)))
 					isOwner = true;
 			}
 			

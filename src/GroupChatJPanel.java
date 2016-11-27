@@ -195,7 +195,6 @@ public class GroupChatJPanel extends JPanel
 	ChatControlPanel.add(groupChatSelectScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 6;
-	gbc.ipady = 0;
 	gbc.gridheight = 3;
 	ChatControlPanel.add(selectButton, gbc);
 
@@ -319,6 +318,7 @@ public class GroupChatJPanel extends JPanel
 			Boolean complete = DBInteractorGroupChat.isGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				currentGroupName=temp;
+				changeGroupNameTextField.setText("Change group name to");
 				changeGroupDurationTextField.setText("Current duration is " + DBInteractorGroupChat.getGroupChatDurationWrapper(BuzmoJFrame.con, currentGroupName) +" days");
 				groupMembersTextArea.setText("Members:\n"+DBInteractorGroupChat.getGroupMembers(BuzmoJFrame.con, currentGroupName));
 				historyTextArea.setText("You entered chat group: "+temp+"\n");
