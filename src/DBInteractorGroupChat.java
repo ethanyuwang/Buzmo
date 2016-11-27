@@ -246,25 +246,31 @@ public class DBInteractorGroupChat {
 			if(rs.next()){
 				count = rs.getInt(1);
 				if(count > 0){
+					System.out.println("inviteToGroupChat failed at multiple same contacts\n");
 					return false;
 				}
 			}
-			else{return false;}
+			else{
+				System.out.println("inviteToGroupChat failed at contact not found\n");
+				return false;
+			}
+
 			// check pending list
 			sql = "SELECT count(*) FROM Group_pending_lists C WHERE " +
-			"(C.receiver='" + requestEmail + "' AND " +
-			" C.sender='" + senderEmail + "') " + 
-			"OR " +
-			"(C.receiver='" + senderEmail + "' AND " +
-			" C.sender='" + requestEmail + "')"; 
+			"(C.pending_people='" + requestEmail + "' AND " +
+			" C.group_id='" + groupId + "')"; 
 			rs = st.executeQuery(sql);			
 			if(rs.next()){
 				count = rs.getInt(1);
 				if(count > 0){
+					System.out.println("inviteToGroupChat failed at multiple requests exist\n");
 					return false;
 				}
 			}
-			else{return false;}
+			else{
+				System.out.println("inviteToGroupChat failed at pending list not found\n");
+				return false;
+			}
 
 			// add to table
 			sql = "INSERT INTO Group_pending_lists " +

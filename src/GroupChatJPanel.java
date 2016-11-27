@@ -240,12 +240,12 @@ public class GroupChatJPanel extends JPanel
 	//answer pending request components
 	c.gridx = 0;
 	c.gridy = 0;
-	c.ipady = 50;
+	c.ipady = 70;
 	c.ipadx = 150;
 	
 	GroupControlPanel.add(pendingRequestsScroll, c);
 	c.gridy = 1;
-
+	c.ipady = 40;
 	GroupControlPanel.add(addScroll, c);
 	c.gridy = 2;
 	c.ipady = 0;
@@ -253,9 +253,10 @@ public class GroupChatJPanel extends JPanel
 
 	//edit contact list components
 	c.gridy = 3;
-	c.ipady = 50;
+	c.ipady = 90;
 	GroupControlPanel.add(contactsScroll, c);
 	c.gridy = 4;
+	c.ipady = 50;
 	GroupControlPanel.add(inviteScroll, c);
 	c.gridy = 5;
 	c.ipady = 0;
@@ -263,13 +264,13 @@ public class GroupChatJPanel extends JPanel
 
 	//change current group name and duration Components
 	c.gridy = 6;
-	c.ipady = 50;
+	c.ipady = 40;
 	GroupControlPanel.add(changeGroupNameScroll, c);
 	c.gridy = 7;
 	c.ipady = 0;
 	GroupControlPanel.add(changeGroupNameBUtton, c);
 	c.gridy = 8;
-	c.ipady = 50;
+	c.ipady = 40;
 	GroupControlPanel.add(changeGroupDurationScroll, c);
 	c.gridy = 9;
 	c.ipady = 0;
@@ -386,7 +387,7 @@ public class GroupChatJPanel extends JPanel
 			String temp = changeGroupNameTextField.getText();
 			Boolean complete = DBInteractorGroupChat.changeGroupChatName(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
-				changeGroupDurationTextField.setText("Current duration is " + DBInteractorGroupChat.getGroupChatDurationWrapper(BuzmoJFrame.con, currentGroupName) +" days");
+				groupChatsListTextArea.setText("Groups:\n"+DBInteractorGroupChat.getGroups(BuzmoJFrame.con));
 				historyTextArea.append("You changed current group name to: "+temp+"\n");
 			}
 			else{
@@ -404,6 +405,7 @@ public class GroupChatJPanel extends JPanel
 			String temp = changeGroupDurationTextField.getText();
 			Boolean complete = DBInteractorGroupChat.changeGroupChatDuration(BuzmoJFrame.con, currentGroupName, temp);
 			if(complete){
+				changeGroupDurationTextField.setText("Current duration is " + DBInteractorGroupChat.getGroupChatDurationWrapper(BuzmoJFrame.con, currentGroupName) +" days");
 				historyTextArea.append("You changed current group duration to: "+temp+"\n");
 			}
 			else{
