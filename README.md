@@ -6,12 +6,12 @@
 
 * ~~PrivateChats currently does not use Private_chats table. Update interactor so that it is used.~~
 
-* Delete/delete on cascade
+* Delete on cascade - double check & make sure everythings correct
 
 * ~~Post a message: The message can be a private message, or in the MyCircle, or in a ChatGroup. Note that
 there are different parameters in these three settings.~~
 
-* Delete a message: Remove the message in the private conversation, ~~the MyCircle~~, or a ChatGroup.
+* ~~Delete a message: Remove the message in the private conversation, the MyCircle, or a ChatGroup.~~
 
 * ~~Create a ChatGroup: The user creates a new ChatGroup, group properties are also set.~~
 
