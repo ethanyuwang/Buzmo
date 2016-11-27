@@ -8,8 +8,6 @@
 
 * Delete/delete on cascade
 
-* Manager mode
-
 * ~~Post a message: The message can be a private message, or in the MyCircle, or in a ChatGroup. Note that
 there are different parameters in these three settings.~~
 
@@ -25,12 +23,14 @@ there are different parameters in these three settings.~~
 or at least one given topic words (two different types of searches). The default set of topic words is the
 set of topic words associated with the user.~~
 
+* ~~Request to join friend circle: Once a new user (email address) is found, send a request to be a friend of
+that user.~~
+
+* --Manager mode--
+
 * Search for users: search criteria include a combination of email address, one or more matching topic words,
 most recent posting is within the last n days (n ≤ 7), n or more number of messaged posted within the
 last 7 days.
-
-* ~~Request to join friend circle: Once a new user (email address) is found, send a request to be a friend of
-that user.~~
 
 * Summary reports: Every 7 days there will be a usage summer report generated. The report include during
 the 7 day period, total number of new messages, total number of message reads, average number of new
