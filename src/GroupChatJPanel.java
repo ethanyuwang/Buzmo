@@ -155,7 +155,7 @@ public class GroupChatJPanel extends JPanel
 	//Pannels
 	gbc = new GridBagConstraints();
 	ChatDispalSubyPanel = new JPanel(new GridLayout(2,1));
-	ChatDispalyPanel = new JPanel();
+	ChatDispalyPanel = new JPanel(new BorderLayout());
 	//ChatDispalyPanel.setPreferredSize(new Dimension(ChatDispalyPanelWidth, pannelHeight));
 	ChatDispalyPanel.setSize(ChatDispalyPanelWidth, pannelHeight);
 
@@ -236,40 +236,39 @@ public class GroupChatJPanel extends JPanel
 	//answer pending request components
 	c.gridx = 0;
 	c.gridy = 0;
-	c.weighty = 3.0;
+	c.ipady = 50;
+	c.ipadx = 150;
 	
 	GroupControlPanel.add(pendingRequestsScroll, c);
 	c.gridy = 1;
-	c.weighty = 3.0;
+
 	GroupControlPanel.add(addScroll, c);
 	c.gridy = 2;
-	c.weighty = 1.0;
+	c.ipady = 0;
 	GroupControlPanel.add(addButton, c);
 
 	//edit contact list components
 	c.gridy = 3;
-	c.weighty = 5.0;
-	gbc.fill = GridBagConstraints.HORIZONTAL;
+	c.ipady = 50;
 	GroupControlPanel.add(contactsScroll, c);
 	c.gridy = 4;
-	c.weighty = 3.0;
 	GroupControlPanel.add(inviteScroll, c);
 	c.gridy = 5;
-	c.weighty = 1.0;
+	c.ipady = 0;
 	GroupControlPanel.add(inviteButton, c);
 
 	//change current group name and duration Components
 	c.gridy = 6;
-	c.weighty = 3.0;
+	c.ipady = 50;
 	GroupControlPanel.add(changeGroupNameScroll, c);
 	c.gridy = 7;
-	c.weighty = 1.0;
+	c.ipady = 0;
 	GroupControlPanel.add(changeGroupNameBUtton, c);
 	c.gridy = 8;
-	c.weighty = 3.0;
+	c.ipady = 50;
 	GroupControlPanel.add(changeGroupDurationScroll, c);
 	c.gridy = 9;
-	c.weighty = 1.0;
+	c.ipady = 0;
 	GroupControlPanel.add(changeGroupDurationBUtton, c);
 
 	gbc.gridx = 0;
