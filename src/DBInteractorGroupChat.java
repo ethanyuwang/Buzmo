@@ -245,8 +245,8 @@ public class DBInteractorGroupChat {
 			ResultSet rs = st.executeQuery(sql);
 			if(rs.next()){
 				count = rs.getInt(1);
-				if(count > 0){
-					System.out.println("inviteToGroupChat failed at multiple same contacts\n");
+				if(count < 0){
+					System.out.println("inviteToGroupChat failed at no such contact\n");
 					return false;
 				}
 			}
