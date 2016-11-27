@@ -95,7 +95,7 @@ public class DBInteractorGroupChat {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			int groupId = getGroupID(con, groupName);
-
+			System.out.println("Group id is : "+groupId);
 			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +
 			"(G.group_id=" + groupId + ")"; 
 			ResultSet rs = st.executeQuery(sql);			
@@ -295,6 +295,7 @@ public class DBInteractorGroupChat {
 		try {
 			String ret = "";
 			int groupId = getGroupID(con, groupName);
+			System.out.println("Current group id is; "+groupId);
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +

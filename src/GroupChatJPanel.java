@@ -230,62 +230,46 @@ public class GroupChatJPanel extends JPanel
 	ChatControlPanel.add(backButton, gbc);
 
 	//add components to bot panel
+	GridBagConstraints c = new GridBagConstraints();
+	c.fill = GridBagConstraints.HORIZONTAL;
 	//answer pending request components
-	gbc.gridx = 3;
-	gbc.gridy = 0;
-	gbc.ipady = 50;
-	gbc.ipadx = 70;
-	gbc.gridwidth = 1;
-	gbc.gridheight = 3;
-	gbc.fill = GridBagConstraints.HORIZONTAL;
-	GroupControlPanel.add(pendingRequestsScroll, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 3;
-	gbc.gridheight = 3;
-	gbc.ipady = 20;
-	GroupControlPanel.add(addScroll, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 6;
-	gbc.ipady = 0;
-	GroupControlPanel.add(addButton, gbc);
+	c.gridx = 0;
+	c.gridy = 1;
+	c.weighty = 3.0;
+	
+	GroupControlPanel.add(pendingRequestsScroll, c);
+	c.gridy = 1;
+	c.weighty = 3.0;
+	GroupControlPanel.add(addScroll, c);
+	c.gridy = 2;
+	c.weighty = 1.0;
+	GroupControlPanel.add(addButton, c);
 
 	//edit contact list components
-	gbc.gridx = 3;
-	gbc.gridy = 10;
-	gbc.ipady = 50;
-	gbc.gridwidth = 1;
-	gbc.gridheight = 3;
+	c.gridy = 3;
+	c.weighty = 5.0;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
-	GroupControlPanel.add(contactsScroll, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 13;
-	gbc.gridheight = 3;
-	gbc.ipady = 20;
-	GroupControlPanel.add(inviteScroll, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 16;
-	gbc.ipady = 0;
-	GroupControlPanel.add(inviteButton, gbc);
+	GroupControlPanel.add(contactsScroll, c);
+	c.gridy = 4;
+	c.weighty = 3.0;
+	GroupControlPanel.add(inviteScroll, c);
+	c.gridy = 5;
+	c.weighty = 1.0;
+	GroupControlPanel.add(inviteButton, c);
 
 	//change current group name and duration Components
-	gbc.gridx = 3;
-	gbc.gridy = 19;
-	gbc.gridheight = 3;
-	gbc.ipady = 20;
-	GroupControlPanel.add(changeGroupNameScroll, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 22;
-	gbc.ipady = 0;
-	GroupControlPanel.add(changeGroupNameBUtton, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 25;
-	gbc.gridheight = 3;
-	gbc.ipady = 20;
-	GroupControlPanel.add(changeGroupDurationScroll, gbc);
-	gbc.gridx = 3;
-	gbc.gridy = 28;
-	gbc.ipady = 0;
-	GroupControlPanel.add(changeGroupDurationBUtton, gbc);
+	c.gridy = 6;
+	c.weighty = 3.0;
+	GroupControlPanel.add(changeGroupNameScroll, c);
+	c.gridy = 7;
+	c.weighty = 1.0;
+	GroupControlPanel.add(changeGroupNameBUtton, c);
+	c.gridy = 8;
+	c.weighty = 3.0;
+	GroupControlPanel.add(changeGroupDurationScroll, c);
+	c.gridy = 9;
+	c.weighty = 1.0;
+	GroupControlPanel.add(changeGroupDurationBUtton, c);
 
 	gbc.gridx = 0;
 	gbc.gridy = 0;
