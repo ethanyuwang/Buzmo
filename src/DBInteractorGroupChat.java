@@ -156,6 +156,7 @@ public class DBInteractorGroupChat {
 			ps.setString(4, "group");
 			ps.setString(5, myEmail);
 			ps.setString(6, myEmail);
+			ps.setString(7, myEmail);
 			ps.setInt(8, groupId);
 			ps.addBatch();
 			ps.executeBatch();
