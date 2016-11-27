@@ -70,7 +70,7 @@ public class DBInteractorGroupChat {
 			Statement st = con.createStatement();
 			String sql = "UPDATE Group_chats SET group_name = '" +
 			newGroupName + "' WHERE owner='" + myEmail + "' AND group_name = '"+
-			groupName + "')"; 
+			groupName + "'"; 
 			st.executeQuery(sql);			
 			return true;
 		}
@@ -83,7 +83,7 @@ public class DBInteractorGroupChat {
 			Statement st = con.createStatement();
 			String sql = "UPDATE Group_chats SET duration = " +
 			newDuration + " WHERE owner='" + myEmail + "' AND group_name = '"+
-			groupName + "')"; 
+			groupName + "'"; 
 			st.executeQuery(sql);			
 			return true;
 		}
