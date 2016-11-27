@@ -22,12 +22,13 @@ public class DBManager {
                         //String password = "049";
                         Connection con = DriverManager.getConnection(url,username, password);
 
-                        //Create Tables
-                        //createTables(con);
-                        //addForeignKeys(con);
-
                         //Delete Tables
-                        //deleteTables(con);
+                        deleteTables(con);
+
+                        //Create Tables
+                        createTables(con);
+                        addForeignKeys(con);
+
 
                         //Print Table
                         //printTable(con, "USERS");

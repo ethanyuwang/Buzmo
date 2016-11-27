@@ -176,9 +176,9 @@ public class GroupChatJPanel extends JPanel
 	ChatDispalSubyPanel.add(groupChatsListScroll);
 	ChatDispalSubyPanel.add(groupMembersScroll);
 
-	ChatDispalyPanel.setPreferredSize(new java.awt.Dimension((int)(ChatDispalyPanelWidth*0.3), pannelHeight));
+	ChatDispalyPanel.setPreferredSize(new java.awt.Dimension((int)(ChatDispalyPanelWidth*0.4), pannelHeight));
 	ChatDispalyPanel.add(ChatDispalSubyPanel, BorderLayout.WEST);
-	ChatDispalyPanel.add(historyScroll, BorderLayout.EAST);
+	ChatDispalyPanel.add(historyScroll, BorderLayout.CENTER);
 
 	//add components to med panel
 	//Select chat group components
