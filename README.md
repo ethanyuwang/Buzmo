@@ -13,7 +13,7 @@ there are different parameters in these three settings.~~
 
 * Delete a message: Remove the message in the private conversation, ~~the MyCircle~~, or a ChatGroup.
 
-* ~~Create a ChatGroup: The user creates a new ChatGroup, group properties are also set.~
+* ~~Create a ChatGroup: The user creates a new ChatGroup, group properties are also set.~~
 
 * ~~Modify ChatGroup properties: Change title, duration for the ChatGroup.~~
 
