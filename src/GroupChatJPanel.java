@@ -352,6 +352,7 @@ public class GroupChatJPanel extends JPanel
 			String temp = addTextField.getText();
 			Boolean complete = DBInteractorGroupChat.addGroupChat(BuzmoJFrame.con, temp);
 			if(complete){
+				groupChatsListTextArea.setText("Groups:\n"+DBInteractorGroupChat.getGroups(BuzmoJFrame.con));
 				historyTextArea.append("You added chat group: "+temp+"\n");
 			}
 			else{

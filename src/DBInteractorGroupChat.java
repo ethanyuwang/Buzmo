@@ -85,8 +85,21 @@ public class DBInteractorGroupChat {
 	public static Boolean changeGroupChatName(Connection con, String groupName, String newGroupName){
 		try {
 			String myEmail = BuzmoJFrame.userEmail;	
+			Boolean isOwner = false;
 			Statement st = con.createStatement();
-			String sql = "UPDATE Group_chats SET group_name = '" +
+			//check if the current use is the owner
+			String sql = "SELECT C.owner FROM Group_chats C WHERE " +
+			"C.group_name='" + groupName + "'"; 
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				if (myEmail == rs.getString(1))
+					isOwner = true;
+			}
+
+			if(isOwner == false)
+				return false;
+
+			sql = "UPDATE Group_chats SET group_name = '" +
 			newGroupName + "' WHERE owner='" + myEmail + "' AND group_name = '"+
 			groupName + "'"; 
 			st.executeQuery(sql);			
@@ -98,8 +111,21 @@ public class DBInteractorGroupChat {
 	public static Boolean changeGroupChatDuration(Connection con, String groupName, String newDuration){
 		try {
 			String myEmail = BuzmoJFrame.userEmail;	
+			Boolean isOwner = false;
 			Statement st = con.createStatement();
-			String sql = "UPDATE Group_chats SET duration = " +
+			//check if the current use is the owner
+			String sql = "SELECT C.owner FROM Group_chats C WHERE " +
+			"C.group_name='" + groupName + "'"; 
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				if (myEmail == rs.getString(1))
+					isOwner = true;
+			}
+			
+			if(isOwner == false)
+				return false;
+
+			sql = "UPDATE Group_chats SET duration = " +
 			newDuration + " WHERE owner='" + myEmail + "' AND group_name = '"+
 			groupName + "'"; 
 			st.executeQuery(sql);			
@@ -132,10 +158,10 @@ public class DBInteractorGroupChat {
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
 			String sql = "SELECT C.duration FROM Group_chats C WHERE " +
-			"(C.owner='" + myEmail + "' AND C.group_name='" + groupName + "')"; 
+			"C.group_name='" + groupName + "'"; 
 			ResultSet rs = st.executeQuery(sql);
 
-			if(rs.next()){
+			while(rs.next()){
 				ret = rs.getInt(1);
 			}
 			return ret;
