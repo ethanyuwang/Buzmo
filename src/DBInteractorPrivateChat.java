@@ -14,7 +14,7 @@ public class DBInteractorPrivateChat {
 			String messageWithTime = message+ts.toString();
 
 			//Add a copy to sender
-			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?)";	
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
 			String messageWithTimeAndOwner = messageWithTime + myEmail;
@@ -25,6 +25,7 @@ public class DBInteractorPrivateChat {
 			ps.setString(5, myEmail);
 			ps.setString(6, myEmail);
 			ps.setString(7, recipientEmail);
+			ps.setNull(8, java.sql.Types.INTEGER);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -39,6 +40,7 @@ public class DBInteractorPrivateChat {
 			ps.setString(5, recipientEmail);
 			ps.setString(6, myEmail);
 			ps.setString(7, recipientEmail);
+			ps.setNull(8, java.sql.Types.INTEGER);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();

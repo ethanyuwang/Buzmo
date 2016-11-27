@@ -215,6 +215,12 @@ public class CirclePostJPanel extends JPanel
                         BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
                 }
         });
+        deleteButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                        BuzmoJFrame.setCurrentPanelTo(new CircleDeleteJPanel());
+                }
+        });
 	cbList[0].addItemListener(new ItemListener() {
 		@Override
 		public void itemStateChanged(ItemEvent e) {

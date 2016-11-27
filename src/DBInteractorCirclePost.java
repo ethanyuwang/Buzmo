@@ -187,7 +187,51 @@ public class DBInteractorCirclePost {
 			return ret;
 		}
 		catch(Exception e){System.out.println(e); return "FAILED to search circle posts";}
+	}
 
+	//Deletion
+	public static String getUsersPosts(Connection con){
+		try {
+			String ret = "";
+			String sql;
+			String myEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+			Statement st2 = con.createStatement();
+			ResultSet rs, rs2;
+			int post_id;
+			sql = "SELECT P.post_owner, P.post_string, P.post_time, P.is_public, P.post_id " + 
+			"FROM CIRCLE_POSTS P WHERE P.post_owner='" + myEmail + "' ORDER BY P.post_time"; 
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				post_id = rs.getInt(5);
+				ret += "<post_id: " + post_id + ">\n";
+				ret += rs.getString(1);
+				ret += " (" + rs.getString(3) + ", ";
+				ret += "public: " + rs.getString(4) + ") ";
+				ret += rs.getString(2) + "\n";
+				// topic words for each post
+				sql = "SELECT T.topic_word FROM POST_TOPIC_WORDS T " +
+				"WHERE T.post_id='" + post_id  + "'";
+				rs2 = st2.executeQuery(sql);
+				while(rs2.next()){
+					ret += "#" + rs2.getString(1);
+				}
+				ret += "\n\n";
+			}
+			return ret;
+		}
+		catch(Exception e){System.out.println(e); return "FAILED to search circle posts";}
+	}	
+	public static boolean deletePost(Connection con, String str_post_id){
+		try {
+			int post_id = Integer.parseInt(str_post_id);
+			String sql = "DELETE FROM CIRCLE_POSTS C WHERE C.post_id=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, post_id);
+			ps.executeUpdate();
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
 	}	
 
 	private static Timestamp getCurrentTimeStamp() {

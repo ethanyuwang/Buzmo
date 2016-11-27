@@ -23,11 +23,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        deleteTables(con);
+                        //deleteTables(con);
 
                         //Create Tables
-                        createTables(con);
-                        addForeignKeys(con);
+                        //createTables(con);
+                        //addForeignKeys(con);
 
 
                         //Print Table
@@ -178,8 +178,8 @@ public class DBManager {
                         st.executeQuery(sql);
 
                          sql = "ALTER TABLE Circle_post_receivers " +
-                        "ADD FOREIGN KEY (post_receiver) REFERENCES Users(email_address) " +
-                        "ADD FOREIGN KEY (post_id) REFERENCES Circle_posts(post_id)";
+                        "ADD FOREIGN KEY (post_receiver) REFERENCES Users(email_address) ON DELETE CASCADE " +
+                        "ADD FOREIGN KEY (post_id) REFERENCES Circle_posts(post_id) ON DELETE CASCADE";
                         st.executeQuery(sql);
 
                         sql = "ALTER TABLE User_topic_words " +
@@ -187,8 +187,9 @@ public class DBManager {
                         st.executeQuery(sql);
 
                         sql = "ALTER TABLE Post_topic_words " +
-                        "ADD FOREIGN KEY (post_id) REFERENCES Circle_posts(post_id)";
+                        "ADD FOREIGN KEY (post_id) REFERENCES Circle_posts(post_id) ON DELETE CASCADE";
                         st.executeQuery(sql);
+
                         sql = "ALTER TABLE Contact_pending_lists " +
                         "ADD FOREIGN KEY (sender) REFERENCES Users(email_address) " +
                         "ADD FOREIGN KEY (receiver) REFERENCES Users(email_address)";

@@ -27,11 +27,11 @@ public class ContactsJPanel extends JPanel
     {
 	this.repaint();
 	titleLabel = new JLabel("CONTACTS");
-	contactTextArea = new JTextArea(DBInteractor.getContactLists(BuzmoJFrame.con));
+	contactTextArea = new JTextArea("<Contact List>\n\n"+DBInteractor.getContactLists(BuzmoJFrame.con));
 	contactTextArea.setEditable(false);
 	contactTextArea.setLineWrap(true);
 	contactTextArea.setWrapStyleWord(false);
-	pendingTextArea = new JTextArea(DBInteractor.getContactPendingLists(BuzmoJFrame.con));
+	pendingTextArea = new JTextArea("<Pending Contact List>\n\n"+DBInteractor.getContactPendingLists(BuzmoJFrame.con));
 	pendingTextArea.setEditable(false);
 	pendingTextArea.setLineWrap(true);
 	pendingTextArea.setWrapStyleWord(false);
