@@ -5,7 +5,7 @@ public class DBManager {
         public static String[] tbNames = {"USERS", "MANAGERS", "CIRCLE_POSTS", "GROUP_CHATS", "PRIVATE_CHATS",
                                    "MESSAGES", "CONTACT_PENDING_LISTS", "CONTACT_LISTS", "GROUP_PENDING_LISTS",
                                    "GROUP_CHAT_MEMBERS", "POST_TOPIC_WORDS", "USER_TOPIC_WORDS", "GROUP_CHAT_MESSAGES",
-                                   "CIRCLE_POST_RECEIVERS", "PRIVATE_CHAT_MESSAGES"};
+                                   "CIRCLE_POST_RECEIVERS"};
 
         public static void main(String[] args){
 
@@ -23,11 +23,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        //deleteTables(con);
+                        deleteTables(con);
 
                         //Create Tables
-                        //createTables(con);
-                        //addForeignKeys(con);
+                        createTables(con);
+                        addForeignKeys(con);
 
 
                         //Print Table
@@ -37,7 +37,7 @@ public class DBManager {
                         //printGLEETables(con);
 
                         //Print all tables
-                        printAllTables(con);
+                        //printAllTables(con);
 
                         // Close conenction
                         con.close();
@@ -140,10 +140,6 @@ public class DBManager {
                         "(group_id INT NOT NULL, " +
                         " message_id INT NOT NULL)";
                         st.executeQuery(sql);
-                        sql = "CREATE TABLE Private_chat_messages " +
-                        "(pc_id INT NOT NULL, " +
-                        " message_id INT NOT NULL)";
-                        st.executeQuery(sql);
                 }
                 catch(Exception e){System.out.println(e);}
         }
@@ -213,11 +209,6 @@ public class DBManager {
                         sql = "ALTER TABLE Group_chat_members " +
                         "ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id) " +
                         "ADD FOREIGN KEY (member) REFERENCES Users(email_address)";
-                        st.executeQuery(sql);
-
-                        sql = "ALTER TABLE Private_chat_messages " +
-                        "ADD FOREIGN KEY (pc_id) REFERENCES Private_chats(pc_id) " +
-                        "ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
                         st.executeQuery(sql);
                 }
                 catch(Exception e){System.out.println(e);}
