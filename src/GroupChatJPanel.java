@@ -322,7 +322,7 @@ public class GroupChatJPanel extends JPanel
 			Boolean complete = DBInteractorGroupChat.isGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				currentGroupName=temp;
-				groupMembersTextArea.setText("Members:\n"+DBInteractorGroupChat.getGroupMembers());
+				groupMembersTextArea.setText("Members:\n"+DBInteractorGroupChat.getGroupMembers(BuzmoJFrame.con, currentGroupName));
 				historyTextArea.setText("You entered chat group: "+temp+"\n");
 				historyTextArea.append(DBInteractorGroupChat.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
 			}
