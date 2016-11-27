@@ -5,34 +5,32 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PrivateChatJPanel extends JPanel
+public class PrivateChatDeleteJPanel extends JPanel
 {
-    //Variables
-    String recipientEmail = "";
+    String recipientEmail;
 
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
 
-    //Naviagtion Components
+    //Button Components
     JButton backButton;
     JButton deleteButton;
+    JButton selectButton;
 
     //Chat dispaly and control Components
     JTextArea historyTextArea;
-    JTextField draftTextField;
     JScrollPane historyScroll;
+    JTextArea draftTextArea;
     JScrollPane draftScroll;
-    JButton sendButton;
 
     //List of freinds and select Components
     JTextArea contactsTextArea;
-    JTextField recipientTextField;
     JScrollPane contactsScroll;
+    JTextArea recipientTextArea;
     JScrollPane recipientScroll;
-    JButton selectButton;
 
-    public PrivateChatJPanel()
+    public PrivateChatDeleteJPanel()
     {
 	this.repaint();
 
@@ -41,29 +39,28 @@ public class PrivateChatJPanel extends JPanel
 	historyTextArea.setEditable(false);
 	historyTextArea.setLineWrap(true);
 	historyTextArea.setWrapStyleWord(false);
-
-	draftTextField= new JTextField("Enter message");
-
 	historyScroll = new JScrollPane(historyTextArea);
-	draftScroll = new JScrollPane(draftTextField);
 
-	sendButton = new JButton("Send");
+	draftTextArea = new JTextArea("Enter message_id");
+	draftTextArea.setLineWrap(true);
+	draftTextArea.setWrapStyleWord(false);
+	draftScroll = new JScrollPane(draftTextArea);
 
-	//Naviagtion Components
-	backButton = new JButton("Back");
-	deleteButton = new JButton("Deletion Page");
-
-	//contacts dispaly and select Components
+	//Contacts dispaly and select Components
 	contactsTextArea = new JTextArea("<Friend List>\n"+DBInteractor.getContactLists(BuzmoJFrame.con));
 	contactsTextArea.setEditable(false);
 	contactsTextArea.setLineWrap(true);
 	contactsTextArea.setWrapStyleWord(false);
-
-	recipientTextField = new JTextField("Enter friend's email");
-
 	contactsScroll = new JScrollPane(contactsTextArea);
-	recipientScroll = new JScrollPane(recipientTextField);
 
+	recipientTextArea = new JTextArea("Enter friend's email");
+	recipientTextArea.setLineWrap(true);
+	recipientTextArea.setWrapStyleWord(false);
+	recipientScroll = new JScrollPane(recipientTextArea);
+
+	//Button Components
+	backButton = new JButton("Back");
+	deleteButton = new JButton("Delete");
 	selectButton = new JButton("Select Private Chat");
 
 	//Pannels
@@ -75,32 +72,26 @@ public class PrivateChatJPanel extends JPanel
 	setLayout(new GridLayout());
 
 	//add components to top panel
-	//topPanel.add(titleLabel, BorderLayout.PAGE_START);
 	topPanel.add(historyScroll, BorderLayout.CENTER);
 
 	//add components to bot panel
-	//edit message components
 	gbc.gridx = 0;
 	gbc.gridy = 0;
-	gbc.ipady = 200;
+	gbc.ipady = 50;
 	gbc.ipadx = 100;
-	gbc.gridwidth = 3;
+	gbc.gridwidth = 1;
 	gbc.gridheight = 3;
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 	botPanel.add(draftScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 3;
 	gbc.ipady = 0;
-	botPanel.add(sendButton, gbc);
-	gbc.gridx = 0;
-	gbc.gridy = 6;
 	botPanel.add(deleteButton, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 9;
+	gbc.gridy = 6;
 	botPanel.add(backButton, gbc);
-	
 
-	//edit contact list components
+	//contact list components
 	gbc.gridx = 3;
 	gbc.gridy = 0;
 	gbc.ipady = 200;
@@ -129,43 +120,36 @@ public class PrivateChatJPanel extends JPanel
 	selectButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			String temp = recipientTextField.getText();
+			String temp = recipientTextArea.getText();
 			Boolean complete = DBInteractor.isContact(BuzmoJFrame.con, temp);
 			if(complete){
 				recipientEmail = temp;
-				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractorPrivateChat.loadChatHistory(BuzmoJFrame.con, recipientEmail));
+				historyTextArea.setText("<Chat with "+recipientEmail+">\nChoose a message to delete\n\n"+
+				DBInteractorPrivateChat.loadChatHistoryWithID(BuzmoJFrame.con, recipientEmail));
 			}
 			else{
 				historyTextArea.append("Can not find "+temp+" in your contact list\n");
 			}
 		}
 	});
-	sendButton.addMouseListener(new MouseAdapter() {
+	deleteButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if(recipientEmail.equals("")){
-				historyTextArea.append("Please select a friend\n");
-				return;
-			}
-			Boolean complete = DBInteractorPrivateChat.addMessageToPrivateChat(BuzmoJFrame.con, draftTextField.getText(), recipientEmail);
-			if(complete){
-				historyTextArea.setText("<Chat with "+recipientEmail+">\n"+DBInteractorPrivateChat.loadChatHistory(BuzmoJFrame.con, recipientEmail));
-			}
-			else{
-				historyTextArea.append("Sending message failed\n");
-			}
+			if(DBInteractorPrivateChat.deletePrivateMessage(BuzmoJFrame.con, draftTextArea.getText())) {
+				draftTextArea.setText("Deletion complete");
+				//reload
+                                historyTextArea.setText("<Chat with "+recipientEmail+">\nChoose a message to delete\n\n"+
+				DBInteractorPrivateChat.loadChatHistoryWithID(BuzmoJFrame.con, recipientEmail));
+                        }
+                        else {
+                                draftTextArea.setText("Failed to delete: double check your post_id\n");
+                        }
 		}
 	});
 	backButton.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
-		}
-	});
-	deleteButton.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			BuzmoJFrame.setCurrentPanelTo(new PrivateChatDeleteJPanel());
+			BuzmoJFrame.setCurrentPanelTo(new PrivateChatJPanel());
 		}
 	});
     }

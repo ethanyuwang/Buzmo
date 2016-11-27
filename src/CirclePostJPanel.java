@@ -86,7 +86,7 @@ public class CirclePostJPanel extends JPanel
 	createButton = new JButton("Create");
 	searchButton = new JButton("Search");
 	backButton = new JButton("Back");
-	deleteButton = new JButton("Delete");
+	deleteButton = new JButton("Deletion Page");
 
 	//ETC
 	countTextField = new JTextField("Enter number of results wanted");
