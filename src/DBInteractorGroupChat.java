@@ -233,7 +233,6 @@ public class DBInteractorGroupChat {
 	//Used for GroupChatJPanel 
 	public static String loadGroupChatHistory(Connection con, String groupName){
 		try {
-			//cleanOldGroupChatHistory(con, groupName);
 			String ret = "";
 			String myEmail = BuzmoJFrame.userEmail;	
 			int groupId = getGroupID(con, groupName);
@@ -242,6 +241,11 @@ public class DBInteractorGroupChat {
 				System.out.println("groupID not found\n");
 				return "";
 			}
+			// delete messages that are older than duration
+			if(cleanOldGroupChatHistory(con, groupName, groupId) == false){
+				return "FAILED: automatic old message deletion";
+			};
+			// get group chat messages
 			Statement st = con.createStatement();
 			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
 			"M.type='group' AND M.group_id='" + groupId + 
@@ -255,33 +259,49 @@ public class DBInteractorGroupChat {
 			return ret;
 		}
 		catch(Exception e){System.out.println(e); return "";}
-}
+	}
 
-	public static Boolean cleanOldGroupChatHistory(Connection con, String groupName){
-		/*try {
-			int currentDuration = getGroupChatDuration(con, groupName);
-
-			String ret = "";
+	public static Boolean cleanOldGroupChatHistory(Connection con, String groupName, int groupId){
+		try {
+			int duration = getGroupChatDuration(con, groupName);
+			Timestamp ts = DBInteractor.getCurrentTimeStamp();
 			String myEmail = BuzmoJFrame.userEmail;	
 			Statement st = con.createStatement();
-			String sql = "SELECT M.text_string, M.sender, M.timestamp FROM MESSAGES M WHERE " +
-			"M.type='private' AND M.owner='" + myEmail + "' AND " + 
-			"((M.sender='" + myEmail + "' AND " + 
-			" M.receiver='" + recipientEmail + "') " +
-			"OR " +
-			"(M.sender='" + recipientEmail + "' AND " + 
-			" M.receiver='" + myEmail + "')) ORDER BY M.timestamp";
-			ResultSet rs = st.executeQuery(sql);			
+
+			String sql = "SELECT M.timestamp, M.message_id FROM MESSAGES M " +
+			"WHERE M.group_id=? ORDER BY M.timestamp";
+			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps2;
+			ps.setInt(1, groupId);
+			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
-				ret += rs.getString(2) + " (";
-				ret += rs.getString(3) + "): ";
-				ret += rs.getString(1) + "\n";
+				if(compareTimestamps(duration, ts, rs.getTimestamp(1))){
+					// delete old message
+					sql = "DELETE FROM MESSAGES M WHERE M.message_id=?";
+					ps2 = con.prepareStatement(sql);
+					ps2.setInt(1, rs.getInt(2));
+					ps.executeUpdate();
+				}
 			}
-			return ret;
+			return true;
 		}
-		catch(Exception e){System.out.println(e); return "";}*/
-		return true;
-}
+		catch(Exception e){System.out.println(e); return false;}
+	}
+	public static boolean compareTimestamps(int duration, Timestamp cur, Timestamp pre){
+		// true: need to delete!
+		long milisec_cur = cur.getTime();
+		long milisec_pre = cur.getTime();
+		long diff = milisec_cur - milisec_pre;
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+		if(diffDays > duration){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+
 	//Used for GroupChatJPanel 
 	public static Boolean inviteToGroupChat(Connection con, String groupName, String requestEmail){
 		try {
