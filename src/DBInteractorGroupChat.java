@@ -96,11 +96,13 @@ public class DBInteractorGroupChat {
 					isOwner = true;
 			}
 
-			if(isOwner == false)
+			if(isOwner == false) {
+				System.out.println("changeGroupChatName failed at current user isnt the owner\n");
 				return false;
+			}
 
 			sql = "UPDATE Group_chats SET group_name = '" +
-			newGroupName + "' WHERE owner='" + myEmail + "' AND group_name = '"+
+			newGroupName + "' WHERE group_name = '"+
 			groupName + "'"; 
 			st.executeQuery(sql);			
 			return true;
@@ -122,11 +124,13 @@ public class DBInteractorGroupChat {
 					isOwner = true;
 			}
 			
-			if(isOwner == false)
+			if(isOwner == false) {
+				System.out.println("changeGroupChatDuration failed at current user isnt the owner\n");
 				return false;
+			}
 
 			sql = "UPDATE Group_chats SET duration = " +
-			newDuration + " WHERE owner='" + myEmail + "' AND group_name = '"+
+			newDuration + " WHERE group_name = '"+
 			groupName + "'"; 
 			st.executeQuery(sql);			
 			return true;
