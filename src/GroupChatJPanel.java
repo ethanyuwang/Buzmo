@@ -155,7 +155,7 @@ public class GroupChatJPanel extends JPanel
 	//Pannels
 	gbc = new GridBagConstraints();
 	ChatDispalSubyPanel = new JPanel(new GridLayout(2,1));
-	ChatDispalyPanel = new JPanel(new GridBagLayout());
+	ChatDispalyPanel = new JPanel();
 	//ChatDispalyPanel.setPreferredSize(new Dimension(ChatDispalyPanelWidth, pannelHeight));
 	ChatDispalyPanel.setSize(ChatDispalyPanelWidth, pannelHeight);
 
@@ -176,16 +176,9 @@ public class GroupChatJPanel extends JPanel
 	ChatDispalSubyPanel.add(groupChatsListScroll);
 	ChatDispalSubyPanel.add(groupMembersScroll);
 
-	gbc.fill = GridBagConstraints.HORIZONTAL;
-	gbc.gridx = 0;
-	gbc.gridy = 0;
-	gbc.weightx = 0.3;
-	ChatDispalyPanel.add(ChatDispalSubyPanel);
-
-	gbc.gridx = 1;
-	gbc.gridy = 0;
-	gbc.weightx = 0.7;
-	ChatDispalyPanel.add(historyScroll);
+	ChatDispalyPanel.setPreferredSize(new java.awt.Dimension((int)(ChatDispalyPanelWidth*0.3), pannelHeight));
+	ChatDispalyPanel.add(ChatDispalSubyPanel, BorderLayout.WEST);
+	ChatDispalyPanel.add(historyScroll, BorderLayout.EAST);
 
 	//add components to med panel
 	//Select chat group components
