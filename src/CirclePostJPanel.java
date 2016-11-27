@@ -25,6 +25,7 @@ public class CirclePostJPanel extends JPanel
     JLabel draftLabel;
     JLabel topicLabel;
     JLabel searchLabel;
+    JTextField countTextField;
     JTextArea historyTextArea;
     JTextArea draftTextArea;
     JTextArea topicTextArea;
@@ -88,6 +89,7 @@ public class CirclePostJPanel extends JPanel
 	deleteButton = new JButton("Delete");
 
 	//ETC
+	countTextField = new JTextField("Enter number of results wanted");
 	shareLabel = new JLabel("Share with: ");
 	draftLabel = new JLabel("Message: ");
 	topicLabel = new JLabel("Topic words: ");
@@ -155,12 +157,15 @@ public class CirclePostJPanel extends JPanel
 	gbc.gridy = 11;
 	gbc.ipady = 0;
 	gbc.ipadx = 0;
-	botPanel.add(searchButton, gbc);
+	botPanel.add(countTextField, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 12;
-	botPanel.add(deleteButton, gbc);
+	botPanel.add(searchButton, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 13;
+	botPanel.add(deleteButton, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 14;
 	botPanel.add(backButton, gbc);
 
 	topPanel.setOpaque(false);
@@ -204,7 +209,7 @@ public class CirclePostJPanel extends JPanel
                 @Override
                 public void mouseReleased(MouseEvent e) {
 			String[] topicArray = searchTextArea.getText().split("\\s+");
-			String found = DBInteractorCirclePost.searchCirclePosts(BuzmoJFrame.con, topicArray);
+			String found = DBInteractorCirclePost.searchCirclePosts(BuzmoJFrame.con, topicArray, countTextField.getText());
 			System.out.println("Reloading circle posts");
 			historyTextArea.setText("<Circle Feed>\n" + found);	
                 }

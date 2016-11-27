@@ -145,15 +145,17 @@ public class DBInteractorCirclePost {
 		}
 		catch(Exception e){System.out.println(e); return "FAILED to get user's topic words";}
 	}
-	public static String searchCirclePosts(Connection con, String[] topicArray){
+	public static String searchCirclePosts(Connection con, String[] topicArray, String count_str){
 		try {
-			int post_id;
+			int count = Integer.parseInt(count_str);
+			int post_id, current = 1;
 			ResultSet rs;
 			ResultSet rs2;
 			Statement st = con.createStatement();
 			Statement st2 = con.createStatement();
-			String ret = "Searched posts related to: ";
+			String ret = "Searched " + count_str  + " most recent posts related to: ";
 			String myEmail = BuzmoJFrame.userEmail;
+			// Get posts
 			String sql = "SELECT DISTINCT P.post_owner, P.post_string, P.post_time, P.is_public, " +
 			"P.post_id FROM CIRCLE_POSTS P WHERE (P.post_id IN " + 
 			"(SELECT T.post_id FROM POST_TOPIC_WORDS T WHERE T.topic_word IN (";
@@ -167,26 +169,31 @@ public class DBInteractorCirclePost {
 					sql += "'" + topicArray[i] + "', ";
 				}
 			}
-			sql += ")))";
+			sql += "))) ORDER BY P.post_time DESC";
 			rs = st.executeQuery(sql);
-			while(rs.next()){
-				ret += rs.getString(1);
-				ret += " (" + rs.getString(3) + ", ";
-				ret += "public: " + rs.getString(4) + ") ";
-				ret += rs.getString(2) + "\n";
+			String holder;
+			while(rs.next() && current<=count){
+				holder = "";
+				current++;
+				holder += rs.getString(1);
+				holder += " (" + rs.getString(3) + ", ";
+				holder += "public: " + rs.getString(4) + ") ";
+				holder += rs.getString(2) + "\n";
 				post_id = rs.getInt(5);
 				// topic words for each post
 				sql = "SELECT T.topic_word FROM POST_TOPIC_WORDS T " +
 				"WHERE T.post_id='" + post_id  + "'";
 				rs2 = st2.executeQuery(sql);
 				while(rs2.next()){
-					ret += "#" + rs2.getString(1);
+					holder += "#" + rs2.getString(1);
 				}
-				ret += "\n\n";
+				holder += "\n\n";
+				ret = holder + ret;
 			}
 			return ret;
 		}
-		catch(Exception e){System.out.println(e); return "FAILED to search circle posts";}
+		catch(Exception e){System.out.println(e); return "FAILED to search circle posts.\n" + 
+				"Note: search count MUST be an INTEGER";}
 	}
 
 	//Deletion
