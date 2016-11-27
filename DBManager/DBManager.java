@@ -4,8 +4,7 @@ public class DBManager {
 
         public static String[] tbNames = {"USERS", "MANAGERS", "CIRCLE_POSTS", "GROUP_CHATS", "PRIVATE_CHATS",
                                    "MESSAGES", "CONTACT_PENDING_LISTS", "CONTACT_LISTS", "GROUP_PENDING_LISTS",
-                                   "GROUP_CHAT_MEMBERS", "POST_TOPIC_WORDS", "USER_TOPIC_WORDS", "GROUP_CHAT_MESSAGES",
-                                   "CIRCLE_POST_RECEIVERS"};
+                                   "GROUP_CHAT_MEMBERS", "POST_TOPIC_WORDS", "USER_TOPIC_WORDS", "CIRCLE_POST_RECEIVERS"};
 
         public static void main(String[] args){
 
@@ -23,11 +22,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        deleteTables(con);
+                        //deleteTables(con);
 
                         //Create Tables
-                        createTables(con);
-                        addForeignKeys(con);
+                        //createTables(con);
+                        //addForeignKeys(con);
 
 
                         //Print Table
@@ -37,7 +36,7 @@ public class DBManager {
                         //printGLEETables(con);
 
                         //Print all tables
-                        //printAllTables(con);
+                        printAllTables(con);
 
                         // Close conenction
                         con.close();
@@ -90,6 +89,7 @@ public class DBManager {
                         " group_id INT, " +
                         " PRIMARY KEY (message_id))";
                         st.executeQuery(sql);
+
                         sql = "CREATE TABLE Circle_posts " +
                         "(post_id INT NOT NULL, " +
                         " post_string VARCHAR(1400) NOT NULL, " +
@@ -134,11 +134,6 @@ public class DBManager {
                         "(topic_word VARCHAR(256) NOT NULL, " +
                         " email_address VARCHAR(20) NOT NULL, " +
                         " UNIQUE (topic_word, email_address))";
-                        st.executeQuery(sql);
-
-                        sql = "CREATE TABLE Group_chat_messages " +
-                        "(group_id INT NOT NULL, " +
-                        " message_id INT NOT NULL)";
                         st.executeQuery(sql);
                 }
                 catch(Exception e){System.out.println(e);}
@@ -199,11 +194,6 @@ public class DBManager {
                         sql = "ALTER TABLE Group_pending_lists " +
                         "ADD FOREIGN KEY (pending_people) REFERENCES Users(email_address) " +
                         "ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id)";
-                        st.executeQuery(sql);
-
-                        sql = "ALTER TABLE Group_chat_messages " +
-                        "ADD FOREIGN KEY (group_id) REFERENCES Group_chats(group_id) " +
-                        "ADD FOREIGN KEY (message_id) REFERENCES Messages(message_id)";
                         st.executeQuery(sql);
 
                         sql = "ALTER TABLE Group_chat_members " +
@@ -283,7 +273,7 @@ public class DBManager {
 
         public static void printAllTables(Connection con){
                 try{
-                        for(int i=0; i<15; i++){
+                        for(int i=0; i<tbNames.length; i++){
                                 printTable(con, tbNames[i]);
                                 System.out.println();
                         }
