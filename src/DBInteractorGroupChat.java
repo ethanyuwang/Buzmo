@@ -138,7 +138,7 @@ public class DBInteractorGroupChat {
 
 	//Used for GroupChatJPanel 
 	public static Boolean addMessageToGroupChat(Connection con, String message, String groupName){
-		/*try {
+		try {
 			String myEmail = BuzmoJFrame.userEmail;
 			Timestamp ts = DBInteractor.getCurrentTimeStamp();
 			String messageWithTime = message+ts.toString();
@@ -148,6 +148,7 @@ public class DBInteractorGroupChat {
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
 			String messageWithTimeAndOwner = messageWithTime + myEmail;
+			
 			ps.setInt(1, messageWithTimeAndOwner.hashCode());
 			ps.setString(2, message);
 			ps.setTimestamp(3, ts);
@@ -160,8 +161,7 @@ public class DBInteractorGroupChat {
 			con.commit();
 			return true;
 		}
-		catch(Exception e){System.out.println(e); return false;}*/
-		return false;
+		catch(Exception e){System.out.println(e); return false;}
 }
 
 	//Used for GroupChatJPanel 
@@ -295,7 +295,6 @@ public class DBInteractorGroupChat {
 		try {
 			String ret = "";
 			int groupId = getGroupID(con, groupName);
-			System.out.println("Current group id is; "+groupId);
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			String sql = "SELECT G.member FROM Group_chat_members G WHERE " +

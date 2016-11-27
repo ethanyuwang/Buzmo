@@ -155,7 +155,7 @@ public class GroupChatJPanel extends JPanel
 	//Pannels
 	gbc = new GridBagConstraints();
 	ChatDispalSubyPanel = new JPanel(new GridLayout(2,1));
-	ChatDispalyPanel = new JPanel(new GridLayout(1,2));
+	ChatDispalyPanel = new JPanel(new GridBagLayout());
 	//ChatDispalyPanel.setPreferredSize(new Dimension(ChatDispalyPanelWidth, pannelHeight));
 	ChatDispalyPanel.setSize(ChatDispalyPanelWidth, pannelHeight);
 
@@ -175,7 +175,16 @@ public class GroupChatJPanel extends JPanel
 	//add components to top panel
 	ChatDispalSubyPanel.add(groupChatsListScroll);
 	ChatDispalSubyPanel.add(groupMembersScroll);
+
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.weightx = 0.3;
 	ChatDispalyPanel.add(ChatDispalSubyPanel);
+
+	gbc.gridx = 1;
+	gbc.gridy = 0;
+	gbc.weightx = 0.7;
 	ChatDispalyPanel.add(historyScroll);
 
 	//add components to med panel
@@ -186,7 +195,6 @@ public class GroupChatJPanel extends JPanel
 	gbc.ipadx = 70;
 	gbc.gridwidth = 3;
 	gbc.gridheight = 3;
-	gbc.fill = GridBagConstraints.HORIZONTAL;
 	ChatControlPanel.add(groupChatSelectScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 6;
@@ -234,7 +242,7 @@ public class GroupChatJPanel extends JPanel
 	c.fill = GridBagConstraints.HORIZONTAL;
 	//answer pending request components
 	c.gridx = 0;
-	c.gridy = 1;
+	c.gridy = 0;
 	c.weighty = 3.0;
 	
 	GroupControlPanel.add(pendingRequestsScroll, c);
@@ -314,6 +322,7 @@ public class GroupChatJPanel extends JPanel
 			Boolean complete = DBInteractorGroupChat.isGroup(BuzmoJFrame.con, temp);
 			if(complete){
 				currentGroupName=temp;
+				groupMembersTextArea.setText("Members:\n"+DBInteractorGroupChat.getGroupMembers());
 				historyTextArea.setText("You entered chat group: "+temp+"\n");
 				historyTextArea.append(DBInteractorGroupChat.loadGroupChatHistory(BuzmoJFrame.con, currentGroupName));
 			}
