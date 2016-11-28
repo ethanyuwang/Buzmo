@@ -124,10 +124,10 @@ public class DBInteractorManager {
 						else if (addGroupMessages&&(!line.equals("-group_info"))&&(!line.equals("-group_messages")))
 						{
 							String[] informations = line.split("; ");
-							System.out.println("informations[0]" + informations[0]);
+							/*System.out.println("informations[0]" + informations[0]);
 							System.out.println("informations[1]" + informations[1]);
-							System.out.println("informations[2]" + informations[2]);
-							
+							System.out.println("informations[2]" + informations[2]);*/
+
 							if (addMessageToGroupChatDirectly(con, informations[1], 
 										currentGroupName, getEmialWithName(con, informations[0]), 
 										parseTimeStamp(informations[2]))==false)
@@ -151,8 +151,8 @@ public class DBInteractorManager {
 					}
 					case addCircle: {
 						System.out.println("Adding circle feed " + line);
-						//if (addContactsCircle(con, line)==false)
-						//	System.out.println("Error at " + line);
+						if (addCircle(con, line)==false)
+							System.out.println("Error at " + line);
 						break;
 					}
 					case addTopicWords: {
@@ -341,6 +341,80 @@ public class DBInteractorManager {
 			return true;
 		}
 		catch(Exception e){System.out.println(e); return false;}
+	}
+	public static Boolean addCircle(Connection con, String line) {
+		String[] informations = line.split(", ");
+
+		String[] social =informations[0].split(" (");
+		String userEmail = getEmialWithName(con, social[0]);
+		String[] topics = (informations[2].replace("Topic words: ", "")).split(", ");
+		Boolean isPublic = false;
+		Timestamp ts = parseTimeStamp(informations[3]);
+
+		String[] receivers = (social[1].replace(")", "")).split("; ");
+
+		if (social[1]=="all)")
+			isPublic = true;
+		
+		int post_id = createCirclePostDirectly(con, userEmail, informations[1], topics, isPublic, ts);
+
+		if (post_id==-1)
+		{
+			System.out.println("FAILED to create circle feed: " +userEmail+ informations[1]+ topics[0]+ isPublic+ ts);
+			return true;
+		}
+		//link owner
+		if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, userEmail, post_id)){
+					System.out.println("SUCCESS linked user to circle feed");}
+		else{System.out.println("FAILED to link user to circle feed");return false;}
+
+		//link recivers
+		if (isPublic = false)
+		{
+			for(int i=0; i<receivers.length; i++){
+
+				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i-1]), post_id)){
+					System.out.println("SUCCESS linked user to circle feed");}
+				else{System.out.println("FAILED to link user to circle feed");return false;}	
+			}
+		}
+		return true;
+	}
+
+	public static int createCirclePostDirectly(Connection con, String userEmail, String message, String[] topicArray, boolean publicChecked, Timestamp ts){
+		try {
+			String is_public = "False";
+			if(publicChecked) {is_public = "True";}
+			String myEmail = BuzmoJFrame.userEmail;
+			String hashStr = "CF" + myEmail + message + ts.toString();
+			int hashCode = hashStr.hashCode();
+			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?)";	
+			PreparedStatement ps = con.prepareStatement(sql);
+			// 1. Create message
+			con.setAutoCommit(false);
+			ps.setInt(1, hashCode);
+			ps.setString(2, message);
+			ps.setTimestamp(3, ts);
+			ps.setString(4, is_public);
+			ps.setString(5, myEmail);
+			ps.addBatch();
+			ps.executeBatch();
+			con.commit();
+			con.setAutoCommit(true);
+			// 2. Link topic words to message/user
+			Statement st = con.createStatement();
+			for(int i=0; i<topicArray.length; i++){
+				sql = "INSERT INTO POST_TOPIC_WORDS " +
+				"(SELECT'" + topicArray[i] + "' AS TOPIC_WORD, " + 
+				" " + hashCode + " AS POST_ID " +
+				"FROM POST_TOPIC_WORDS WHERE " +
+				"TOPIC_WORD='" + topicArray[i] + "' AND " + 
+				"POST_ID=" + hashCode + " HAVING COUNT(*) = 0)";
+				st.executeUpdate(sql);
+			}
+			return hashCode;
+		}	
+		catch(Exception e){System.out.println(e); return -1;}
 	}
 
 	public static Boolean addMessageToGroupChatDirectly(Connection con, String message, String groupName, String memeberEmail, Timestamp ts){
