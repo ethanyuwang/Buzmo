@@ -40,31 +40,37 @@ public class DBInteractorManager {
 				else if(line.equals("Private_Messages"))
 				{
 					ldbc=loadDBControl.addPrivateMessages;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line.equals("Chat_groups"))
 				{
 					ldbc=loadDBControl.addGroups;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line.equals("Circle_feeds"))
 				{
 					ldbc=loadDBControl.addCircle;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line.equals("User_Topic_words"))
 				{
 					ldbc=loadDBControl.addTopicWords;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line.equals("Managers"))
 				{
 					ldbc=loadDBControl.addManager;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 				else if(line.equals("Finish"))
 				{
 					ldbc=loadDBControl.finish;
+					System.out.println("Start adding" + line);
 					continue;
 				}
 
@@ -83,8 +89,9 @@ public class DBInteractorManager {
 						break;
 					}
 					case addPrivateMessages: {
-						//if (addUser(con, line)==false)
-						//	return false;
+						System.out.println("Adding private messages " + line);
+						if (addPrivateMessagesWithString(con, line)==false)
+							return false;
 						break;
 					}
 					case addGroups: {
@@ -126,6 +133,12 @@ public class DBInteractorManager {
 		return true;
 	}
 
+	public static Boolean addPrivateMessagesWithString(Connection con, String line){
+		String[] info = line.split(";");
+		return(addMessageToPrivateChatWithMoreInfo(con, info[2], info[1], info[0], info[3]));
+	}
+	
+
 	//debug and managing purpose, not normal program flow
 	public static Boolean addContactsDirectly(Connection con, String owner, String contact){
 		try {
@@ -147,6 +160,52 @@ public class DBInteractorManager {
 		}
 		catch(Exception e){System.out.println(e); return false;}
 	}
+
+
+
+	public static Boolean addMessageToPrivateChatWithMoreInfo(Connection con, String message, String recipientEmail, String SenderEmail, String time){
+		try {
+			String myEmail = BuzmoJFrame.userEmail;
+			Timestamp ts = parseTimeStamp(time);
+			String messageWithTime = message+ts.toString();
+
+			//Add a copy to sender
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
+			PreparedStatement ps = con.prepareStatement(sql);
+			con.setAutoCommit(false);
+			String messageWithTimeAndOwner = messageWithTime + myEmail;
+			ps.setInt(1, messageWithTimeAndOwner.hashCode());
+			ps.setString(2, message);
+			ps.setTimestamp(3, ts);
+			ps.setString(4, "private");
+			ps.setString(5, myEmail);
+			ps.setString(6, myEmail);
+			ps.setString(7, recipientEmail);
+			ps.setNull(8, java.sql.Types.INTEGER);
+			ps.addBatch();
+			ps.executeBatch();
+			con.commit();
+
+			//Add a copy to recipient
+			ps = con.prepareStatement(sql);
+			messageWithTimeAndOwner = messageWithTime + recipientEmail;
+			ps.setInt(1, messageWithTimeAndOwner.hashCode());
+			ps.setString(2, message);
+			ps.setTimestamp(3, ts);
+			ps.setString(4, "private");
+			ps.setString(5, recipientEmail);
+			ps.setString(6, myEmail);
+			ps.setString(7, recipientEmail);
+			ps.setNull(8, java.sql.Types.INTEGER);
+			ps.addBatch();
+			ps.executeBatch();
+			con.commit();
+			con.setAutoCommit(true);
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+	}
+
 	//Used for GroupChatJPanel 
 	public static String getEmialWithName(Connection con, String name){
 		try {
@@ -162,4 +221,30 @@ public class DBInteractorManager {
 		}
 		catch(Exception e){System.out.println(e); return "";}
 	}
+
+	public static Timestamp parseTimeStamp(String line) {
+		String properFormat;
+
+		String[] dateTime = line.split(", ");
+		String[] date = dateTime[0].split(".");
+		String[] time = dateTime[1].split(" ");
+
+		String month = String.format("%02s", date[0]);
+		String day = String.format("%02s", date[1]);
+
+		properFormat = date[2]+"-"+month+"-"+day+" ";
+
+		String[] exactTime = time[0].split(":");
+		
+		if (time[1].equals("PM"))
+			exactTime[0]=String.valueOf(Integer.parseInt(exactTime[0])+12);
+
+		properFormat += (exactTime[0]+":"+exactTime[1]+":0.0");
+
+		System.out.println("Parsed timestamp is "+properFormat);
+		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(properFormat);
+		//java.util.Date today = new java.util.Date();
+		return timestamp;
+	}
+
 }
