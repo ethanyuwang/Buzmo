@@ -185,6 +185,41 @@ public class DBInteractor {
 		catch(Exception e){System.out.println(e); return false;}
 	}
 
+	//User topic words
+	public static boolean addUserTopicWords(Connection con, String[] topicArray){
+		try {
+			String sql;
+			String myEmail = BuzmoJFrame.userEmail;	
+			Statement st = con.createStatement();
+			for(int i=0; i<topicArray.length; i++){
+                                sql = "INSERT INTO USER_TOPIC_WORDS " +
+                                "(SELECT'" + topicArray[i] + "' AS TOPIC_WORD, " +
+                                " '" + myEmail + "' AS EMAIL_ADDRESS " +
+                                "FROM USER_TOPIC_WORDS WHERE " +
+                                "TOPIC_WORD='" + topicArray[i] + "' AND " +
+                                "EMAIL_ADDRESS='" + myEmail + "' HAVING COUNT(*) = 0)";
+                                st.executeUpdate(sql);
+			}
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+	}
+        public static String getUserTopicWords(Connection con){
+                try {
+                        Statement st = con.createStatement();
+                        String ret = "";
+                        String myEmail = BuzmoJFrame.userEmail;
+                        String sql = "SELECT T.topic_word FROM USER_TOPIC_WORDS T " +
+                        "WHERE T.email_address='" + myEmail + "'";
+                        ResultSet rs = st.executeQuery(sql);
+                        while(rs.next()){
+                                ret += rs.getString(1) + " ";
+                        }
+                        return ret;
+                }
+                catch(Exception e){System.out.println(e); return "FAILED to get user's topic words";}
+        }
+
 	//Helper functions
 	public static Timestamp getCurrentTimeStamp() {
 		java.util.Date today = new java.util.Date();
