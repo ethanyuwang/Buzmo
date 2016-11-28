@@ -44,7 +44,7 @@ public class ManagerModeJPanel extends JPanel
 	emailLabel = new JLabel("Enter emails divided by space (gets users with those emails)");
 	topicLabel = new JLabel("Enter topic words divided by space (gets users with those topic words)");
 	timestampLabel = new JLabel("Enter a timestamp (gets users that created a post after the timestamp)");
-	postnumLabel = new JLabel("Enter a postive integer (gets users that created at least that many posts within 7 days)");
+	postnumLabel = new JLabel("Enter an integer (gets users that created at least that many posts within 7 days)");
 
 	//Scroll displays
 	resultTextArea = new JTextArea("<Manager Mode Results>");
@@ -152,11 +152,12 @@ public class ManagerModeJPanel extends JPanel
 			String[] emailArray = emailTextArea.getText().split("\\s+");
 			String[] topicArray = topicTextArea.getText().split("\\s+");
 			String timestamp = timestampTextArea.getText();
-			String postnum = postnumTextArea.getText();
+			String postnum_str = postnumTextArea.getText();
 
                         String result = DBInteractorManagerMode.searchUsers(BuzmoJFrame.con, 
-			emailArray, topicArray, timestamp, postnum);
+			emailArray, topicArray, timestamp, postnum_str);
                         resultTextArea.setText("<Manager Mode Results>\n\n" + result);
+			System.out.println("Search Updated");
                 }
         });
         registerUsersButton.addMouseListener(new MouseAdapter() {
