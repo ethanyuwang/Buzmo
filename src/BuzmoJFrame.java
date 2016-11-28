@@ -12,7 +12,7 @@ public class BuzmoJFrame
 	// Database
 	public static Connection con;
 	public static String userEmail;
-
+	public static boolean is_manager;
 	LoginJPanel cp;
 
 	//Constructor

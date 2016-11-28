@@ -30,6 +30,9 @@ public class LoginJPanel extends JPanel
 	emailField = new JTextField("email");
 	passField = new JTextField("password");
 
+	// -For manager mode development-
+	//DBInteractorManagerMode.addManager(BuzmoJFrame.con, "email");
+
 	//emailField = new JTextField("Rihanna@gmail.com");
 	//passField = new JTextField("Rihanna1");
 

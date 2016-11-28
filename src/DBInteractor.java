@@ -43,11 +43,23 @@ public class DBInteractor {
 			Statement st = con.createStatement();
 			String sql = "SELECT U.PASSWORD FROM USERS U WHERE U.EMAIL_ADDRESS='" + email + "'";
 			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs2;
 			if(rs.next()){
 				System.out.println(rs.getString(1));
 				System.out.println(pass);
 				if (pass.equals(rs.getString(1))){
 					BuzmoJFrame.userEmail = email;
+					// Check if it's a manager
+					sql = "SELECT * FROM MANAGERS M WHERE M.EMAIL_ADDRESS='" + email + "'";
+					rs2 = st.executeQuery(sql);
+					if(rs2.next()){
+						System.out.println("logged in as mager");
+						BuzmoJFrame.is_manager = true;
+					}
+					else{
+						System.out.println("NOT logged in as mager");
+						BuzmoJFrame.is_manager = false;
+					}
 					return true;
 				}
 			}

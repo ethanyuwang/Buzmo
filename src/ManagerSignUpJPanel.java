@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class SignUpJPanel extends JPanel
+public class ManagerSignUpJPanel extends JPanel
 {
     //Java GUI Components
     JButton signUpButton;
@@ -21,12 +21,12 @@ public class SignUpJPanel extends JPanel
     JPanel topPanel;
     JPanel botPanel;
 
-    public SignUpJPanel()
+    public ManagerSignUpJPanel()
     {
 	this.repaint();
-	signUpButton = new JButton("Sign up");
 	backButton = new JButton("Back");
-	signUpLabel = new JLabel("Sign up");
+	signUpButton = new JButton("Sign up");
+	signUpLabel = new JLabel("Register Users (manager mode)");
 
 	// User Info
 	emailField = new JTextField("email");
@@ -89,15 +89,15 @@ public class SignUpJPanel extends JPanel
 			Boolean complete = DBInteractor.addUser(BuzmoJFrame.con, emailField.getText(), passField.getText(),
 				nameField.getText(), phoneField.getText(), screennameField.getText());
 			if(complete){
-				BuzmoJFrame.setCurrentPanelTo(new LoginJPanel());
+				BuzmoJFrame.setCurrentPanelTo(new ManagerModeJPanel());
 			}
 		}
 	});
-        backButton.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                        BuzmoJFrame.setCurrentPanelTo(new LoginJPanel());
-                }
-        });
+	backButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new ManagerModeJPanel());
+		}
+	});
     }
 }

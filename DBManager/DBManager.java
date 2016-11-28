@@ -22,11 +22,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        deleteTables(con);
+                        //deleteTables(con);
 
                         //Create Tables
-                        createTables(con);
-                        addForeignKeys(con);
+                        //createTables(con);
+                        //addForeignKeys(con);
 
 
                         //Print Table
@@ -145,7 +145,7 @@ public class DBManager {
                         Statement st = con.createStatement();
 
                         String sql = "ALTER TABLE Managers " +
-                        "ADD FOREIGN KEY (email_address) REFERENCES Users(email_address)";
+                        "ADD FOREIGN KEY (email_address) REFERENCES Users(email_address) ON DELETE CASCADE";
                         st.executeQuery(sql);
 
                         sql = "ALTER TABLE Group_chats " +
