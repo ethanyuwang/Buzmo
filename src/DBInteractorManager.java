@@ -136,7 +136,7 @@ public class DBInteractorManager {
 
 	public static Boolean addPrivateMessagesWithString(Connection con, String line){
 		String[] info = line.split(";");
-		return(addMessageToPrivateChatWithMoreInfo(con, info[2], info[1], info[0], info[3]));
+		return(addMessageToPrivateChatWithMoreInfo(con, info[2], getEmialWithName(con, info[1]), getEmialWithName(con, info[0]), info[3]));
 	}
 	
 
@@ -230,29 +230,19 @@ public class DBInteractorManager {
 		String[] date = dateTime[0].split("\\.");
 		String[] time = dateTime[1].split(" ");
 
-		/*System.out.println("Parsing date time: "+Arrays.toString(dateTime));
-		System.out.println("Parsing date "+Arrays.toString(date));
-		System.out.println("Parsing time "+Arrays.toString(time));*/
-
 		String month = String.format("%02d", Integer.parseInt(date[0]));
 		String day = String.format("%02d", Integer.parseInt(date[1]));
-
-		System.out.println("Parsing day "+month+" day "+day);
 
 		properFormat = date[2]+"-"+month+"-"+day+" ";
 
 		String[] exactTime = time[0].split(":");
-
-		System.out.println("Parsing exactTime "+Arrays.toString(exactTime));
 
 		if (time[1].equals("PM"))
 			exactTime[0]=String.valueOf(Integer.parseInt(exactTime[0])+12);
 
 		properFormat += (exactTime[0]+":"+exactTime[1]+":00.0");
 
-		System.out.println("Parsed timestamp is "+properFormat);
 		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(properFormat);
-		//java.util.Date today = new java.util.Date();
 		return timestamp;
 	}
 
