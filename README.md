@@ -2,9 +2,6 @@
 * Geon Lee, Ethan Wang
 
 # To-do:
-* ~~Merge: DBInteractor.java, DBManager.java~~
-
-* ~~PrivateChats currently does not use Private_chats table. Update interactor so that it is used.~~
 
 * Delete on cascade - double check & make sure everythings correct
 
@@ -14,29 +11,14 @@
 
 * Add "view count" to messages and increase for every query
 
-* ~~Post a message: The message can be a private message, or in the MyCircle, or in a ChatGroup. Note that
-there are different parameters in these three settings.~~
+*  select an author of one of the messages displayed and send a join friend circle request.
 
-* ~~Delete a message: Remove the message in the private conversation, the MyCircle, or a ChatGroup.~~
-
-* ~~Create a ChatGroup: The user creates a new ChatGroup, group properties are also set.~~
-
-* ~~Modify ChatGroup properties: Change title, duration for the ChatGroup.~~
-
-* ~~Invite and accept: invite a user (email address) to join a ChatGroup and accept the invitation.~~
-
-* ~~Search recent messages: Given one or more topic words, find n most recent public messages matching all
-or at least one given topic words (two different types of searches). The default set of topic words is the
-set of topic words associated with the user.~~
-
-* ~~Request to join friend circle: Once a new user (email address) is found, send a request to be a friend of
-that user.~~
 
 * --Manager mode--
-
-* ~~Search for users: search criteria include a combination of email address, one or more matching topic words,
-most recent posting is within the last n days (n ≤ 7), n or more number of messaged posted within the
-last 7 days.~~
+* Find the active users (top 3 in message counts in the last 7 days),
+* Find top messages (top read counts in the last 7 days),
+* Show the number of inactive users (3 or less messages sent), or
+* Display the complete report.
 
 * Summary reports: Every 7 days there will be a usage summer report generated. The report include during
 the 7 day period, total number of new messages, total number of message reads, average number of new
