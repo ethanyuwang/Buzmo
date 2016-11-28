@@ -235,7 +235,6 @@ public class DBInteractorCirclePost {
 	}	
 
 	private static Timestamp getCurrentTimeStamp() {
-		java.util.Date today = new java.util.Date();
-		return new Timestamp(today.getTime());
+		return DBInteractor.getCurrentTimeStamp();
 	}
 }
