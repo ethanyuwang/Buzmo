@@ -366,7 +366,7 @@ public class DBInteractorManager {
 		if (social[1]=="all")
 		{
 			isPublic = true;
-			receivers = DBInteractorCirclePost.getContactListsAsArray(BuzmoJFrame.con);
+			receivers = getContactListsAsArray(BuzmoJFrame.con, userEmail);
 		}
 		
 		int post_id = createCirclePostDirectly(con, userEmail, informations[1], topics, isPublic, ts);
@@ -383,12 +383,25 @@ public class DBInteractorManager {
 
 		//link recivers
 
-		for(int i=0; i<receivers.length; i++){
-			System.out.println("receivers[i]  "+receivers[i]);
+		if (isPublic)
+		{
+			for(int i=0; i<receivers.length; i++){
+				System.out.println("receivers[i]  "+receivers[i]);
 
-			if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i]), post_id)){
-				System.out.println("SUCCESS linked user to circle feed");}
-			else{System.out.println("FAILED to link user to circle feed");return false;}	
+				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, receivers[i], post_id)){
+					System.out.println("SUCCESS linked user to circle feed");}
+				else{System.out.println("FAILED to link user to circle feed");return false;}	
+			}
+		}
+		else
+		{
+			for(int i=0; i<receivers.length; i++){
+				System.out.println("receivers[i]  "+receivers[i]);
+
+				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i]), post_id)){
+					System.out.println("SUCCESS linked user to circle feed");}
+				else{System.out.println("FAILED to link user to circle feed");return false;}	
+			}
 		}
 		
 		return true;
