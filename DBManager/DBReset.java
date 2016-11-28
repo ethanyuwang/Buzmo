@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class DBManager {
+public class DBReset {
 
         public static String[] tbNames = {"USERS", "MANAGERS", "CIRCLE_POSTS", "GROUP_CHATS", "PRIVATE_CHATS",
                                    "MESSAGES", "CONTACT_PENDING_LISTS", "CONTACT_LISTS", "GROUP_PENDING_LISTS",
