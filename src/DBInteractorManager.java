@@ -232,6 +232,7 @@ public class DBInteractorManager {
 		String[] date = dateTime[0].split(".");
 		String[] time = dateTime[1].split(" ");
 
+		System.out.println("Parsing date time: "+Arrays.toString(dateTime));
 		System.out.println("Parsing date "+Arrays.toString(date));
 		System.out.println("Parsing time "+Arrays.toString(time));
 
