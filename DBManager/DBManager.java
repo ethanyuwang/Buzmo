@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class DBManager {
 
-        public static String[] tbNames = {"USERS", "MANAGERS", "CIRCLE_POSTS", "GROUP_CHATS", "PRIVATE_CHATS",
+        public static String[] tbNames = {"TIME", "USERS", "MANAGERS", "CIRCLE_POSTS", "GROUP_CHATS", "PRIVATE_CHATS",
                                    "MESSAGES", "CONTACT_PENDING_LISTS", "CONTACT_LISTS", "GROUP_PENDING_LISTS",
                                    "GROUP_CHAT_MEMBERS", "POST_TOPIC_WORDS", "USER_TOPIC_WORDS", "CIRCLE_POST_RECEIVERS"};
 
@@ -22,11 +22,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        //deleteTables(con);
+                        deleteTables(con);
 
                         //Create Tables
-                        //createTables(con);
-                        //addForeignKeys(con);
+                        createTables(con);
+                        addForeignKeys(con);
 
 
                         //Print Table
@@ -34,6 +34,10 @@ public class DBManager {
 
                         //Print GLEE Tables
                         //printGLEETables(con);
+
+			//Time
+			//createTime(con);
+			//setTIme(con, "2007-09-23 10:10:10.0");
 
                         //Print all tables
                         printAllTables(con);
@@ -43,7 +47,31 @@ public class DBManager {
                 }
                 catch(Exception e){System.out.println(e);}
         }
-
+	public static void createTime(Connection con){
+		try{
+			// set to current system time
+			java.util.Date today = new java.util.Date();
+			Timestamp time = new Timestamp(today.getTime());
+			PreparedStatement ps;
+			String sql = "INSERT INTO TIME VALUES(?, ?)";
+			ps = con.prepareStatement(sql);
+			ps.setTimestamp(1, time);
+			ps.setInt(2, 0);
+			ps.executeQuery();
+		}
+                catch(Exception e){System.out.println(e);}
+	}
+	public static void setTime(Connection con, String time_str){
+		try{
+			Timestamp time = Timestamp.valueOf(time_str);
+			PreparedStatement ps;
+			String sql = "UDPATE TIME SET baseTime=? WHERE time_id=0";
+			ps = con.prepareStatement(sql);
+			ps.setTimestamp(1, time);
+			ps.executeUpdate();
+		}
+		catch(Exception e){System.out.println(e);}
+	}
         public static void createTables(Connection con){
                 try{
                         // Create tables without foreign keys
@@ -134,6 +162,12 @@ public class DBManager {
                         "(topic_word VARCHAR(256) NOT NULL, " +
                         " email_address VARCHAR(20) NOT NULL, " +
                         " UNIQUE (topic_word, email_address))";
+                        st.executeQuery(sql);
+
+			sql = "CREATE TABLE Time " + 
+			"(base_time DATE NOT NULL, " + 
+			" time_id INT NOT NULL, " + 
+			" UNIQUE(time_id))"; 
                         st.executeQuery(sql);
                 }
                 catch(Exception e){System.out.println(e);}

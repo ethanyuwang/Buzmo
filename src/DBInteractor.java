@@ -231,8 +231,26 @@ public class DBInteractor {
         }
 
 	//Helper functions
+	public static Timestamp getBaseTime(Connection con){
+		try {
+                        Statement st = con.createStatement();
+			String sql = "SELECT T.base_time FROM TIME T WHERE T.time_id=0";
+			ResultSet rs = st.executeQuery(sql);
+			if(rs.next()){
+				return rs.getTimestamp(1);
+			}
+			else{
+				return null;
+			}
+		}
+		catch(Exception e){System.out.println(e); return null;}
+	}
 	public static Timestamp getCurrentTimeStamp() {
 		java.util.Date today = new java.util.Date();
-		return new Timestamp(today.getTime());
+		Timestamp start_time = BuzmoJFrame.start_time;
+		Timestamp base_time = BuzmoJFrame.base_time;
+		Timestamp current_time = new Timestamp(today.getTime());
+		long ret_time = base_time.getTime() + current_time.getTime() - start_time.getTime();
+		return new Timestamp(ret_time);
 	}
 }

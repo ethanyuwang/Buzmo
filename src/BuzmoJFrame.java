@@ -13,6 +13,8 @@ public class BuzmoJFrame
 	public static Connection con;
 	public static String userEmail;
 	public static boolean is_manager;
+	public static Timestamp base_time;
+	public static Timestamp start_time;
 	LoginJPanel cp;
 
 	//Constructor
@@ -41,6 +43,9 @@ public class BuzmoJFrame
 	public static void main(String [] args)
 	{
 		con = DBInteractor.connectToDB();
+		base_time = DBInteractor.getBaseTime(con);
+		java.util.Date today = new java.util.Date();
+		start_time = new Timestamp(today.getTime());
 		new BuzmoJFrame();
 	}
 }
