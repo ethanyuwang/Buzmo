@@ -343,17 +343,24 @@ public class DBInteractorManager {
 		catch(Exception e){System.out.println(e); return false;}
 	}
 	public static Boolean addCircle(Connection con, String line) {
-		String[] informations = line.split(", ");
+		String[] informations = line.split("; ");
+		System.out.println("informations[0] "+informations[0]);
+		System.out.println("informations[1] "+informations[1]);
+		System.out.println("informations[2] "+informations[2]);
+		System.out.println("informations[3] "+informations[3]);
 
-		String[] social =informations[0].split(" (");
+		String[] social =informations[0].split(" \\(");
 		String userEmail = getEmialWithName(con, social[0]);
 		String[] topics = (informations[2].replace("Topic words: ", "")).split(", ");
 		Boolean isPublic = false;
 		Timestamp ts = parseTimeStamp(informations[3]);
 
+		System.out.println("social[0] "+social[0]);
+		System.out.println("social[1] "+social[1]);
+
 		String[] receivers = (social[1].replace(")", "")).split("; ");
 
-		if (social[1]=="all)")
+		if (social[1]=="all")
 			isPublic = true;
 		
 		int post_id = createCirclePostDirectly(con, userEmail, informations[1], topics, isPublic, ts);
