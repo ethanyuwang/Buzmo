@@ -106,20 +106,9 @@ public class DBInteractorManager {
 						break;
 					}
 					case addGroups: {
-						System.out.println("Adding private messages " + line);
-						//------------------------------------------------------------	
-						if (line.equals("-group_info"))
-						{
-							addGroupInfo=true;
-							addGroupMessages=false;
-						}
-						else if (line.equals("-group_messages"))
-						{
-							addGroupInfo=false;
-							addGroupMessages=true;
-						}
-
-						if (addGroupInfo)
+						System.out.println("Adding groups " + line);
+						//-----------------------need to factor out-------------------
+						if (addGroupInfo&&(!line.equals("-group_info"))&&(!line.equals("-group_messages")))
 						{
 							String[] informations = line.split(", ");
 							currentGroupName = informations[0];
@@ -132,7 +121,7 @@ public class DBInteractorManager {
 								}
 							}
 						}
-						else if (addGroupMessages)
+						else if (addGroupMessages&&(!line.equals("-group_info"))&&(!line.equals("-group_messages")))
 						{
 							String[] informations = line.split("; ");
 							if (addMessageToGroupChatDirectly(con, informations[1], 
@@ -142,6 +131,18 @@ public class DBInteractorManager {
 								System.out.println("error at addGroupChatDirectly" + line);
 							}
 						}
+
+						if (line.equals("-group_info"))
+						{
+							addGroupInfo=true;
+							addGroupMessages=false;
+						}
+						else if (line.equals("-group_messages"))
+						{
+							addGroupInfo=false;
+							addGroupMessages=true;
+						}						
+						//------------------------------------------------------------	
 						break;
 					}
 					case addCircle: {
