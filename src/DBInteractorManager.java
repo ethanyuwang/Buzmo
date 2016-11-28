@@ -482,4 +482,30 @@ public class DBInteractorManager {
 		return timestamp;
 	}
 
+	public static String[] getContactListsAsArray(Connection con, String myEmail){
+                try {
+                        String[] ret;
+                        Statement st = con.createStatement();
+                        String sql = "SELECT count(*) FROM CONTACT_LISTS C " +
+                        "WHERE C.owner='" + myEmail + "'";
+                        ResultSet rs = st.executeQuery(sql);
+                        if(rs.next()){
+                                ret = new String[rs.getInt(1)];
+                        }
+                        else{
+                                return null;
+                        }
+                        sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+                        "WHERE C.owner='" + myEmail + "'";
+                        rs = st.executeQuery(sql);
+                        int i = 0;
+                        while(rs.next()){
+                                ret[i] = rs.getString(1);
+                                i++;
+                        }
+                        return ret;
+                }
+                catch(Exception e){System.out.println(e); return null;}
+        }
+
 }
