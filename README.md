@@ -8,6 +8,10 @@
 
 * Delete on cascade - double check & make sure everythings correct
 
+* Use/store "buzmo time" instead of using current time
+
+* Max number of messages to show ANYWHERE (all 3 types) should be 7
+
 * ~~Post a message: The message can be a private message, or in the MyCircle, or in a ChatGroup. Note that
 there are different parameters in these three settings.~~
 
@@ -28,9 +32,9 @@ that user.~~
 
 * --Manager mode--
 
-* Search for users: search criteria include a combination of email address, one or more matching topic words,
+* ~~Search for users: search criteria include a combination of email address, one or more matching topic words,
 most recent posting is within the last n days (n ≤ 7), n or more number of messaged posted within the
-last 7 days.
+last 7 days.~~
 
 * Summary reports: Every 7 days there will be a usage summer report generated. The report include during
 the 7 day period, total number of new messages, total number of message reads, average number of new
