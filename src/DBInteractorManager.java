@@ -124,6 +124,10 @@ public class DBInteractorManager {
 						else if (addGroupMessages&&(!line.equals("-group_info"))&&(!line.equals("-group_messages")))
 						{
 							String[] informations = line.split("; ");
+							System.out.println("informations[0]" + informations[0]);
+							System.out.println("informations[1]" + informations[1]);
+							System.out.println("informations[2]" + informations[2]);
+							
 							if (addMessageToGroupChatDirectly(con, informations[1], 
 										currentGroupName, getEmialWithName(con, informations[0]), 
 										parseTimeStamp(informations[2]))==false)
