@@ -355,13 +355,19 @@ public class DBInteractorManager {
 		Boolean isPublic = false;
 		Timestamp ts = parseTimeStamp(informations[3]);
 
-		System.out.println("social[0] "+social[0]);
-		System.out.println("social[1] "+social[1]);
+
 
 		String[] receivers = (social[1].replace(")", "")).split("; ");
 
+		System.out.println("social[0] "+social[0]);
+		System.out.println("social[1] "+social[1].replace(")", ""));
+
+
 		if (social[1]=="all")
+		{
 			isPublic = true;
+			receivers = getContactListsAsArray(BuzmoJFrame.con, userEmail);
+		}
 		
 		int post_id = createCirclePostDirectly(con, userEmail, informations[1], topics, isPublic, ts);
 
@@ -376,15 +382,28 @@ public class DBInteractorManager {
 		else{System.out.println("FAILED to link user to circle feed");return false;}
 
 		//link recivers
-		if (isPublic = false)
+
+		if (isPublic)
 		{
 			for(int i=0; i<receivers.length; i++){
+				System.out.println("receivers[i]  "+receivers[i]);
 
-				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i-1]), post_id)){
+				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, receivers[i], post_id)){
 					System.out.println("SUCCESS linked user to circle feed");}
 				else{System.out.println("FAILED to link user to circle feed");return false;}	
 			}
 		}
+		else
+		{
+			for(int i=0; i<receivers.length; i++){
+				System.out.println("receivers[i]  "+receivers[i]);
+
+				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i]), post_id)){
+					System.out.println("SUCCESS linked user to circle feed");}
+				else{System.out.println("FAILED to link user to circle feed");return false;}	
+			}
+		}
+		
 		return true;
 	}
 
@@ -392,7 +411,7 @@ public class DBInteractorManager {
 		try {
 			String is_public = "False";
 			if(publicChecked) {is_public = "True";}
-			String myEmail = BuzmoJFrame.userEmail;
+			String myEmail = userEmail;
 			String hashStr = "CF" + myEmail + message + ts.toString();
 			int hashCode = hashStr.hashCode();
 			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?)";	
@@ -449,6 +468,17 @@ public class DBInteractorManager {
 			ps.setString(6, myEmail);
 			ps.setString(7, myEmail);
 			ps.setInt(8, groupId);
+
+			System.out.println("1, messageWithTimeAndOwner.hashCode()"+messageWithTimeAndOwner.hashCode());
+			System.out.println("2, message"+message);
+			System.out.println("3, ts"+ts);
+			System.out.println("4, group "+group);
+			System.out.println("5, myEmail"+myEmail);
+			System.out.println("6, myEmail" +myEmail);
+			System.out.println("(7, myEmail" +myEmail);
+			System.out.println("8, groupId" +myEmail);
+
+
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -481,5 +511,31 @@ public class DBInteractorManager {
 		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(properFormat);
 		return timestamp;
 	}
+
+	public static String[] getContactListsAsArray(Connection con, String myEmail){
+                try {
+                        String[] ret;
+                        Statement st = con.createStatement();
+                        String sql = "SELECT count(*) FROM CONTACT_LISTS C " +
+                        "WHERE C.owner='" + myEmail + "'";
+                        ResultSet rs = st.executeQuery(sql);
+                        if(rs.next()){
+                                ret = new String[rs.getInt(1)];
+                        }
+                        else{
+                                return null;
+                        }
+                        sql = "SELECT C.friend FROM CONTACT_LISTS C " +
+                        "WHERE C.owner='" + myEmail + "'";
+                        rs = st.executeQuery(sql);
+                        int i = 0;
+                        while(rs.next()){
+                                ret[i] = rs.getString(1);
+                                i++;
+                        }
+                        return ret;
+                }
+                catch(Exception e){System.out.println(e); return null;}
+        }
 
 }
