@@ -452,6 +452,7 @@ public class DBInteractorManager {
 
 	public static Timestamp parseTimeStamp(String line) {
 		String properFormat;
+		System.out.println("time parser line: "+line);
 
 		String[] dateTime = line.split(", ");
 		String[] date = dateTime[0].split("\\.");
@@ -469,6 +470,7 @@ public class DBInteractorManager {
 
 		properFormat += (exactTime[0]+":"+exactTime[1]+":00.0");
 
+		System.out.println("properFormat: "+properFormat);
 		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(properFormat);
 		return timestamp;
 	}
