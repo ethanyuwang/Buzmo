@@ -103,7 +103,6 @@ public class NavigationJPanel extends JPanel
 	botPanel.add(signOutButton, gbc);
 	// Manager mode
 	if(BuzmoJFrame.is_manager){
-		System.out.println("ITS A MANAGER OMG");
 		gbc.gridx = 3;
 		gbc.gridy = 6;
 		botPanel.add(managerModeButton, gbc);

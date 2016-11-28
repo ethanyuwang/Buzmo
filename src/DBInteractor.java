@@ -53,11 +53,9 @@ public class DBInteractor {
 					sql = "SELECT * FROM MANAGERS M WHERE M.EMAIL_ADDRESS='" + email + "'";
 					rs2 = st.executeQuery(sql);
 					if(rs2.next()){
-						System.out.println("logged in as mager");
 						BuzmoJFrame.is_manager = true;
 					}
 					else{
-						System.out.println("NOT logged in as mager");
 						BuzmoJFrame.is_manager = false;
 					}
 					return true;

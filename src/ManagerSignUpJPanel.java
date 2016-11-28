@@ -25,7 +25,7 @@ public class ManagerSignUpJPanel extends JPanel
     {
 	this.repaint();
 	backButton = new JButton("Back");
-	signUpButton = new JButton("Sign up");
+	signUpButton = new JButton("Register");
 	signUpLabel = new JLabel("Register Users (manager mode)");
 
 	// User Info

@@ -13,90 +13,71 @@ public class ManagerModeJPanel extends JPanel
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
-
-    //Naviagtion Components
-    JButton userModeButton;
-    JButton registerUserButton;
-    JButton createButton;
+    //Button
     JButton searchButton;
-    JButton deleteButton;
-
-    //Chat dispaly and control Components
-    JLabel shareLabel;
-    JLabel draftLabel;
+    JButton generateReportButton;
+    JButton registerUsersButton;
+    JButton userModeButton;
+    //Label
+    JLabel emailLabel;
     JLabel topicLabel;
-    JLabel searchLabel;
-    JTextField countTextField;
-    JTextArea historyTextArea;
-    JTextArea draftTextArea;
+    JLabel timestampLabel;
+    JLabel postnumLabel;
+    //JTextArea
+    JTextArea resultTextArea;
+    JTextArea emailTextArea;
     JTextArea topicTextArea;
-    JTextArea searchTextArea;
-    JScrollPane historyScroll;
-    JScrollPane draftScroll;
-    JScrollPane topicScroll;
-    JScrollPane searchScroll;
-    JCheckBox publicCheckBox;
-    CheckBoxList checkBoxList;
-    JCheckBox[] cbList;
-    String[] strList;
+    JTextArea timestampTextArea;
+    JTextArea postnumTextArea;
+    //JScrollPane
+    JScrollPane resultScroll;    
+    JScrollPane emailScroll;    
+    JScrollPane topicScroll;    
+    JScrollPane timestampScroll;    
+    JScrollPane postnumScroll;    
 
     public ManagerModeJPanel()
     {
 	this.repaint();
 
-	//CheckBoxList
-	checkBoxList = new CheckBoxList();
-	strList = DBInteractorCirclePost.getContactListsAsArray(BuzmoJFrame.con);
-	if(strList != null){ // if user has friends
-		checkBoxList = new CheckBoxList();
-		cbList = new JCheckBox[strList.length + 1];
-		cbList[0] = new JCheckBox("All");
-		for(int i=0; i<strList.length; i++){
-			cbList[i+1] = new JCheckBox(strList[i]);
-		}
-	}
-	else{
-		cbList = new JCheckBox[1];
-		cbList[0] = new JCheckBox("All");
-	}
-        checkBoxList.setListData(cbList);
+	//Labels
+	emailLabel = new JLabel("Enter emails divided by space (gets users with those emails)");
+	topicLabel = new JLabel("Enter topic words divided by space (gets users with those topic words)");
+	timestampLabel = new JLabel("Enter a timestamp (gets users that created a post after the timestamp)");
+	postnumLabel = new JLabel("Enter a postive integer (gets users that created at least that many posts within 7 days)");
 
 	//Scroll displays
-	historyTextArea = new JTextArea("<Circle Feed>\n" + DBInteractorCirclePost.getCircleFeedHistory(BuzmoJFrame.con));
-	historyTextArea.setEditable(false);
-	historyTextArea.setLineWrap(true);
-	historyTextArea.setWrapStyleWord(false);
-	historyScroll = new JScrollPane(historyTextArea);
+	resultTextArea = new JTextArea("<Manager Mode Results>");
+	resultTextArea.setEditable(false);
+	resultTextArea.setLineWrap(true);
+	resultTextArea.setWrapStyleWord(false);
+	resultScroll = new JScrollPane(resultTextArea);
 
-	draftTextArea= new JTextArea("Enter message");
-	draftTextArea.setLineWrap(true);
-	draftTextArea.setWrapStyleWord(false);
-	draftScroll = new JScrollPane(draftTextArea);
-	
-	topicTextArea= new JTextArea("Enter topic words divided by space");
+	emailTextArea = new JTextArea("e.g. john@gmail.com ethan@gmail.com");
+	emailTextArea.setLineWrap(true);
+	emailTextArea.setWrapStyleWord(false);
+	emailScroll = new JScrollPane(emailTextArea);
+
+	topicTextArea = new JTextArea("e.g. soccer basketball kobe");
 	topicTextArea.setLineWrap(true);
 	topicTextArea.setWrapStyleWord(false);
 	topicScroll = new JScrollPane(topicTextArea);
 
-	searchTextArea= new JTextArea(DBInteractorCirclePost.defaultUsersTopicWords(BuzmoJFrame.con));
-	searchTextArea.setLineWrap(true);
-	searchTextArea.setWrapStyleWord(false);
-	searchScroll = new JScrollPane(searchTextArea);
+	timestampTextArea = new JTextArea("e.g. 2007-09-23 10:10:10.0");
+	timestampTextArea.setLineWrap(true);
+	timestampTextArea.setWrapStyleWord(false);
+	timestampScroll = new JScrollPane(timestampTextArea);
 
-	//Naviagtion Components
+	postnumTextArea = new JTextArea("e.g. 8");
+	postnumTextArea.setLineWrap(true);
+	postnumTextArea.setWrapStyleWord(false);
+	postnumScroll = new JScrollPane(postnumTextArea);
+
+	//Buttons
+	searchButton = new JButton("Search Users");
+	registerUsersButton = new JButton("Register Users");
+	generateReportButton = new JButton("Generate Report");
 	userModeButton = new JButton("User Mode");
-	registerUserButton = new JButton("Register Users");
-	createButton = new JButton("Create");
-	searchButton = new JButton("Search");
-	deleteButton = new JButton("Deletion Page");
-
-	//ETC
-	countTextField = new JTextField("Enter number of results wanted");
-	shareLabel = new JLabel("Share with: ");
-	draftLabel = new JLabel("Message: ");
-	topicLabel = new JLabel("Topic words: ");
-	searchLabel = new JLabel("Search with topic words: ");
-	publicCheckBox = new JCheckBox("Public");
 
 	//Pannels
 	gbc = new GridBagConstraints();
@@ -107,70 +88,54 @@ public class ManagerModeJPanel extends JPanel
 	setLayout(new GridLayout());
 
 	//add components to top panel
-	topPanel.add(historyScroll, BorderLayout.CENTER);
+	topPanel.add(resultScroll, BorderLayout.CENTER);
 
 	//add components to bot panel
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 	gbc.gridx = 0;
 	gbc.gridy = 0;
-	botPanel.add(shareLabel, gbc);
+	gbc.ipady = 0;
+	botPanel.add(emailLabel, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 1;
 	gbc.ipady = 50;
-	gbc.ipadx = 300;
-	botPanel.add(checkBoxList, gbc);
+	botPanel.add(emailScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 2;
 	gbc.ipady = 0;
-	gbc.ipadx = 0;
-	botPanel.add(draftLabel, gbc);
+	botPanel.add(topicLabel, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 3;
-	gbc.ipady = 50;
-	gbc.ipadx = 300;
-	botPanel.add(draftScroll, gbc);
+	gbc.ipady = 80;
+	botPanel.add(topicScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 4;
 	gbc.ipady = 0;
-	gbc.ipadx = 0;
-	botPanel.add(topicLabel, gbc);
+	botPanel.add(timestampLabel, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 5;
-	gbc.ipady = 50;
-	gbc.ipadx = 300;
-	botPanel.add(topicScroll, gbc);
+	gbc.ipady = 20;
+	botPanel.add(timestampScroll, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 6;
 	gbc.ipady = 0;
-	gbc.ipadx = 0;
-	botPanel.add(publicCheckBox, gbc);
+	botPanel.add(postnumLabel, gbc);
 	gbc.gridx = 0;
 	gbc.gridy = 7;
-	botPanel.add(createButton, gbc);
+	gbc.ipady = 20;
+	botPanel.add(postnumScroll, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 9;
-	botPanel.add(searchLabel, gbc);
-	gbc.gridx = 0;
-	gbc.gridy = 10;
-	gbc.ipady = 50;
-	gbc.ipadx = 300;
-	botPanel.add(searchScroll, gbc);
-	gbc.gridx = 0;
-	gbc.gridy = 11;
+	gbc.gridy = 8;
 	gbc.ipady = 0;
-	gbc.ipadx = 0;
-	botPanel.add(countTextField, gbc);
-	gbc.gridx = 0;
-	gbc.gridy = 12;
 	botPanel.add(searchButton, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 13;
-	botPanel.add(deleteButton, gbc);
+	gbc.gridy = 9;
+	botPanel.add(registerUsersButton, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 14;
-	botPanel.add(registerUserButton, gbc);
+	gbc.gridy = 10;
+	botPanel.add(generateReportButton, gbc);
 	gbc.gridx = 0;
-	gbc.gridy = 15;
+	gbc.gridy = 11;
 	botPanel.add(userModeButton, gbc);
 
 	topPanel.setOpaque(false);
@@ -181,54 +146,30 @@ public class ManagerModeJPanel extends JPanel
 	add(botPanel);
 
 	//event managers	
-	createButton.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			String msgStr = draftTextArea.getText();
-			String[] topicArray = topicTextArea.getText().split("\\s+");		
-			Boolean publicChecked = publicCheckBox.isSelected();
-			// Create circle post & handle topic word links to user/message
-			int post_id = DBInteractorCirclePost.createCirclePost(BuzmoJFrame.con, msgStr, topicArray, publicChecked);
-			if(post_id == -1){System.out.println("FAILED to create circle post"); return;}
-			System.out.println("SUCCESS created circle post");
-			// Link circle feed to viewers
-			for(int i=0; i<cbList.length; i++){
-				//cbList length has due to "All"
-				if(i==0){
-					if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, BuzmoJFrame.userEmail, post_id)){
-						System.out.println("SUCCESS linked user to circle feed");}
-					else{System.out.println("FAILED to link user to circle feed"); return;}	
-				}
-				else if(cbList[i].isSelected()){
-					if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, strList[i-1], post_id)){
-						System.out.println("SUCCESS linked user to circle feed");}
-					else{System.out.println("FAILED to link user to circle feed"); return;}	
-				}
-			}
-			// reload
-			System.out.println("Reloading circle posts");
-			historyTextArea.setText("<Circle Feed>\n" + DBInteractorCirclePost.getCircleFeedHistory(BuzmoJFrame.con));
-		}
-	});
         searchButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-			String[] topicArray = searchTextArea.getText().split("\\s+");
-			String found = DBInteractorCirclePost.searchCirclePosts(BuzmoJFrame.con, topicArray, countTextField.getText());
-			System.out.println("Reloading circle posts");
-			historyTextArea.setText("<Circle Feed>\n" + found);	
+			String[] emailArray = emailTextArea.getText().split("\\s+");
+			String[] topicArray = topicTextArea.getText().split("\\s+");
+			String timestamp = timestampTextArea.getText();
+			String postnum = postnumTextArea.getText();
+
+                        String result = DBInteractorManagerMode.searchUsers(BuzmoJFrame.con, 
+			emailArray, topicArray, timestamp, postnum);
+                        resultTextArea.setText("<Manager Mode Results>\n\n" + result);
                 }
         });
-        deleteButton.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                        BuzmoJFrame.setCurrentPanelTo(new CircleDeleteJPanel());
-                }
-        });
-        registerUserButton.addMouseListener(new MouseAdapter() {
+        registerUsersButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
                         BuzmoJFrame.setCurrentPanelTo(new ManagerSignUpJPanel());
+                }
+        });
+        generateReportButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+			String result = DBInteractorManagerMode.generateReport(BuzmoJFrame.con);
+			resultTextArea.setText("<Manager Mode Results>\n\n" + result);
                 }
         });
         userModeButton.addMouseListener(new MouseAdapter() {
@@ -237,21 +178,6 @@ public class ManagerModeJPanel extends JPanel
                         BuzmoJFrame.setCurrentPanelTo(new NavigationJPanel());
                 }
         });
-	cbList[0].addItemListener(new ItemListener() {
-		@Override
-		public void itemStateChanged(ItemEvent e) {
-			if(e.getStateChange() == ItemEvent.SELECTED) {
-				for(int i=1; i<cbList.length; i++){
-					cbList[i].setSelected(true);
-				}
-			}
-			else {
-				for(int i=1; i<cbList.length; i++){
-					cbList[i].setSelected(false);
-				}
-			}
-		}
-	});
     }
 }
 
