@@ -79,19 +79,19 @@ public class DBInteractorManager {
 					case addUser: {
 						System.out.println("Adding user " + line);
 						if (addUserWithString(con, line)==false)
-							return false;
+							System.out.println("Error at " + line);
 						break;
 					}
 					case addContacts: {
 						System.out.println("Adding contacts " + line);
 						if (addContactsCircle(con, line)==false)
-							return false;
+							System.out.println("Error at " + line);
 						break;
 					}
 					case addPrivateMessages: {
 						System.out.println("Adding private messages " + line);
 						if (addPrivateMessagesWithString(con, line)==false)
-							return false;
+							System.out.println("Error at " + line);
 						break;
 					}
 					case addGroups: {
@@ -235,7 +235,7 @@ public class DBInteractorManager {
 		properFormat = date[2]+"-"+month+"-"+day+" ";
 
 		String[] exactTime = time[0].split(":");
-		
+
 		if (time[1].equals("PM"))
 			exactTime[0]=String.valueOf(Integer.parseInt(exactTime[0])+12);
 

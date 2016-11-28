@@ -22,11 +22,11 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        //deleteTables(con);
+                        deleteTables(con);
 
                         //Create Tables
-                        //createTables(con);
-                        //addForeignKeys(con);
+                        createTables(con);
+                        addForeignKeys(con);
 
 
                         //Print Table
