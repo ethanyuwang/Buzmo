@@ -78,6 +78,12 @@ public class DBInteractorManager {
 					System.out.println("Start adding" + line);
 					continue;
 				}
+				else if(line.equals("---------------------------------------------------------------------"))
+				{
+					ldbc=loadDBControl.none;
+					System.out.println(line);
+					continue;
+				}
 
 				//do specific task
 				switch(ldbc) {
