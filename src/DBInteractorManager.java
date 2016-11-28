@@ -468,6 +468,17 @@ public class DBInteractorManager {
 			ps.setString(6, myEmail);
 			ps.setString(7, myEmail);
 			ps.setInt(8, groupId);
+
+			System.out.println("1, messageWithTimeAndOwner.hashCode()"+messageWithTimeAndOwner.hashCode());
+			System.out.println("2, message"+message);
+			System.out.println("3, ts"+ts);
+			System.out.println("4, group "+group);
+			System.out.println("5, myEmail"+myEmail);
+			System.out.println("6, myEmail" +myEmail);
+			System.out.println("(7, myEmail" +myEmail);
+			System.out.println("8, groupId" +myEmail);
+
+
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
