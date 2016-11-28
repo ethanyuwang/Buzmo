@@ -8,9 +8,11 @@
 
 * Delete on cascade - double check & make sure everythings correct
 
-* Use/store "buzmo time" instead of using current time
+* Use/store "buzmo time" instead of using current time & update this in code
 
 * Max number of messages to show ANYWHERE (all 3 types) should be 7
+
+* Add "view count" to messages and increase for every query
 
 * ~~Post a message: The message can be a private message, or in the MyCircle, or in a ChatGroup. Note that
 there are different parameters in these three settings.~~
