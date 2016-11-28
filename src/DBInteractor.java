@@ -245,12 +245,26 @@ public class DBInteractor {
 		}
 		catch(Exception e){System.out.println(e); return null;}
 	}
+	public static void updateBaseTime(Connection con){
+                try{
+                        Timestamp time = DBInteractor.getCurrentTimeStamp();
+                        PreparedStatement ps;
+                        String sql = "UPDATE TIME SET base_time=? WHERE time_id=0";
+                        ps = con.prepareStatement(sql);
+                        ps.setTimestamp(1, time);
+			System.out.println("hi");
+                        ps.executeUpdate();
+			System.out.println("bye");
+                }
+                catch(Exception e){System.out.println(e);}
+	}
 	public static Timestamp getCurrentTimeStamp() {
 		java.util.Date today = new java.util.Date();
 		Timestamp start_time = BuzmoJFrame.start_time;
 		Timestamp base_time = BuzmoJFrame.base_time;
 		Timestamp current_time = new Timestamp(today.getTime());
 		long ret_time = base_time.getTime() + current_time.getTime() - start_time.getTime();
+		System.out.println(ret_time);
 		return new Timestamp(ret_time);
 	}
 }

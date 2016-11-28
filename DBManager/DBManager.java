@@ -22,11 +22,12 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        deleteTables(con);
+                        //deleteTables(con);
 
                         //Create Tables
-                        createTables(con);
-                        addForeignKeys(con);
+                        //createTables(con);
+                        //addForeignKeys(con);
+			setTime(con, "2007-09-23 10:10:10.0");
 
 
                         //Print Table
@@ -34,10 +35,6 @@ public class DBManager {
 
                         //Print GLEE Tables
                         //printGLEETables(con);
-
-			//Time
-			//createTime(con);
-			//setTIme(con, "2007-09-23 10:10:10.0");
 
                         //Print all tables
                         printAllTables(con);
@@ -62,15 +59,16 @@ public class DBManager {
                 catch(Exception e){System.out.println(e);}
 	}
 	public static void setTime(Connection con, String time_str){
-		try{
+                try{
 			Timestamp time = Timestamp.valueOf(time_str);
-			PreparedStatement ps;
-			String sql = "UDPATE TIME SET baseTime=? WHERE time_id=0";
-			ps = con.prepareStatement(sql);
-			ps.setTimestamp(1, time);
-			ps.executeUpdate();
-		}
-		catch(Exception e){System.out.println(e);}
+                        PreparedStatement ps;
+                        String sql = "UPDATE TIME SET base_time=? WHERE time_id=0";
+                        ps = con.prepareStatement(sql);
+                        ps.setTimestamp(1, time);
+                        ps.executeUpdate();
+                }
+                catch(Exception e){System.out.println(e);}
+
 	}
         public static void createTables(Connection con){
                 try{
@@ -169,6 +167,9 @@ public class DBManager {
 			" time_id INT NOT NULL, " + 
 			" UNIQUE(time_id))"; 
                         st.executeQuery(sql);
+
+			//time
+			createTime(con);
                 }
                 catch(Exception e){System.out.println(e);}
         }
