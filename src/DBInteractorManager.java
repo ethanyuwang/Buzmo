@@ -234,8 +234,8 @@ public class DBInteractorManager {
 		System.out.println("Parsing date "+Arrays.toString(date));
 		System.out.println("Parsing time "+Arrays.toString(time));*/
 
-		String month = String.format("%02s", date[0]);
-		String day = String.format("%02s", date[1]);
+		String month = String.format("%02d", Integer.parseInt(date[0]));
+		String day = String.format("%02d", Integer.parseInt(date[1]));
 
 		System.out.println("Parsing day "+month+" day "+day);
 
@@ -248,7 +248,7 @@ public class DBInteractorManager {
 		if (time[1].equals("PM"))
 			exactTime[0]=String.valueOf(Integer.parseInt(exactTime[0])+12);
 
-		properFormat += (exactTime[0]+":"+exactTime[1]+":0.0");
+		properFormat += (exactTime[0]+":"+exactTime[1]+":00.0");
 
 		System.out.println("Parsed timestamp is "+properFormat);
 		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(properFormat);
