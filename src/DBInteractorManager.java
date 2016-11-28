@@ -16,6 +16,10 @@ public class DBInteractorManager {
 		
 		loadDBControl ldbc=loadDBControl.none;
 		String database="resource/data_base_sampler.txt";
+
+		Boolean addGroupInfo = false;
+		Boolean addGroupMessages = false;
+		String currentGroupName = "";
 		//URL url=getClass().getResource(database);
 		//File db = new File(url.getPath());
 		File db = new File(database);
@@ -26,49 +30,49 @@ public class DBInteractorManager {
 
 			while ((line = br.readLine())!=null){
 				//decide what to do
-				if (line.equals("Users"))
+				if (line.equals("-Users"))
 				{
 					ldbc=loadDBControl.addUser;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("Friends"))
+				else if(line.equals("-Friends"))
 				{
 					ldbc=loadDBControl.addContacts;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("Private_Messages"))
+				else if(line.equals("-Private_Messages"))
 				{
 					ldbc=loadDBControl.addPrivateMessages;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("Chat_groups"))
+				else if(line.equals("-Chat_groups"))
 				{
 					ldbc=loadDBControl.addGroups;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("Circle_feeds"))
+				else if(line.equals("-Circle_feeds"))
 				{
 					ldbc=loadDBControl.addCircle;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("User_Topic_words"))
+				else if(line.equals("-User_Topic_words"))
 				{
 					ldbc=loadDBControl.addTopicWords;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("Managers"))
+				else if(line.equals("-Managers"))
 				{
 					ldbc=loadDBControl.addManager;
 					System.out.println("Start adding" + line);
 					continue;
 				}
-				else if(line.equals("Finish"))
+				else if(line.equals("-Finish"))
 				{
 					ldbc=loadDBControl.finish;
 					System.out.println("Start adding" + line);
@@ -96,8 +100,60 @@ public class DBInteractorManager {
 						break;
 					}
 					case addGroups: {
+						System.out.println("Adding private messages " + line);
+						//------------------------------------------------------------	
+						if (line.equals("-group_info"))
+						{
+							addGroupInfo=true;
+							addGroupMessages=false;
+						}
+						else if (line.equals("-group_messages"))
+						{
+							addGroupInfo=false;
+							addGroupMessages=true;
+						}
+
+						if (addGroupInfo)
+						{
+							String[] informations = line.split(", ");
+							currentGroupName = informations[0];
+							createGroupWithOwner(con, currentGroupName, getEmialWithName(con, informations[1]));
+
+							for (int member = 2; member<informations.length; member++) {
+								if (addGroupChatDirectly(con, currentGroupName, getEmialWithName(con, informations[member]))==false)
+								{
+									System.out.println("error at addGroupChatDirectly" + line);
+								}
+							}
+						}
+						else if (addGroupMessages)
+						{
+							String[] informations = line.split("; ");
+							if (addMessageToGroupChatDirectly(con, informations[1], 
+										currentGroupName, getEmialWithName(con, informations[0]), 
+										parseTimeStamp(informations[2]))==false)
+							{
+								System.out.println("error at addGroupChatDirectly" + line);
+							}
+						}
+						break;
+					}
+					case addCircle: {
+						System.out.println("Adding circle feed " + line);
 						//if (addContactsCircle(con, line)==false)
-						//	return false;
+						//	System.out.println("Error at " + line);
+						break;
+					}
+					case addTopicWords: {
+						System.out.println("Adding user topic words " + line);
+						//if (addContactsCircle(con, line)==false)
+						//	System.out.println("Error at " + line);
+						break;
+					}
+					case addManager: {
+						System.out.println("Adding manager " + line);
+						//if (addPrivateMessagesWithString(con, line)==false)
+						//	System.out.println("Error at " + line);
 						break;
 					}
 
@@ -115,13 +171,13 @@ public class DBInteractorManager {
 	}
 
 	public static Boolean addUserWithString(Connection con, String line){
-		String[] informations = line.split(",");
+		String[] informations = line.split(", ");
 		//System.out.println(informations[1]+ informations[2]+ informations[0]+ informations[3]+ informations[4]);
 		return DBInteractor.addUser(con, informations[1], informations[2], informations[0], informations[3], informations[4]);
 	}
 
 	public static Boolean addContactsCircle(Connection con, String line){
-		String[] contacts = line.split(",");
+		String[] contacts = line.split(", ");
 		//for (int i=0; i<contacts.length;i++)
 		//	System.out.println("We are contacts: "+contacts[i]+"\n");
 
@@ -135,10 +191,12 @@ public class DBInteractorManager {
 	}
 
 	public static Boolean addPrivateMessagesWithString(Connection con, String line){
-		String[] info = line.split(";");
+		String[] info = line.split("; ");
 		return(addMessageToPrivateChatWithMoreInfo(con, info[2], getEmialWithName(con, info[1]), getEmialWithName(con, info[0]), info[3]));
 	}
 	
+		//debug and managing purpose, not normal program flow
+
 
 	//debug and managing purpose, not normal program flow
 	public static Boolean addContactsDirectly(Connection con, String owner, String contact){
@@ -166,11 +224,6 @@ public class DBInteractorManager {
 
 	public static Boolean addMessageToPrivateChatWithMoreInfo(Connection con, String message, String recipientEmail, String SenderEmail, String time){
 		try {
-			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+message+"\n");
-			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+recipientEmail+"\n");
-			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+SenderEmail+"\n");
-			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+time+"\n");
-
 			String myEmail = SenderEmail;
 			Timestamp ts = parseTimeStamp(time);
 			String messageWithTime = message+ts.toString();
@@ -227,6 +280,90 @@ public class DBInteractorManager {
 		}
 		catch(Exception e){System.out.println(e); return "";}
 	}
+
+	public static Boolean createGroupWithOwner(Connection con, String groupName, String ownerEmail){
+		try { 
+			Statement st = con.createStatement();
+			int groupId = groupName.hashCode();
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
+			// Create table
+			String sql = "INSERT INTO Group_chats " +
+			"VALUES (" + groupId + ", '" +
+			groupName + "', " +
+			7 + ", " +
+			"'" + ownerEmail + "')";
+			st.executeUpdate(sql);
+
+			// link to group members
+			sql = "INSERT INTO Group_chat_members " +
+			"VALUES (" + groupId + ", '" +
+			ownerEmail + "')";
+
+			st.executeUpdate(sql);
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+}
+
+	//Used for GroupChatJPanel 
+	public static Boolean addGroupChatDirectly(Connection con, String groupName, String memeberEmail){
+		try {
+			int groupId = DBInteractorGroupChat.getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
+			String receiverEmail = BuzmoJFrame.userEmail;
+			Statement st = con.createStatement();
+	
+			// add to GROUP MEMEBERS list
+			String sql = "INSERT INTO Group_chat_members " + 
+			"VALUES ('" + groupId + "', " + 
+			" '" + memeberEmail + "')";
+			st.executeUpdate(sql);
+			
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+	}
+
+	public static Boolean addMessageToGroupChatDirectly(Connection con, String message, String groupName, String memeberEmail, Timestamp ts){
+		try {
+			String myEmail = memeberEmail;
+			String messageWithTime = message+ts.toString();
+			int groupId = DBInteractorGroupChat.getGroupID(con, groupName);
+			if (groupId == 0)
+			{
+				System.out.println("groupID not found\n");
+				return false;
+			}
+
+			//Add a copy to sender
+			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
+			PreparedStatement ps = con.prepareStatement(sql);
+			con.setAutoCommit(false);
+			String messageWithTimeAndOwner = messageWithTime + myEmail;
+
+			ps.setInt(1, messageWithTimeAndOwner.hashCode());
+			ps.setString(2, message);
+			ps.setTimestamp(3, ts);
+			ps.setString(4, "group");
+			ps.setString(5, myEmail);
+			ps.setString(6, myEmail);
+			ps.setString(7, myEmail);
+			ps.setInt(8, groupId);
+			ps.addBatch();
+			ps.executeBatch();
+			con.commit();
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
+}
 
 	public static Timestamp parseTimeStamp(String line) {
 		String properFormat;

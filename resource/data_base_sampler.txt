@@ -1,47 +1,76 @@
 
-Users
-Chris Brown,ChrisBrown@gmail.com,ChrisBro1,4008801345,CB
-Russell Westbrook,RWestbrook@gmail.com,RWesbrook1,2318760989,Thunder Leader
-Kevin Durant,DurantKev@gmail.com,KDurant1,5345298112,KDTrey5
-Iggy Azalea,Iggy@gmail.com,Iggy1,6876498432,IGGY
-Mariah Carey,MariaCarey@gmail.com,MCarey1,5540390182,MariahCarey
-Nicki Minaj,NickiMinaj@gmail.com,NMinaj1,4764033082,NickiMalaji
-Daniel Radcliffe,DRadcliffe@gmail.com,DRad1,2734063052,HP_Daniel
-Rihanna,Rihanna@gmail.com,Rihanna1,2723060542,Rihanna
-Justin Bieber,JBieber@gmail.com,JBieber1,8340740172,JBtheKing
-Larry Page,LarryPage@gmail.com,LarryPage1,6540320172,LarryPage
-Stephen Curry,SCurry@gmail.com,SCurry1,3412377584,WarriorChampion
-Emma Watson,EmmaWatson@yahoo.com,EWatson1,8443298162,EmWatson
-Lena Headey,Lheadey@yahoo.com,LHeadey1,1031973432,The Queen
-Ariana Grande,AGrande@yahoo.com,AGrande1,9376498172,Ariana Grande
-Kit Harington,KHarin@gmail.com,KHarin1,6340740172,Lord Commander
-Emilia Clarke,EClarke@gmail.com,EClarke1,3431193740,Khaleesi
-Peter Dinklage,PDinklage@gmail.com,PDinklage1,6753568567,The Imp
-James Harden,JHarden@gmail.com,JHarden1,3416274384,James Harden
-Tim Cook,Timcook@gmail.com,TCook1,4512756891,CookApple
-Elon Musk,Elonmusk@yahoo.com,EMusk1,2847201343,Elon Musk
-Jeff Bezos,JeffBezos@yahoo.com,JBezos1,3463712649,AmazonPrime
-Friends
-Russell Westbrook,Kevin Durant,James Harden,Stephen Curry
-Kit Harington,Emilia Clarke,Peter Dinklage,Lena Headey
-Chris Brown,Justin Bieber,Iggy Azalea,Rihanna,Ariana Grande,Nicki Minaj,Mariah Carey
-Emma Watson,Daniel Radcliffe
-Tim Cook,Jeff Bezos,Elon Musk,Larry Page
-Mariah Carey,Emma Watson
-Tim Cook,Stephen Curry
-Chris Brown,Russell Westbrook
-Kit Harington,Russell Westbrook
-Kit Harington,Kevin Durant
-James Harden,Iggy Azalea
-James Harden,Rihanna
-Daniel Radcliffe,Justin Bieber
-Private_Messages
-Kevin Durant;Russell Westbrook;I am going to warriors;7.5.2016, 9:00 AM
-Peter Dinklage;Emilia Clarke;We are gonna building ships and sail to Westeros;7.8.2016, 10:00 PM
-Ariana Grande;Justin Bieber;I’m gonna stop the rumor between us;4.1.2016, 9:00 AM
-Justin Bieber;Ariana Grande;go ahead;4.1.2016, 9:01 AM
-Chat_groups
-Circle_feeds
-User_Topic_words
-Managers
-Finish
+-Users
+Chris Brown, ChrisBrown@gmail.com, ChrisBro1, 4008801345, CB
+Russell Westbrook, RWestbrook@gmail.com, RWesbrook1, 2318760989, Thunder Leader
+Kevin Durant, DurantKev@gmail.com, KDurant1, 5345298112, KDTrey5
+Iggy Azalea, Iggy@gmail.com, Iggy1, 6876498432, IGGY
+Mariah Carey, MariaCarey@gmail.com, MCarey1, 5540390182, MariahCarey
+Nicki Minaj, NickiMinaj@gmail.com, NMinaj1, 4764033082, NickiMalaji
+Daniel Radcliffe, DRadcliffe@gmail.com, DRad1, 2734063052, HP_Daniel
+Rihanna, Rihanna@gmail.com, Rihanna1, 2723060542, Rihanna
+Justin Bieber, JBieber@gmail.com, JBieber1, 8340740172, JBtheKing
+Larry Page, LarryPage@gmail.com, LarryPage1, 6540320172, LarryPage
+Stephen Curry, SCurry@gmail.com, SCurry1, 3412377584, WarriorChampion
+Emma Watson, EmmaWatson@yahoo.com, EWatson1, 8443298162, EmWatson
+Lena Headey, Lheadey@yahoo.com, LHeadey1, 1031973432, The Queen
+Ariana Grande, AGrande@yahoo.com, AGrande1, 9376498172, Ariana Grande
+Kit Harington, KHarin@gmail.com, KHarin1, 6340740172, Lord Commander
+Emilia Clarke, EClarke@gmail.com, EClarke1, 3431193740, Khaleesi
+Peter Dinklage, PDinklage@gmail.com, PDinklage1, 6753568567, The Imp
+James Harden, JHarden@gmail.com, JHarden1, 3416274384, James Harden
+Tim Cook, Timcook@gmail.com, TCook1, 4512756891, CookApple
+Elon Musk, Elonmusk@yahoo.com, EMusk1, 2847201343, Elon Musk
+Jeff Bezos, JeffBezos@yahoo.com, JBezos1, 3463712649, AmazonPrime
+---------------------------------------------------------------------
+-Friends
+Russell Westbrook, Kevin Durant, James Harden, Stephen Curry
+Kit Harington, Emilia Clarke, Peter Dinklage, Lena Headey
+Chris Brown, Justin Bieber, Iggy Azalea, Rihanna, Ariana Grande, Nicki Minaj, Mariah Carey
+Emma Watson, Daniel Radcliffe
+Tim Cook, Jeff Bezos, Elon Musk, Larry Page
+Mariah Carey, Emma Watson
+Tim Cook, Stephen Curry
+Chris Brown, Russell Westbrook
+Kit Harington, Russell Westbrook
+Kit Harington, Kevin Durant
+James Harden, Iggy Azalea
+James Harden, Rihanna
+Daniel Radcliffe, Justin Bieber
+---------------------------------------------------------------------
+-Private_Messages
+Kevin Durant; Russell Westbrook; I am going to warriors; 7.5.2016, 9:00 AM
+Peter Dinklage; Emilia Clarke; We are gonna building ships and sail to Westeros; 7.8.2016, 10:00 PM
+Ariana Grande; Justin Bieber; I’m gonna stop the rumor between us; 4.1.2016, 9:00 AM
+Justin Bieber; Ariana Grande; go ahead; 4.1.2016, 9:01 AM
+---------------------------------------------------------------------
+-Chat_groups
+-group_info
+Thunder Big, Kevin Durant, Russell Westbrook, James Harden
+-group_messages
+Kevin Durant; We are moving forward.; 11.1.2016, 5:00 PM
+James Harden; I deserve the MVP this season!; 11.1.2015, 5:01 PM
+Russell Westbrook; I will lead the team to Champion!; 11.1.2015, 5:02 PM
+Kevin Durant; LOL. Hope to see u in western finals.; 11.1.2015, 5:03 PM
+-group_info
+Game of Thrones, Emilia Clarke, Peter Dinklage, Kit Harington, Lena Headey
+-group_messages
+Emilia Clarke; Do you guys see my dragons?; 11.3.2016, 9:00 AM
+Peter Dinklage; They almost ate me last night…; 11.3.2016, 9:01 AM
+Kit Harington; Didn’t see them… fought Ramsay last night…; 11.3.2016, 9:02 AM
+Lena Headey; I got them. So disappointed they didn’t eat Tyrion… But it doesn’t matter,  I am the real queen now…; 11.3.2016, 9:03 AM
+Peter Dinklage; All right…; 11.3.2016 9:04 AM
+-group_info
+CEOs, Tim Cook, Jeff Bezos, Larry Page, Elon Musk
+-group_messages
+Tim Cook; There will be no discount on Macbook Pro!; 11.10.2016, 10:01 AM
+Jeff Bezos; C’mon man, it’s soon Black Friday…; 11.10.2016, 10:02 AM
+Elon Musk; I think Surface book is better!; 11.10.2016, 10:15 AM
+Jeff Bezos; [emoji]; 11.10.2016, 10:16 AM
+---------------------------------------------------------------------
+-Circle_feeds
+---------------------------------------------------------------------
+-User_Topic_words
+---------------------------------------------------------------------
+-Managers
+---------------------------------------------------------------------
+-Finish
