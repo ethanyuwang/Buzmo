@@ -22,12 +22,12 @@ public class DBManager {
                         Connection con = DriverManager.getConnection(url,username, password);
 
                         //Delete Tables
-                        //deleteTables(con);
+                        deleteTables(con);
 
                         //Create Tables
-                        //createTables(con);
-                        //addForeignKeys(con);
-			setTime(con, "2007-09-23 10:10:10.0");
+                        createTables(con);
+                        addForeignKeys(con);
+			//setTime(con, "2007-09-23 10:10:10.0");
 
 
                         //Print Table
@@ -37,7 +37,7 @@ public class DBManager {
                         //printGLEETables(con);
 
                         //Print all tables
-                        printAllTables(con);
+                        //printAllTables(con);
 
                         // Close conenction
                         con.close();
@@ -122,6 +122,7 @@ public class DBManager {
                         " post_time DATE NOT NULL, " +
                         " is_public VARCHAR(15) NOT NULL, " +
                         " post_owner VARCHAR(20) NOT NULL, " +
+			" view_count INT NOT NULL, " +
                         " PRIMARY KEY (post_id))";
                         st.executeQuery(sql);
 

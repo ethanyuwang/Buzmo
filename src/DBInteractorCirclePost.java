@@ -50,9 +50,10 @@ public class DBInteractorCirclePost {
 			String myEmail = BuzmoJFrame.userEmail;
 			Statement st = con.createStatement();
 			Statement st2 = con.createStatement();
+			Statement st3 = con.createStatement();
 			ResultSet rs, rs2;
 			int post_id;
-			sql = "SELECT P.post_owner, P.post_string, P.post_time, P.is_public, P.post_id " + 
+			sql = "SELECT P.post_owner, P.post_string, P.post_time, P.is_public, P.post_id, P.view_count " + 
 			"FROM CIRCLE_POSTS P WHERE (P.post_id IN " +
 			" (SELECT C.post_id FROM CIRCLE_POST_RECEIVERS C " +
 			"  WHERE C.post_receiver='" + myEmail + "'))" + 
@@ -64,6 +65,10 @@ public class DBInteractorCirclePost {
 				ret += "public: " + rs.getString(4) + ") ";
 				ret += rs.getString(2) + "\n";
 				post_id = rs.getInt(5);
+				// increase view count
+				sql = "UPDATE CIRCLE_POSTS SET view_count= " + String.valueOf(rs.getInt(6)+1) + " WHERE post_id=" + post_id;
+				st3.executeUpdate(sql);
+				ret += "[" + String.valueOf(rs.getInt(6)+1)+" views]\n";
 				// topic words for each post
 				sql = "SELECT T.topic_word FROM POST_TOPIC_WORDS T " +
 				"WHERE T.post_id='" + post_id  + "'";
@@ -85,7 +90,7 @@ public class DBInteractorCirclePost {
 			String myEmail = BuzmoJFrame.userEmail;
 			String hashStr = "CF" + myEmail + message + ts.toString();
 			int hashCode = hashStr.hashCode();
-			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?)";	
+			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			// 1. Create message
 			con.setAutoCommit(false);
@@ -94,6 +99,7 @@ public class DBInteractorCirclePost {
 			ps.setTimestamp(3, ts);
 			ps.setString(4, is_public);
 			ps.setString(5, myEmail);
+			ps.setInt(6, 0);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -146,6 +152,7 @@ public class DBInteractorCirclePost {
 			ResultSet rs2;
 			Statement st = con.createStatement();
 			Statement st2 = con.createStatement();
+			Statement st3 = con.createStatement();
 			String ret = "Searched " + count_str  + " most recent posts related to: ";
 			String myEmail = BuzmoJFrame.userEmail;
 			// Get posts
@@ -173,6 +180,10 @@ public class DBInteractorCirclePost {
 				holder += "public: " + rs.getString(4) + ") ";
 				holder += rs.getString(2) + "\n";
 				post_id = rs.getInt(5);
+				// increase view count
+				sql = "UPDATE CIRCLE_POSTS SET view_count= " + String.valueOf(rs.getInt(6)+1) + " WHERE post_id=" + post_id;
+				st3.executeUpdate(sql);
+				holder += "[" + String.valueOf(rs.getInt(6)+1)+" views]\n";
 				// topic words for each post
 				sql = "SELECT T.topic_word FROM POST_TOPIC_WORDS T " +
 				"WHERE T.post_id='" + post_id  + "'";

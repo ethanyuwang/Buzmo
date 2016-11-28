@@ -252,9 +252,7 @@ public class DBInteractor {
                         String sql = "UPDATE TIME SET base_time=? WHERE time_id=0";
                         ps = con.prepareStatement(sql);
                         ps.setTimestamp(1, time);
-			System.out.println("hi");
                         ps.executeUpdate();
-			System.out.println("bye");
                 }
                 catch(Exception e){System.out.println(e);}
 	}
