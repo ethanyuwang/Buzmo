@@ -30,6 +30,14 @@ public class BuzmoJFrame
 		mainWindow.setLocationRelativeTo(null);
 		mainWindow.add(cp);
 		mainWindow.setVisible(true);
+
+		// Exiting
+		mainWindow.addWindowListener(new java.awt.event.WindowAdapter() {
+    			@Override
+    			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				DBInteractor.updateBaseTime(con);
+			}
+		});
 	}
 
 	public static void setCurrentPanelTo(JPanel panel)
