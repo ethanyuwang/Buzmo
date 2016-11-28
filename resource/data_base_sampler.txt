@@ -27,7 +27,19 @@ Kit Harington,Emilia Clarke,Peter Dinklage,Lena Headey
 Chris Brown,Justin Bieber,Iggy Azalea,Rihanna,Ariana Grande,Nicki Minaj,Mariah Carey
 Emma Watson,Daniel Radcliffe
 Tim Cook,Jeff Bezos,Elon Musk,Larry Page
+Mariah Carey,Emma Watson
+Tim Cook,Stephen Curry
+Chris Brown,Russell Westbrook
+Kit Harington,Russell Westbrook
+Kit Harington,Kevin Durant
+James Harden,Iggy Azalea
+James Harden,Rihanna
+Daniel Radcliffe,Justin Bieber
 Private_Messages
+Kevin Durant;Russell Westbrook;I am going to warriors;7.5.2016, 9:00 AM
+Peter Dinklage;Emilia Clarke;We are gonna building ships and sail to Westeros;7.8.2016, 10:00 PM
+Ariana Grande;Justin Bieber;I’m gonna stop the rumor between us;4.1.2016, 9:00 AM
+Justin Bieber;Ariana Grande;go ahead;4.1.2016, 9:01AM
 Chat_groups
 Circle_feeds
 User_Topic_words
