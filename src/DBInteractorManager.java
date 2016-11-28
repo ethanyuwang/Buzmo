@@ -4,6 +4,7 @@ import java.sql.*;
 import java.io.*;
 import java.net.*;
 import java.lang.*;
+import java.util.Arrays;
 
 public class DBInteractorManager {
 
@@ -225,9 +226,14 @@ public class DBInteractorManager {
 	public static Timestamp parseTimeStamp(String line) {
 		String properFormat;
 
+		System.out.println("Parsing timestamp "+line);
+
 		String[] dateTime = line.split(", ");
 		String[] date = dateTime[0].split(".");
 		String[] time = dateTime[1].split(" ");
+
+		System.out.println("Parsing date "+Arrays.toString(date));
+		System.out.println("Parsing time "+Arrays.toString(time));
 
 		String month = String.format("%02s", date[0]);
 		String day = String.format("%02s", date[1]);
