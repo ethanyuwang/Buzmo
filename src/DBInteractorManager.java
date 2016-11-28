@@ -355,13 +355,19 @@ public class DBInteractorManager {
 		Boolean isPublic = false;
 		Timestamp ts = parseTimeStamp(informations[3]);
 
-		System.out.println("social[0] "+social[0]);
-		System.out.println("social[1] "+social[1]);
+
 
 		String[] receivers = (social[1].replace(")", "")).split("; ");
 
+		System.out.println("social[0] "+social[0]);
+		System.out.println("social[1] "+social[1].replace(")", ""));
+
+
 		if (social[1]=="all")
+		{
 			isPublic = true;
+			receivers = DBInteractorCirclePost.getContactListsAsArray(BuzmoJFrame.con);
+		}
 		
 		int post_id = createCirclePostDirectly(con, userEmail, informations[1], topics, isPublic, ts);
 
@@ -376,15 +382,15 @@ public class DBInteractorManager {
 		else{System.out.println("FAILED to link user to circle feed");return false;}
 
 		//link recivers
-		if (isPublic = false)
-		{
-			for(int i=0; i<receivers.length; i++){
 
-				if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i-1]), post_id)){
-					System.out.println("SUCCESS linked user to circle feed");}
-				else{System.out.println("FAILED to link user to circle feed");return false;}	
-			}
+		for(int i=0; i<receivers.length; i++){
+			System.out.println("receivers[i]  "+receivers[i]);
+
+			if(DBInteractorCirclePost.linkReceiversToCirclePost(BuzmoJFrame.con, getEmialWithName(con, receivers[i]), post_id)){
+				System.out.println("SUCCESS linked user to circle feed");}
+			else{System.out.println("FAILED to link user to circle feed");return false;}	
 		}
+		
 		return true;
 	}
 
@@ -392,7 +398,7 @@ public class DBInteractorManager {
 		try {
 			String is_public = "False";
 			if(publicChecked) {is_public = "True";}
-			String myEmail = BuzmoJFrame.userEmail;
+			String myEmail = userEmail;
 			String hashStr = "CF" + myEmail + message + ts.toString();
 			int hashCode = hashStr.hashCode();
 			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?)";	
