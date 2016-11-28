@@ -226,22 +226,24 @@ public class DBInteractorManager {
 	public static Timestamp parseTimeStamp(String line) {
 		String properFormat;
 
-		System.out.println("Parsing timestamp "+line);
-
 		String[] dateTime = line.split(", ");
-		String[] date = dateTime[0].split(".");
+		String[] date = dateTime[0].split("\\.");
 		String[] time = dateTime[1].split(" ");
 
-		System.out.println("Parsing date time: "+Arrays.toString(dateTime));
+		/*System.out.println("Parsing date time: "+Arrays.toString(dateTime));
 		System.out.println("Parsing date "+Arrays.toString(date));
-		System.out.println("Parsing time "+Arrays.toString(time));
+		System.out.println("Parsing time "+Arrays.toString(time));*/
 
 		String month = String.format("%02s", date[0]);
 		String day = String.format("%02s", date[1]);
 
+		System.out.println("Parsing day "+month+" day "+day);
+
 		properFormat = date[2]+"-"+month+"-"+day+" ";
 
 		String[] exactTime = time[0].split(":");
+
+		System.out.println("Parsing exactTime "+Arrays.toString(exactTime));
 
 		if (time[1].equals("PM"))
 			exactTime[0]=String.valueOf(Integer.parseInt(exactTime[0])+12);
