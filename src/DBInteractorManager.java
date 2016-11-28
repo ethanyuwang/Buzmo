@@ -166,7 +166,12 @@ public class DBInteractorManager {
 
 	public static Boolean addMessageToPrivateChatWithMoreInfo(Connection con, String message, String recipientEmail, String SenderEmail, String time){
 		try {
-			String myEmail = BuzmoJFrame.userEmail;
+			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+message+"\n");
+			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+recipientEmail+"\n");
+			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+SenderEmail+"\n");
+			System.out.println("We are addMessageToPrivateChatWithMoreInfo: "+time+"\n");
+
+			String myEmail = SenderEmail;
 			Timestamp ts = parseTimeStamp(time);
 			String messageWithTime = message+ts.toString();
 
