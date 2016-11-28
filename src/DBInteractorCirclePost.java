@@ -108,13 +108,6 @@ public class DBInteractorCirclePost {
 				"TOPIC_WORD='" + topicArray[i] + "' AND " + 
 				"POST_ID=" + hashCode + " HAVING COUNT(*) = 0)";
 				st.executeUpdate(sql);
-				sql = "INSERT INTO USER_TOPIC_WORDS " +
-				"(SELECT'" + topicArray[i] + "' AS TOPIC_WORD, " + 
-				" '" + myEmail + "' AS EMAIL_ADDRESS " +
-				"FROM USER_TOPIC_WORDS WHERE " +
-				"TOPIC_WORD='" + topicArray[i] + "' AND " + 
-				"EMAIL_ADDRESS='" + myEmail + "' HAVING COUNT(*) = 0)";
-				st.executeUpdate(sql);
 			}
 			return hashCode;
 		}	

@@ -14,9 +14,17 @@ public class NavigationJPanel extends JPanel
     JButton groupChatButton;
     JButton contactsButton;
     JButton signOutButton;
+
     GridBagConstraints gbc;
     JPanel topPanel;
     JPanel botPanel;
+
+    //Topic words
+    JButton addButton;
+    JTextArea historyTextArea;
+    JTextArea draftTextArea;
+    JScrollPane historyScroll;
+    JScrollPane draftScroll;
 
     public NavigationJPanel()
     {
@@ -28,20 +36,50 @@ public class NavigationJPanel extends JPanel
 	contactsButton = new JButton("Contacts");
 	signOutButton = new JButton("Sign out");
 
-	gbc = new GridBagConstraints();
-	topPanel = new JPanel(new BorderLayout());
-	botPanel = new JPanel(new GridBagLayout());
+	//Topic words
+	addButton = new JButton("Add Topic Words");
+        historyTextArea = new JTextArea("<Topic Words>\n" + DBInteractor.getUserTopicWords(BuzmoJFrame.con));
+        historyTextArea.setEditable(false);
+        historyTextArea.setLineWrap(true);
+        historyTextArea.setWrapStyleWord(false);
+        historyScroll = new JScrollPane(historyTextArea);
+        draftTextArea= new JTextArea("Enter topic words divided by space");
+        draftTextArea.setLineWrap(true);
+        draftTextArea.setWrapStyleWord(false);
+        draftScroll = new JScrollPane(draftTextArea);
 
-	//set layout manager for this panel
-	setLayout(new GridLayout(2,1));
-
-	//set title font and size
-	welcomeLabel.setFont(new Font("Serif", Font.BOLD, 38));
+	//WelcomeLabel font and size
+	welcomeLabel.setFont(new Font("Serif", Font.BOLD, 28));
 	welcomeLabel.setVerticalAlignment(SwingConstants.CENTER);
 	welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+	// Panels
+	gbc = new GridBagConstraints();
+	topPanel = new JPanel(new GridBagLayout());
+	botPanel = new JPanel(new GridBagLayout());
+
 	//add components to top panel
-	topPanel.add(welcomeLabel, BorderLayout.CENTER);
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+        gbc.ipady = 50;
+        gbc.ipadx = 300;
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+	topPanel.add(welcomeLabel, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 1;
+        gbc.ipady = 100;
+	topPanel.add(historyScroll, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 2;
+        gbc.ipady = 50;
+	topPanel.add(draftScroll, gbc);
+	gbc.gridx = 0;
+	gbc.gridy = 3;
+	gbc.ipady = 0;
+	topPanel.add(addButton, gbc);	
+
+	//set layout manager for this panel
+	setLayout(new GridLayout(2,1));
 
 	//add components to bot panel
 	gbc.gridx = 3;
@@ -70,6 +108,18 @@ public class NavigationJPanel extends JPanel
 	add(botPanel);
 
         //event managers
+        addButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+			String[] topicArray = draftTextArea.getText().split("\\s+");
+			if(DBInteractor.addUserTopicWords(BuzmoJFrame.con, topicArray)){
+				historyTextArea.setText("<Topic Words>\n" + DBInteractor.getUserTopicWords(BuzmoJFrame.con));
+			}
+			else{
+				historyTextArea.setText("FAILED to add topic words");
+			}
+                }
+        });
         circleFeedButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
