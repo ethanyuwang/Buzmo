@@ -284,7 +284,7 @@ public class DBInteractorManager {
 			String sql = "SELECT U.email_address FROM Users U " +
 			"WHERE U.name='" + name + "'";
 			ResultSet rs = st.executeQuery(sql);
-			if(rs.next()){
+			while(rs.next()){
 				ret = rs.getString(1);
 			}
 			return ret;
