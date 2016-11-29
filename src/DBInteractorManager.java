@@ -163,8 +163,8 @@ public class DBInteractorManager {
 					}
 					case addManager: {
 						System.out.println("Adding manager " + line);
-						//if (addPrivateMessagesWithString(con, line)==false)
-						//	System.out.println("Error at " + line);
+						if (addManagerLine(con, line)==false)
+							System.out.println("Error at " + line);
 						break;
 					}
 
@@ -419,7 +419,19 @@ public class DBInteractorManager {
 		return addUserTopicWordsDirectly(con, getEmialWithName(con, info[0]), topics);
 
 	}
+	public static boolean addManagerLine(Connection con, String line){
+		DBInteractorManagerMode.addManager(con, getEmialWithName(con, "Tim Cook"));
+		DBInteractorManagerMode.addManager(con, getEmialWithName(con, "Ariana Grande"));
 
+
+		/*String[] names = line.split("; ");
+		for (int i = 0; i<names.length; i++)
+		{
+			if (DBInteractorManagerMode.addManager(con, getEmialWithName(con, names[i])==false))
+				return false;
+		}*/
+		return true;
+	}
 
 		//User topic words
 	public static boolean addUserTopicWordsDirectly(Connection con, String userEmail, String[] topicArray){
