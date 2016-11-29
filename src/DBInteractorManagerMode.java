@@ -42,8 +42,7 @@ public class DBInteractorManagerMode {
 			// Convert given timestamp
 			Timestamp ts = Timestamp.valueOf(timestamp);
 			// 7 days before current timestamp
-			java.util.Date date7 = new java.util.Date();
-			Timestamp ts7 = new Timestamp(date7.getTime() - (7 * 24 * 60 * 60 * 1000));
+			Timestamp ts7 = new Timestamp(DBInteractor.getCurrentTimeStamp().getTime() - (7 * 24 * 60 * 60 * 1000));
 			PreparedStatement ps;
 			ResultSet rs;
 
@@ -94,7 +93,59 @@ public class DBInteractorManagerMode {
 	}
 	public static String generateReport(Connection con){
 		try {
-			String ret = "";
+			int totalNewPostViews = 1;
+			int totalNewPosts = 1;
+
+			// 7 days before current timestamp
+			Timestamp ts7 = new Timestamp(DBInteractor.getCurrentTimeStamp().getTime() - (7 * 24 * 60 * 60 * 1000));
+			PreparedStatement ps;
+			ResultSet rs;
+			String sql;
+			String ret = "-7 Day Report-\n\n";
+
+			sql = "SELECT COUNT(*) FROM CIRCLE_POSTS P WHERE P.post_time >= ?";
+			ps = con.prepareStatement(sql);
+			ps.setTimestamp(1, ts7);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				totalNewPosts = rs.getInt(1);
+				ret += "Total number of new posts " + String.valueOf(rs.getInt(1)) + "\n";
+			}
+
+			sql = "SELECT SUM(P.view_count) FROM CIRCLE_POSTS P";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				ret += "Total number of post reads " + String.valueOf(rs.getInt(1)) + "\n";
+			}
+
+			//ret += "Average number of new message reads " + ;
+
+			sql = "SELECT SUM(P.view-count) FROM CIRCLE_POSTS P WHERE P.post_time >= ?";
+			ps = con.prepareStatement(sql);
+			ps.setTimestamp(1, ts7);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				totalNewPostViews = rs.getInt(1);
+				ret += "Total number of new post reads " + String.valueOf(rs.getInt(1)) + "\n";
+			}
+
+			ret += "Average number of reads for new messages " + String.valueOf(totalNewPostViews/(float)totalNewPosts) + "\n";
+
+			//ret += "Top 3 most viewed messages: " + ;
+			//ret += "Top 3 users by new message count: " + ;
+			
+			sql = "SELECT COUNT(*) FROM USERS U WHERE U.user_id IN " + 
+			"(SELECT P.post_owner FROM CIRCLE_POSTS P GROUP BY P.post_owner " + 
+			"HAVING COUNT(*) < 3)";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			ret += "Number of users who sent less than 3 messages: \n" ;
+			while(rs.next()){
+				ret += rs.getString(1) + "\n";
+			}
+
+			//ret += "For each topic word, most read message: " ;
 			return ret;
 		}
                 catch(Exception e){System.out.println(e); return "REPORT FAILED";}
