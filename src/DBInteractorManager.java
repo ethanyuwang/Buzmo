@@ -157,8 +157,8 @@ public class DBInteractorManager {
 					}
 					case addTopicWords: {
 						System.out.println("Adding user topic words " + line);
-						//if (addContactsCircle(con, line)==false)
-						//	System.out.println("Error at " + line);
+						if (addUserTopicWordsLine(con, line)==false)
+							System.out.println("Error at " + line);
 						break;
 					}
 					case addManager: {
@@ -411,6 +411,34 @@ public class DBInteractorManager {
 		}
 		
 		return true;
+	}
+
+	public static boolean addUserTopicWordsLine(Connection con, String line){
+		String[] info = line.split("; ");
+		String[] topics = info[1].split(", ");
+		return addUserTopicWordsDirectly(con, getEmialWithName(con, info[0]), topics);
+
+	}
+
+
+		//User topic words
+	public static boolean addUserTopicWordsDirectly(Connection con, String userEmail, String[] topicArray){
+		try {
+			String sql;
+			String myEmail = userEmail;	
+			Statement st = con.createStatement();
+			for(int i=0; i<topicArray.length; i++){
+                                sql = "INSERT INTO USER_TOPIC_WORDS " +
+                                "(SELECT'" + topicArray[i] + "' AS TOPIC_WORD, " +
+                                " '" + myEmail + "' AS EMAIL_ADDRESS " +
+                                "FROM USER_TOPIC_WORDS WHERE " +
+                                "TOPIC_WORD='" + topicArray[i] + "' AND " +
+                                "EMAIL_ADDRESS='" + myEmail + "' HAVING COUNT(*) = 0)";
+                                st.executeUpdate(sql);
+			}
+			return true;
+		}
+		catch(Exception e){System.out.println(e); return false;}
 	}
 
 	public static int createCirclePostDirectly(Connection con, String userEmail, String message, String[] topicArray, boolean publicChecked, Timestamp ts){
