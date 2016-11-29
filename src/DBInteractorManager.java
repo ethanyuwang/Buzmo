@@ -357,16 +357,22 @@ public class DBInteractorManager {
 
 
 
-		String[] receivers = (social[1].replace(")", "")).split("; ");
+		String[] receivers = (social[1].replace(")", "")).split(", ");
 
 		System.out.println("social[0] "+social[0]);
 		System.out.println("social[1] "+social[1].replace(")", ""));
 
+		social[1].replace(")", "");
 
-		if (social[1]=="all")
+
+		if (receivers[0].equals("all"))
 		{
 			isPublic = true;
+			System.out.println("isPublic  "+isPublic);
 			receivers = getContactListsAsArray(BuzmoJFrame.con, userEmail);
+			for(int i=0; i<receivers.length; i++){
+				System.out.println("receivers  "+i+receivers[i]);
+			}
 		}
 		
 		int post_id = createCirclePostDirectly(con, userEmail, informations[1], topics, isPublic, ts);
@@ -414,7 +420,7 @@ public class DBInteractorManager {
 			String myEmail = userEmail;
 			String hashStr = "CF" + myEmail + message + ts.toString();
 			int hashCode = hashStr.hashCode();
-			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?)";	
+			String sql = "INSERT INTO CIRCLE_POSTS VALUES (?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			// 1. Create message
 			con.setAutoCommit(false);
@@ -423,6 +429,7 @@ public class DBInteractorManager {
 			ps.setTimestamp(3, ts);
 			ps.setString(4, is_public);
 			ps.setString(5, myEmail);
+			ps.setInt(6, 0);
 			ps.addBatch();
 			ps.executeBatch();
 			con.commit();
@@ -445,6 +452,7 @@ public class DBInteractorManager {
 
 	public static Boolean addMessageToGroupChatDirectly(Connection con, String message, String groupName, String memeberEmail, Timestamp ts){
 		try {
+
 			String myEmail = memeberEmail;
 			String messageWithTime = message+ts.toString();
 			int groupId = DBInteractorGroupChat.getGroupID(con, groupName);
@@ -453,13 +461,11 @@ public class DBInteractorManager {
 				System.out.println("groupID not found\n");
 				return false;
 			}
-
 			//Add a copy to sender
 			String sql = "INSERT INTO MESSAGES VALUES (?,?,?,?,?,?,?,?)";	
 			PreparedStatement ps = con.prepareStatement(sql);
 			con.setAutoCommit(false);
 			String messageWithTimeAndOwner = messageWithTime + myEmail;
-
 			ps.setInt(1, messageWithTimeAndOwner.hashCode());
 			ps.setString(2, message);
 			ps.setTimestamp(3, ts);
@@ -468,16 +474,6 @@ public class DBInteractorManager {
 			ps.setString(6, myEmail);
 			ps.setString(7, myEmail);
 			ps.setInt(8, groupId);
-
-			System.out.println("1, messageWithTimeAndOwner.hashCode()"+messageWithTimeAndOwner.hashCode());
-			System.out.println("2, message"+message);
-			System.out.println("3, ts"+ts);
-			System.out.println("4, group "+group);
-			System.out.println("5, myEmail"+myEmail);
-			System.out.println("6, myEmail" +myEmail);
-			System.out.println("(7, myEmail" +myEmail);
-			System.out.println("8, groupId" +myEmail);
-
 
 			ps.addBatch();
 			ps.executeBatch();
