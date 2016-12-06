@@ -15,6 +15,7 @@ public class NavigationJPanel extends JPanel
     JButton contactsButton;
     JButton signOutButton;
     JButton managerModeButton;
+    JButton userSearchButton;
 
     GridBagConstraints gbc;
     JPanel topPanel;
@@ -37,6 +38,7 @@ public class NavigationJPanel extends JPanel
 	contactsButton = new JButton("Contacts");
 	signOutButton = new JButton("Sign out");
 	managerModeButton = new JButton("Manager Mode");
+	userSearchButton = new JButton("Search Users");
 
 	//Topic words
 	addButton = new JButton("Add Topic Words");
@@ -100,11 +102,14 @@ public class NavigationJPanel extends JPanel
 	botPanel.add(contactsButton, gbc);
 	gbc.gridx = 3;
 	gbc.gridy = 5;
+	botPanel.add(userSearchButton, gbc);
+	gbc.gridx = 3;
+	gbc.gridy = 6;
 	botPanel.add(signOutButton, gbc);
 	// Manager mode
 	if(BuzmoJFrame.is_manager){
 		gbc.gridx = 3;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		botPanel.add(managerModeButton, gbc);
 	}
 
@@ -156,6 +161,12 @@ public class NavigationJPanel extends JPanel
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			BuzmoJFrame.setCurrentPanelTo(new LoginJPanel());
+		}
+	});
+	userSearchButton.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			BuzmoJFrame.setCurrentPanelTo(new UserSearchJPanel());
 		}
 	});
 	managerModeButton.addMouseListener(new MouseAdapter() {

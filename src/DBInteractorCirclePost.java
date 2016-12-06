@@ -157,7 +157,7 @@ public class DBInteractorCirclePost {
 			String myEmail = BuzmoJFrame.userEmail;
 			// Get posts
 			String sql = "SELECT DISTINCT P.post_owner, P.post_string, P.post_time, P.is_public, " +
-			"P.post_id FROM CIRCLE_POSTS P WHERE (P.post_id IN " + 
+			"P.post_id, P.view_count FROM CIRCLE_POSTS P WHERE (P.post_id IN " + 
 			"(SELECT T.post_id FROM POST_TOPIC_WORDS T WHERE T.topic_word IN (";
 			for(int i=0; i<topicArray.length; i++){
 				if(i+1 == topicArray.length){
@@ -172,9 +172,7 @@ public class DBInteractorCirclePost {
 			sql += "))) ORDER BY P.post_time DESC";
 			rs = st.executeQuery(sql);
 			String holder;
-			System.out.println("hi");
 			while(rs.next() && current<=count){
-				System.out.println("hi");
 				holder = "";
 				current++;
 				holder += rs.getString(1);
