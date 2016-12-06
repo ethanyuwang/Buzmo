@@ -157,14 +157,14 @@ public class DBInteractorManager {
 					}
 					case addTopicWords: {
 						System.out.println("Adding user topic words " + line);
-						if (addUserTopicWordsLine(con, line)==false)
-							System.out.println("Error at " + line);
+						//if (addUserTopicWordsLine(con, line)==false)
+						//	System.out.println("Error at " + line);
 						break;
 					}
 					case addManager: {
 						System.out.println("Adding manager " + line);
-						if (addManagerLine(con, line)==false)
-							System.out.println("Error at " + line);
+						//if (addManagerLine(con, line)==false)
+						//	System.out.println("Error at " + line);
 						break;
 					}
 

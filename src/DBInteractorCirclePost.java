@@ -172,7 +172,9 @@ public class DBInteractorCirclePost {
 			sql += "))) ORDER BY P.post_time DESC";
 			rs = st.executeQuery(sql);
 			String holder;
+			System.out.println("hi");
 			while(rs.next() && current<=count){
+				System.out.println("hi");
 				holder = "";
 				current++;
 				holder += rs.getString(1);

@@ -92,6 +92,7 @@ public class DBInteractorManagerMode {
                 catch(Exception e){System.out.println(e); return "SEARCH FAILED: double check your inputs";}
 	}
 	public static String generateReport(Connection con){
+		String ret = "-7 Day Report-\n\n";
 		try {
 			int totalNewPostViews = 1;
 			int totalNewPosts = 1;
@@ -101,7 +102,6 @@ public class DBInteractorManagerMode {
 			PreparedStatement ps;
 			ResultSet rs;
 			String sql;
-			String ret = "-7 Day Report-\n\n";
 
 			sql = "SELECT COUNT(*) FROM CIRCLE_POSTS P WHERE P.post_time >= ?";
 			ps = con.prepareStatement(sql);
@@ -121,7 +121,7 @@ public class DBInteractorManagerMode {
 
 			//ret += "Average number of new message reads " + ;
 
-			sql = "SELECT SUM(P.view-count) FROM CIRCLE_POSTS P WHERE P.post_time >= ?";
+			sql = "SELECT SUM(P.view_count) FROM CIRCLE_POSTS P WHERE P.post_time >= ?";
 			ps = con.prepareStatement(sql);
 			ps.setTimestamp(1, ts7);
 			rs = ps.executeQuery();
@@ -135,7 +135,7 @@ public class DBInteractorManagerMode {
 			//ret += "Top 3 most viewed messages: " + ;
 			//ret += "Top 3 users by new message count: " + ;
 			
-			sql = "SELECT COUNT(*) FROM USERS U WHERE U.user_id IN " + 
+			sql = "SELECT COUNT(*) FROM USERS U WHERE U.email_address IN " + 
 			"(SELECT P.post_owner FROM CIRCLE_POSTS P GROUP BY P.post_owner " + 
 			"HAVING COUNT(*) < 3)";
 			ps = con.prepareStatement(sql);
@@ -148,7 +148,7 @@ public class DBInteractorManagerMode {
 			//ret += "For each topic word, most read message: " ;
 			return ret;
 		}
-                catch(Exception e){System.out.println(e); return "REPORT FAILED";}
+                catch(Exception e){System.out.println(e); return ret;}
 	}
 }
 

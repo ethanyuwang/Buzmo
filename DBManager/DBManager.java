@@ -21,12 +21,17 @@ public class DBManager {
                         //String password = "049";
                         Connection con = DriverManager.getConnection(url,username, password);
 
+			// Add manager
+			String sql = "INSERT INTO MANAGERS VALUES('Timcook@gmail.com')";
+                        Statement st = con.createStatement();
+			//st.executeUpdate(sql);
+
                         //Delete Tables
-                        deleteTables(con);
+                        //deleteTables(con);
 
                         //Create Tables
-                        createTables(con);
-                        addForeignKeys(con);
+                        //createTables(con);
+                        //addForeignKeys(con);
 			//setTime(con, "2007-09-23 10:10:10.0");
 
 
@@ -37,7 +42,7 @@ public class DBManager {
                         //printGLEETables(con);
 
                         //Print all tables
-                        //printAllTables(con);
+                        printAllTables(con);
 
                         // Close conenction
                         con.close();
