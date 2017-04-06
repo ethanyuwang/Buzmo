@@ -13,6 +13,6 @@ To run the program: `ant run`
 * As a user, you can view contact list after logging in. From the contact list, you can start a new private chat, or a group chat. You can also invite new contact to a group chat or accept an invitation. <br />
 Newly generated information are immediately saved to database.
 
-*As a manager, you can add new users, search for posts with keywords, and generate summary reports.
+* As a manager, you can add new users, search for posts with keywords, and generate summary reports.
 
 
